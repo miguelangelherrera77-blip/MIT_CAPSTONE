@@ -13,7 +13,7 @@ Miguel Herrera - Section B
     * The purpose of the Wikipedia Retrieval Engine is to provide a conversational interface that answers questions about significant people, places, and topics using Retrieval-Augmented Generation (RAG) over a collection of Wikipedia articles. The system should support factual questions, single-document questions that require information from one article, and multi-document questions that require comparing or combining information from multiple sources. Users should also be able to ask follow-up questions and receive responses grounded in retrieved content. To improve reliability and reduce hallucinations, the system should provide direct quotations from the source articles, allowing users to understand where the information originated and verify the response. 
 
 + **Configuration Requirements**
-    * Add your **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file with your OpenRouter API Key.
+    * Add your **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file.
 
 --------------------------
 
