@@ -184,7 +184,15 @@ def my_probe_prompts() -> list[str]:
 
     Delete the raise NotImplementedError line once your code works.
     """
-    raise NotImplementedError("my_probe_prompts() — see the TODO above.")
+    return [
+        "Who was Albert Einstein?",
+        "What he was especially notable for?",
+        "Did he receive any gifts from his father when young?",
+        "What is Toronto Maple Leafs",
+        "How is Ace Bailey related to it?",
+        "How many weapons are featured in the video game 'GoldenEye 007'?"
+    ]
+    #raise NotImplementedError("my_probe_prompts() — see the TODO above.")
 
 # %% [markdown]
 # ## Step 4 — Run the baseline probes and capture the evidence
