@@ -1,8 +1,12 @@
 # MIT_CAPSTONE
-Repository for RAG and Context Engineering - MIT - Capstone files.
+RAG and Context Engineering: Designing and Building Production-Grade AI Systems
+Repository for Capstone files.
 
+--------------------------
+Miguel Herrera - Section B
+--------------------------
 Project Name:
-Selected Scenario: Research Paper Navigator
+Selected Scenario: Wikipedia Retrieval Engine
 Purpose of the System:
 Setup instructions:
 
