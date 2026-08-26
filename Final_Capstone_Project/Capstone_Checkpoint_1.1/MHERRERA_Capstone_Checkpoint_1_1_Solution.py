@@ -67,7 +67,7 @@ TEMPERATURE = 0.2
 LOG_PATH = Path.cwd() / "checkpoint_1_1_responses.log"
 
 # === SET THIS to your chosen scenario ===
-SCENARIO = "research_papers"   # "research_papers" or "wikipedia"
+SCENARIO = "wikipedia"   # "research_papers" or "wikipedia"
 
 SYSTEM_PROMPT = (
     "You are a helpful research assistant. Answer the user's question as "
