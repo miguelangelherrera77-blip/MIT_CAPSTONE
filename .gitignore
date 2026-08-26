@@ -1,3 +1,4 @@
 #Ignore .env and Virtual environment
-.env
-.venv/
+.venv
+venv/
+lab_solution_files/
