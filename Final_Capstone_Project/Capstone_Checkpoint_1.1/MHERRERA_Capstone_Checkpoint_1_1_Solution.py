@@ -64,7 +64,8 @@ from langchain_openai import ChatOpenAI
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 LLM_MODEL = "openai/gpt-5.4-mini"  # latest small OpenAI model, fast; covered by course credits
 TEMPERATURE = 0.2
-LOG_PATH = Path.cwd() / "checkpoint_1_1_responses.log"
+CHECKPOINT_DIR = Path(__file__).resolve().parent
+LOG_PATH = CHECKPOINT_DIR / "checkpoint_1_1_responses.log"
 
 # === SET THIS to your chosen scenario ===
 SCENARIO = "wikipedia"   # "research_papers" or "wikipedia"
