@@ -44,6 +44,17 @@ MIT_CAPSTONE/
 │   ├── Capstone_Checkpoint_2.1/
 │   │   └── MHERRERA_Capstone_Checkpoint_2_1_Solution.py
 │   └── Capstone_Database/
+│       └── [database files]
+├── .github/
+│   └── [GitHub files]
+├── .vscode/
+│   └── [VS Code settings]
+├── docs/
+│   └── [project docs]
+├── scripts/
+│   └── [utility scripts]
+└── src/
+    └── [source code]
 ```
 
 --------------------------
