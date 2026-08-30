@@ -34,21 +34,22 @@ Goal: Evaluate how an LLM performs without retrieval and determine whether retri
 --------------------------
 
 ## FOLDER STRUCTURE
-
-| Item | Description |
-|------|-------------|
-| `.env` | Environment configuration file (contains API keys and secrets) |
-| `README.md` | Project documentation and overview |
-| `venv_requirements.txt` | Python dependencies for virtual environment |
-| `Final_Capstone_Project/` | Main capstone project directory |
-| `Final_Capstone_Project/Capstone_Checkpoint_1.1/` | Checkpoint 1.1: Evaluating when retrieval is required |
-| `Final_Capstone_Project/Capstone_Checkpoint_1.1/MHERRERA_Capstone_Checkpoint_1_1_Solution.py` | Solution script for checkpoint 1.1 |
-| `Final_Capstone_Project/Capstone_Checkpoint_1.1/checkpoint_1_1_responses.log` | Log file for checkpoint 1.1 responses |
-| `Final_Capstone_Project/Capstone_Checkpoint_1.1/MHerrera_Capstone_Checkpoint_1_1_Worksheet.*` | Checkpoint 1.1 worksheet (PDF and DOCX) |
-| `Final_Capstone_Project/Capstone_Checkpoint_2.1/` | Checkpoint 2.1: Retrieval-Augmented Generation implementation |
-| `Final_Capstone_Project/Capstone_Checkpoint_2.1/MHERRERA_Capstone_Checkpoint_2_1_Solution.py` | Solution script for checkpoint 2.1 |
-| `Final_Capstone_Project/Capstone_Checkpoint_2.1/MHerrera_Capstone_Checkpoint_2_1_Worksheet-1.docx` | Checkpoint 2.1 worksheet |
-| `Final_Capstone_Project/Capstone_Database/Wikipedia/` | Wikipedia articles database for RAG system |
-
+```text
+MIT_CAPSTONE/
+├── .env
+├── README.md
+├── venv_requirements.txt
+└── Final_Capstone_Project/
+    ├── Capstone_Checkpoint_1.1/
+    │   ├── MHERRERA_Capstone_Checkpoint_1_1_Solution.py
+    │   ├── MHerrera_Capstone_Checkpoint_1_1_Worksheet.docx
+    │   ├── MHerrera_Capstone_Checkpoint_1_1_Worksheet.pdf
+    │   └── checkpoint_1_1_responses.log
+    ├── Capstone_Checkpoint_2.1/
+    │   ├── MHERRERA_Capstone_Checkpoint_2_1_Solution.py
+    │   └── MHerrera_Capstone_Checkpoint_2_1_Worksheet-1.docx
+    └── Capstone_Database/
+        └── Wikipedia/
+```
 
 --------------------------
