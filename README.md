@@ -36,25 +36,21 @@ Goal: Evaluate how an LLM performs without retrieval and determine whether retri
 ## FOLDER STRUCTURE
 ```text
 MIT_CAPSTONE/
+├── .env
+├── .gitignore
 ├── README.md
 ├── venv_requirements.txt
-├── Final_Capstone_Project/
-│   ├── Capstone_Checkpoint_1.1/
-│   │   └── MHERRERA_Capstone_Checkpoint_1_1_Solution.py
-│   ├── Capstone_Checkpoint_2.1/
-│   │   └── MHERRERA_Capstone_Checkpoint_2_1_Solution.py
-│   └── Capstone_Database/
-│       └── [database files]
-├── .github/
-│   └── [GitHub files]
-├── .vscode/
-│   └── [VS Code settings]
-├── docs/
-│   └── [project docs]
-├── scripts/
-│   └── [utility scripts]
-└── src/
-    └── [source code]
+└── Final_Capstone_Project/
+    ├── Capstone_Checkpoint_1.1/
+    │   ├── MHERRERA_Capstone_Checkpoint_1_1_Solution.py
+    │   ├── MHerrera_Capstone_Checkpoint_1_1_Worksheet.docx
+    │   ├── MHerrera_Capstone_Checkpoint_1_1_Worksheet.pdf
+    │   └── checkpoint_1_1_responses.log
+    ├── Capstone_Checkpoint_2.1/
+    │   ├── MHERRERA_Capstone_Checkpoint_2_1_Solution.py
+    │   └── MHerrera_Capstone_Checkpoint_2_1_Worksheet-1.docx
+    └── Capstone_Database/
+        └── Wikipedia/
 ```
 
 --------------------------
