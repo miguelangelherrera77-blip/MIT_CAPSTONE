@@ -36,8 +36,6 @@ Goal: Evaluate how an LLM performs without retrieval and determine whether retri
 ## FOLDER STRUCTURE
 ```text
 MIT_CAPSTONE/
-├── .env
-├── .gitignore
 ├── README.md
 ├── venv_requirements.txt
 └── Final_Capstone_Project/
