@@ -32,3 +32,16 @@ Goal: Evaluate how an LLM performs without retrieval and determine whether retri
         * langchain-core
 
 --------------------------
+
+### Repository Notes
++ **Project Scope**
+    * This repository includes the capstone checkpoints, lab starter/solution files, and supporting dataset folders used for developing a retrieval-augmented system.
++ **Workflow**
+    * Begin with the capstone checkpoint scripts to establish the no-retrieval baseline and evaluate the need for retrieval.
+    * Continue to build the retrieval pipeline using the selected Wikipedia corpus and grounded question-answering logic.
++ **Expected Output**
+    * The final system should answer factual questions using information retrieved from relevant Wikipedia articles and cite supporting quotations when appropriate.
++ **Best Practice**
+    * Keep the environment variables in a local .env file and avoid committing any secrets or API keys to version control.
+
+--------------------------
