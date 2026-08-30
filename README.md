@@ -41,7 +41,5 @@ Goal: Evaluate how an LLM performs without retrieval and determine whether retri
     * Continue to build the retrieval pipeline using the selected Wikipedia corpus and grounded question-answering logic.
 + **Expected Output**
     * The final system should answer factual questions using information retrieved from relevant Wikipedia articles and cite supporting quotations when appropriate.
-+ **Best Practice**
-    * Keep the environment variables in a local .env file and avoid committing any secrets or API keys to version control.
 
 --------------------------
