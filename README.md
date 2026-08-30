@@ -38,24 +38,12 @@ Goal: Evaluate how an LLM performs without retrieval and determine whether retri
 MIT_CAPSTONE/
 ├── README.md
 ├── venv_requirements.txt
-├── lab_solution_files/
-│   ├── lab_1_1_chatbot_solution.py
-│   ├── lab_1_2_keyword_retrieval_solution.py
-│   └── lab_2_1_vector_retrieval_solution.py
-├── lab_starter_files/
-│   ├── lab_1_1_chatbot_starter.py
-│   └── lab_2_1_vector_retrieval_starter.py
-├── lab_databases/
-│   ├── lab_1_2/
-│   │   └── detailedEmails/
-│   └── lab_2.1/
 ├── Final_Capstone_Project/
 │   ├── Capstone_Checkpoint_1.1/
 │   │   └── MHERRERA_Capstone_Checkpoint_1_1_Solution.py
 │   ├── Capstone_Checkpoint_2.1/
 │   │   └── MHERRERA_Capstone_Checkpoint_2_1_Solution.py
 │   └── Capstone_Database/
-└──
 ```
 
 --------------------------
