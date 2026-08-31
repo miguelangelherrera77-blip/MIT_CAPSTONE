@@ -84,7 +84,6 @@ ANSWER_SYSTEM = (
     "the answer, say so rather than guessing."
 )
 
-
 # %%
 def check_api_key() -> str:
     load_dotenv()
