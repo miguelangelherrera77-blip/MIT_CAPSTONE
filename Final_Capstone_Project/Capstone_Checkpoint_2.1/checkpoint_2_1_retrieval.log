@@ -1,0 +1,16 @@
+[2026-09-01T18:43:48] QUERY 1: Who was Albert Einstein?
+retrieved=[('Albert_Einstein', np.float64(1.0)), ('Max_Planck', np.float64(0.5537409140309606)), ('Niels_Bohr', np.float64(0.3928153606800381)), ('Albert_Einstein_Medal', 0.3537962985679166)]
+answer=Albert Einstein was a German-born theoretical physicist, best known for developing the theory of relativity. He also made important contributions to quantum theory and won the 1921 Nobel Prize in Physics for his discovery of the law of the photoelectric effect.
+------------------------------------------------------------------------
+[2026-09-01T18:43:50] QUERY 2: How is Ace Bailey related to Toronto Maple Leafs?
+retrieved=[('Toronto_Maple_Leafs', np.float64(1.0)), ('Morgan_Rielly', np.float64(0.3474584486281778)), ('List_of_Stanley_Cup_champions', np.float64(0.2967219587311207)), ('Cam_Plante', np.float64(0.16837785564971552))]
+answer=Ace Bailey is related to the Toronto Maple Leafs as a former player: the team retired his number 6, and he is listed among the franchise’s honoured/retired numbers.
+------------------------------------------------------------------------
+[2026-09-01T18:43:51] QUERY 3: According to the Wikipedia pages, how many weapons are featured in the video game 'GoldenEye 007'?
+retrieved=[('GoldenEye_007_(1997_video_game)', np.float64(1.0)), ('Never_Say_Never_Again', np.float64(0.37628620648032113)), ('David_Arnold', np.float64(0.22002594500642456)), ('Baldur_s_Gate_3', np.float64(0.14925958026559188))]
+answer=According to the Wikipedia page for *GoldenEye 007*, the game features **more than 20 weapons**.
+------------------------------------------------------------------------
+[2026-09-01T18:43:53] QUERY 4: Provide a short summary of the accomplishments of Abraham Lincoln?
+retrieved=[('Harriet_Lane', np.float64(0.5)), ('Abraham_Lincoln', 0.5), ('James_A._Garfield', np.float64(0.32468816327797334)), ('Mount_Rushmore', np.float64(0.3245346962703827))]
+answer=Abraham Lincoln was the 16th president of the United States, leading the country through the Civil War, preserving the Union, and helping end slavery. He issued the Emancipation Proclamation, promoted the Thirteenth Amendment, delivered the Gettysburg Address, and guided Union strategy during the war.
+------------------------------------------------------------------------
