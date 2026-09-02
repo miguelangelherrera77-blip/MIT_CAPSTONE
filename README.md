@@ -6,6 +6,14 @@ Repository for Capstone files.
 Miguel Herrera - Section B
 --------------------------
 
+## TABLE OF CONTENTS
++ [Project Description](#project-description)
++ [Capstone Checkpoint 2.1](#capstone-checkpoint-21-retrieval-strategy-design-and-baseline-implementation)
++ [Capstone Checkpoint 1.1](#capstone-checkpoint-11-evaluating-when-retrieval-is-required)
++ [Folder Structure](#folder-structure)
+
+--------------------------
+
 ## PROJECT DESCRIPTION
 + **Selected Scenario**
     * Wikipedia Retrieval Engine
