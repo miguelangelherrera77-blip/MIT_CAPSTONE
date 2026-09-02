@@ -33,6 +33,22 @@ Goal: Evaluate how an LLM performs without retrieval and determine whether retri
 
 --------------------------
 
+### Capstone Checkpoint 2.1: Retrieval strategy design and baseline implementation.
+Goal: Implement and evaluate a hybrid Retrieval-Augmented Generation (RAG) system that combines BM25 keyword retrieval and vector search over the Wikipedia article collection.
+
++ **Checkpoint 2.1 Configuration Requirements**
+    * Add your own **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file.
+    * Packages:
+        * beautifulsoup4
+        * chromadb
+        * langchain-chroma
+        * langchain-core
+        * langchain-openai
+        * python-dotenv
+        * rank-bm25
+
+--------------------------
+
 ## FOLDER STRUCTURE
 ```text
 MIT_CAPSTONE/
