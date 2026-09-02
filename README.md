@@ -64,8 +64,6 @@ MIT_CAPSTONE/
     ├── Capstone_Checkpoint_2.1/            # Checkpoint 2.1: RAG implementation
     │   ├── MHERRERA_Capstone_Checkpoint_2_1_Solution.py
     │   └── MHerrera_Capstone_Checkpoint_2_1_Worksheet-1.docx
-    └── Capstone_Database/                  # Database directory with Wikipedia articles
-        └── Wikipedia/
 ```
 
 --------------------------
