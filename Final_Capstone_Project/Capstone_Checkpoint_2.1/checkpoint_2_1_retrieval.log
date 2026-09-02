@@ -1,16 +1,54 @@
-[2026-09-01T18:43:48] QUERY 1: Who was Albert Einstein?
+[2026-09-01T18:53:49] QUERY 1: Who was Albert Einstein?
 retrieved=[('Albert_Einstein', np.float64(1.0)), ('Max_Planck', np.float64(0.5537409140309606)), ('Niels_Bohr', np.float64(0.3928153606800381)), ('Albert_Einstein_Medal', 0.3537962985679166)]
-answer=Albert Einstein was a German-born theoretical physicist, best known for developing the theory of relativity. He also made important contributions to quantum theory and won the 1921 Nobel Prize in Physics for his discovery of the law of the photoelectric effect.
+answer=Albert Einstein was a German-born theoretical physicist, best known for developing the theory of relativity. He also made major contributions to quantum theory and is famous for the mass–energy equivalence formula **E = mc²**.
 ------------------------------------------------------------------------
-[2026-09-01T18:43:50] QUERY 2: How is Ace Bailey related to Toronto Maple Leafs?
-retrieved=[('Toronto_Maple_Leafs', np.float64(1.0)), ('Morgan_Rielly', np.float64(0.3474584486281778)), ('List_of_Stanley_Cup_champions', np.float64(0.2967219587311207)), ('Cam_Plante', np.float64(0.16837785564971552))]
-answer=Ace Bailey is related to the Toronto Maple Leafs as a former player: the team retired his number 6, and he is listed among the franchise’s honoured/retired numbers.
+[2026-09-01T18:53:52] QUERY 2: How is Ace Bailey related to Toronto Maple Leafs?
+retrieved=[('Toronto_Maple_Leafs', np.float64(1.0)), ('Morgan_Rielly', np.float64(0.34740598507278514)), ('List_of_Stanley_Cup_champions', np.float64(0.2967219587311207)), ('Cam_Plante', np.float64(0.16843120699337666))]
+answer=Ace Bailey is related to the Toronto Maple Leafs as a former player; his number 6 was retired by the team, and the article notes he was one of the Maple Leafs players whose jersey number was retired.
 ------------------------------------------------------------------------
-[2026-09-01T18:43:51] QUERY 3: According to the Wikipedia pages, how many weapons are featured in the video game 'GoldenEye 007'?
+[2026-09-01T18:53:53] QUERY 3: According to the Wikipedia pages, how many weapons are featured in the video game 'GoldenEye 007'?
 retrieved=[('GoldenEye_007_(1997_video_game)', np.float64(1.0)), ('Never_Say_Never_Again', np.float64(0.37628620648032113)), ('David_Arnold', np.float64(0.22002594500642456)), ('Baldur_s_Gate_3', np.float64(0.14925958026559188))]
-answer=According to the Wikipedia page for *GoldenEye 007*, the game features **more than 20 weapons**.
+answer=According to the Wikipedia page, **GoldenEye 007 features more than 20 weapons**.
 ------------------------------------------------------------------------
-[2026-09-01T18:43:53] QUERY 4: Provide a short summary of the accomplishments of Abraham Lincoln?
+[2026-09-01T18:53:56] QUERY 4: Provide a short summary of the accomplishments of Abraham Lincoln?
+retrieved=[('Harriet_Lane', np.float64(0.5)), ('Abraham_Lincoln', 0.5), ('James_A._Garfield', np.float64(0.3251758598395027)), ('Mount_Rushmore', np.float64(0.3245346962703827))]
+answer=Abraham Lincoln was the 16th president of the United States, leading the country through the Civil War, preserving the Union, and playing a major role in the abolition of slavery. He issued the Emancipation Proclamation, promoted the Thirteenth Amendment, delivered the Gettysburg Address, and helped shape Reconstruction.
+------------------------------------------------------------------------
+[2026-09-01T19:00:18] QUERY 1: Who was Albert Einstein?
+retrieved=[('Albert_Einstein', np.float64(1.0)), ('Max_Planck', np.float64(0.5537730410820456)), ('Niels_Bohr', np.float64(0.39281231673901523)), ('Albert_Einstein_Medal', 0.35370324976569745)]
+answer=Albert Einstein was “a German-born theoretical physicist best known for developing the theory of relativity.” The document also says, “Einstein also made important contributions to quantum theory.” 
+
+It adds that he “received the 1921 Nobel Prize in Physics for ‘his services to theoretical physics, and especially for his discovery of the law of the photoelectric effect.’”
+------------------------------------------------------------------------
+[2026-09-01T19:00:21] QUERY 2: How is Ace Bailey related to Toronto Maple Leafs?
+retrieved=[('Toronto_Maple_Leafs', np.float64(1.0)), ('Morgan_Rielly', np.float64(0.34740598507278514)), ('List_of_Stanley_Cup_champions', np.float64(0.2967219587311207)), ('Cam_Plante', np.float64(0.16843120699337666))]
+answer=Ace Bailey is related to the Toronto Maple Leafs as a former player whose number was retired by the team. The document says: “**Ace Bailey**” is listed among the Maple Leafs’ **retired numbers** and notes that “**The retirement of Bailey's number was the first of its kind in professional sports**.” It also says his jersey was retired after the **Ace Bailey Benefit Game**.
+------------------------------------------------------------------------
+[2026-09-01T19:00:25] QUERY 3: According to the Wikipedia pages, how many weapons are featured in the video game 'GoldenEye 007'?
+retrieved=[('GoldenEye_007_(1997_video_game)', np.float64(1.0)), ('Never_Say_Never_Again', np.float64(0.37628620648032113)), ('David_Arnold', np.float64(0.22002594500642456)), ('Baldur_s_Gate_3', np.float64(0.14925958026559188))]
+answer=According to the GoldenEye 007 page, the game features **more than 20 weapons**: “**The game features more than 20 weapons**...”
+------------------------------------------------------------------------
+[2026-09-01T19:00:28] QUERY 4: Provide a short summary of the accomplishments of Abraham Lincoln?
 retrieved=[('Harriet_Lane', np.float64(0.5)), ('Abraham_Lincoln', 0.5), ('James_A._Garfield', np.float64(0.32468816327797334)), ('Mount_Rushmore', np.float64(0.3245346962703827))]
-answer=Abraham Lincoln was the 16th president of the United States, leading the country through the Civil War, preserving the Union, and helping end slavery. He issued the Emancipation Proclamation, promoted the Thirteenth Amendment, delivered the Gettysburg Address, and guided Union strategy during the war.
+answer=Abraham Lincoln’s accomplishments, according to the document, include leading the United States through the Civil War, defeating the Confederacy, and “playing a major role in the abolition of slavery.” It also says he issued the Emancipation Proclamation, promoted the Thirteenth Amendment, and helped preserve the Union. The document also notes he was “the first Republican president” and that his wartime leadership made him a “national hero.”
+------------------------------------------------------------------------
+[2026-09-01T19:01:24] QUERY 1: Who was Albert Einstein?
+retrieved=[('Albert_Einstein', np.float64(1.0)), ('Max_Planck', np.float64(0.5537409140309606)), ('Niels_Bohr', np.float64(0.3928153606800381)), ('Albert_Einstein_Medal', 0.3537962985679166)]
+answer=Albert Einstein was “a German-born theoretical physicist” best known for developing the theory of relativity. The document says:
+
+> “Albert Einstein (14 March 1879 – 18 April 1955) was a German-born theoretical physicist best known for developing the theory of relativity. Einstein also made important contributions to quantum theory.”
+
+It also notes that he received the 1921 Nobel Prize in Physics and is associated with famous ideas like “E = mc².”
+------------------------------------------------------------------------
+[2026-09-01T19:01:28] QUERY 2: How is Ace Bailey related to Toronto Maple Leafs?
+retrieved=[('Toronto_Maple_Leafs', np.float64(1.0)), ('Morgan_Rielly', np.float64(0.3474584486281778)), ('List_of_Stanley_Cup_champions', np.float64(0.2967219587311207)), ('Cam_Plante', np.float64(0.16837785564971552))]
+answer=Ace Bailey is a Toronto Maple Leafs player whose number was retired. The document says he was a Maple Leafs forward and that “The Leafs held the Ace Bailey Benefit Game, the NHL’s first All-Star Game,” and in the retired numbers list: “6 Ace Bailey RW 1926–1933 … retired.”
+------------------------------------------------------------------------
+[2026-09-01T19:01:29] QUERY 3: According to the Wikipedia pages, how many weapons are featured in the video game 'GoldenEye 007'?
+retrieved=[('GoldenEye_007_(1997_video_game)', np.float64(1.0)), ('Never_Say_Never_Again', np.float64(0.37628620648032113)), ('David_Arnold', np.float64(0.22002594500642456)), ('Baldur_s_Gate_3', np.float64(0.14925958026559188))]
+answer=According to the **GoldenEye 007** Wikipedia page, the game features **more than 20 weapons**: “**The game features more than 20 weapons**,” including pistols, submachine guns, assault rifles, a sniper rifle, grenades, and throwing knives.
+------------------------------------------------------------------------
+[2026-09-01T19:01:32] QUERY 4: Provide a short summary of the accomplishments of Abraham Lincoln?
+retrieved=[('Harriet_Lane', np.float64(0.5)), ('Abraham_Lincoln', 0.5), ('James_A._Garfield', np.float64(0.32480916624882783)), ('Mount_Rushmore', np.float64(0.3245346962703827))]
+answer=Abraham Lincoln “led the United States through the American Civil War,” helped preserve the Union, and played “a major role in the abolition of slavery.” The document says he issued the Emancipation Proclamation, promoted the Thirteenth Amendment, and “following his re-election in 1864, he sought to heal the war-torn nation through Reconstruction.” It also notes that he “closely supervised the Union’s strategy and tactics” during the war.
 ------------------------------------------------------------------------
