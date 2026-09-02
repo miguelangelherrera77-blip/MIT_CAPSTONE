@@ -26,6 +26,7 @@ Goal: Implement and evaluate a hybrid Retrieval-Augmented Generation (RAG) syste
 
 + **Checkpoint 2.1 Configuration Requirements**
     * Add your own **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file.
+    * Create a folder named **Capstone_Database** in the root directory of the capstone project.
     * Packages:
         * beautifulsoup4
         * chromadb
