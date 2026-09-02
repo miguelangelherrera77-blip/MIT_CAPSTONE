@@ -21,18 +21,6 @@ Miguel Herrera - Section B
 
 --------------------------
 
-### Capstone Checkpoint 1.1: Evaluating when retrieval is required.
-Goal: Evaluate how an LLM performs without retrieval and determine whether retrieval is required for the selected scenario.
-
-+ **Checkpoint 1.1 Configuration Requirements**
-    * Add your own **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file.
-    * Packages:
-        * python-dotenv
-        * langchain-openai
-        * langchain-core
-
---------------------------
-
 ### Capstone Checkpoint 2.1: Retrieval strategy design and baseline implementation.
 Goal: Implement and evaluate a hybrid Retrieval-Augmented Generation (RAG) system that combines BM25 keyword retrieval and vector search over the Wikipedia article collection.
 
@@ -46,6 +34,18 @@ Goal: Implement and evaluate a hybrid Retrieval-Augmented Generation (RAG) syste
         * langchain-openai
         * python-dotenv
         * rank-bm25
+
+--------------------------
+
+### Capstone Checkpoint 1.1: Evaluating when retrieval is required.
+Goal: Evaluate how an LLM performs without retrieval and determine whether retrieval is required for the selected scenario.
+
++ **Checkpoint 1.1 Configuration Requirements**
+    * Add your own **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file.
+    * Packages:
+        * python-dotenv
+        * langchain-openai
+        * langchain-core
 
 --------------------------
 
