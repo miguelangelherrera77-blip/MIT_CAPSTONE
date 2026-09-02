@@ -56,6 +56,7 @@ MIT_CAPSTONE/
 ├── .env                                    # Environment configuration (API keys and secrets)
 ├── README.md                               # Project documentation and overview
 ├── venv_requirements.txt                   # Python dependencies for virtual environment
+├── Capstone_Database/                      # Wikipedia articles and Chroma vector database
 └── Final_Capstone_Project/                 # Main capstone project directory
     ├── Capstone_Checkpoint_1.1/            # Checkpoint 1.1: Evaluating when retrieval is required
     │   ├── MHERRERA_Capstone_Checkpoint_1_1_Solution.py
