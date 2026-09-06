@@ -37,8 +37,10 @@ load_dotenv()
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 LLM_MODEL = "openai/gpt-5.4-mini"   # same model used across the capstone
 
+# This script now lives in Capstone_Checkpoint_3.1/test_variables/, so SCRIPT_DIR is
+# that folder; the main questions and the variants output live alongside it.
 SCRIPT_DIR = Path(__file__).resolve().parent
-DEFAULT_INPUT = SCRIPT_DIR / "test_variables" / "test_main_questions.json"
+DEFAULT_INPUT = SCRIPT_DIR / "test_main_questions.json"
 DEFAULT_OUTPUT = SCRIPT_DIR / "testinputs_variant_questions.json"
 DEFAULT_N = 2
 

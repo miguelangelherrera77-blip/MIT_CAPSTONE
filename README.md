@@ -28,15 +28,15 @@ Goal: Build a structured evaluation framework, establish baseline performance me
 
 + **What the checkpoint does**
     * **Grounded question generation** — `test_variables/generate_main_questions.py` samples real articles from `Capstone_Database/Wikipedia`, extracts each article's lead text, and asks the LLM (`openai/gpt-5.4-mini`) to produce one grounded question plus grading notes per article. Results are written to `test_variables/test_main_questions.json` (100 questions, each with a verified source article).
-    * **Paraphrase variant generation** — `generate_variants.py` (a standalone version of the Lab 3.2 paraphrase logic) reads the main questions and asks the LLM for **2 paraphrases per question**, preserving meaning so the same answer applies. Each variant reuses its original's grading notes and sources. Results are written to `testinputs_variant_questions.json` (100 originals + 200 paraphrases = 300 total).
+    * **Paraphrase variant generation** — `test_variables/generate_variants.py` (a standalone version of the Lab 3.2 paraphrase logic) reads the main questions and asks the LLM for **2 paraphrases per question**, preserving meaning so the same answer applies. Each variant reuses its original's grading notes and sources. Results are written to `test_variables/testinputs_variant_questions.json` (100 originals + 200 paraphrases = 300 total).
     * **RAGAS evaluation** — `capstone_checkpoint_3_1_evaluation_starter.py` is the main entry point. It loads the persisted vector store from `Capstone_Database/Capstone_Chroma_DB` (falling back to scanning `Capstone_Database/Wikipedia`), builds the hybrid BM25 + vector retriever, and scores every answer with a RAGAS `DiscreteMetric` LLM judge (pass/fail against grading notes).
-    * **Originals vs paraphrases comparison** — `load_split_datasets()` builds two RAGAS datasets from a single source (`testinputs_variant_questions.json`): the **originals** (from `test_main_questions.json`) and the **paraphrases** (every row in the variants file that is not one of the originals). Each dataset is evaluated separately and the script reports each pass rate, the delta, and a brittle/robust verdict. If paraphrases score materially lower than originals, the retriever is brittle to rephrasing.
+    * **Originals vs paraphrases comparison** — `load_split_datasets()` builds two RAGAS datasets from a single source (`test_variables/testinputs_variant_questions.json`): the **originals** (from `test_variables/test_main_questions.json`) and the **paraphrases** (every row in the variants file that is not one of the originals). Each dataset is evaluated separately and the script reports each pass rate, the delta, and a brittle/robust verdict. If paraphrases score materially lower than originals, the retriever is brittle to rephrasing.
 
 + **How to run**
     * Generate main questions (optional; a set is already provided):
         * `python Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/generate_main_questions.py 100`
     * Generate paraphrase variants (2 per question):
-        * `python Final_Capstone_Project/Capstone_Checkpoint_3.1/generate_variants.py`
+        * `python Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/generate_variants.py`
     * Run the RAGAS originals-vs-paraphrases evaluation:
         * `python Final_Capstone_Project/Capstone_Checkpoint_3.1/capstone_checkpoint_3_1_evaluation_starter.py`
     * Per-dataset CSV results are written under `Capstone_Checkpoint_3.1/ragas_experiments/experiments/`, and a run log to `checkpoint_3_1_evaluation.log`.
@@ -106,13 +106,14 @@ MIT_CAPSTONE/
     │   └── MHerrera_Capstone_Checkpoint_2_1_Worksheet-1.docx
     └── Capstone_Checkpoint_3.1/            # Checkpoint 3.1: RAGAS evaluation (originals vs paraphrases)
         ├── capstone_checkpoint_3_1_evaluation_starter.py   # Main entry point: hybrid retriever + RAGAS comparison
-        ├── generate_variants.py                            # Standalone paraphrase generator (2 variants per question)
-        ├── testinputs_variant_questions.json               # 100 originals + 200 paraphrases (300 total)
+        ├── Required_Capstone_Checkpoint_3_1_Worksheet.docx # Checkpoint worksheet
         ├── checkpoint_3_1_evaluation.log                   # Run log (created on evaluation)
         ├── ragas_experiments/                              # Per-dataset RAGAS CSV results (created on evaluation)
         └── test_variables/
             ├── generate_main_questions.py                  # Grounded main-question generator (reads Wikipedia corpus)
-            └── test_main_questions.json                    # 100 grounded originals with grading notes and sources
+            ├── generate_variants.py                        # Standalone paraphrase generator (2 variants per question)
+            ├── test_main_questions.json                    # 100 grounded originals with grading notes and sources
+            └── testinputs_variant_questions.json           # 100 originals + 200 paraphrases (300 total)
 ```
 
 --------------------------
