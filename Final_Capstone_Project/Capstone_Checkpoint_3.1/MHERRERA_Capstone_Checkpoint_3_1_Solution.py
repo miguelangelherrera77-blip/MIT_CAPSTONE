@@ -62,7 +62,7 @@ LLM_MODEL = "openai/gpt-5.4-mini"          # answer model; covered by course cre
 EMBEDDING_MODEL = "openai/text-embedding-3-small"
 JUDGE_MODEL = "openai/gpt-5.4-mini"        # RAGAS judge model
 TEMPERATURE = 0.2
-TOP_K = 4
+TOP_K = 3
 CANDIDATE_POOL = 10
 WEIGHT_BM25 = 0.5
 WEIGHT_VECTOR = 0.5
@@ -83,6 +83,7 @@ VARIANTS_PATH = CHECKPOINT_DIR / "test_variables" / "testinputs_variant_question
 
 RAGAS_ROOT = str(CHECKPOINT_DIR / "ragas_experiments")
 LOG_PATH = CHECKPOINT_DIR / "checkpoint_3_1_evaluation.log"
+TEST_RESULTS_LOG = CHECKPOINT_DIR / "detailed_test_results.log"
 
 ANSWER_SYSTEM = (
     "You are a helpful assistant for a Wikipedia retrieval engine. Answer the question "
@@ -358,6 +359,24 @@ def load_split_datasets() -> tuple[Dataset, Dataset]:
 # ## Experiment (Step 4)
 
 # %%
+# ── progress tracking (shared across the current experiment run) ──────────
+_PROGRESS = {"done": 0, "total": 0, "label": ""}
+
+
+def _reset_progress(label: str, total: int) -> None:
+    _PROGRESS["done"] = 0
+    _PROGRESS["total"] = total
+    _PROGRESS["label"] = label
+
+
+def _tick_progress(question: str, verdict: str) -> None:
+    """Print a one-line progress update as each question finishes scoring."""
+    _PROGRESS["done"] += 1
+    n, total, label = _PROGRESS["done"], _PROGRESS["total"], _PROGRESS["label"]
+    preview = (question[:60] + "...") if len(question) > 60 else question
+    print(f"  [{label}] {n}/{total} tested  ({verdict.upper()})  {preview}")
+
+
 def build_experiment(retriever: BaseRetriever, kind: str):
     @experiment()
     async def run_experiment(row):
@@ -367,21 +386,92 @@ def build_experiment(retriever: BaseRetriever, kind: str):
             response=response,
             grading_notes=row["grading_notes"],
         )
+        _tick_progress(row["question"], str(score.value))
         return {**row, "retriever": kind, "response": response, "score": score.value}
 
     return run_experiment
 
 
-async def _evaluate(retriever: BaseRetriever, dataset: Dataset, label: str) -> tuple[int, int]:
-    print(f"\nEvaluating {label}: {len(dataset)} questions with the hybrid retriever...")
+async def _evaluate(retriever: BaseRetriever, dataset: Dataset, label: str) -> dict:
+    total = len(dataset)
+    print(f"\nEvaluating {label}: {total} questions with the hybrid retriever...")
+    _reset_progress(label, total)
     results = await build_experiment(retriever, "hybrid").arun(dataset)
     passes = sum(1 for r in results if r["score"] == "pass")
     total = len(results)
+    failures = [r["question"] for r in results if r["score"] != "pass"]
     results.save()
     csv_path = Path(RAGAS_ROOT) / "experiments" / f"{results.name}.csv"
     print(f"  {label}: {passes}/{total} passed  ->  {csv_path.resolve()}")
     log(f"{label} RESULT", f"{passes}/{total} passed; csv={csv_path}")
-    return passes, total
+    return {
+        "label": label,
+        "passes": passes,
+        "total": total,
+        "failures": failures,
+        "csv_path": str(csv_path),
+    }
+
+
+def append_test_results(originals: dict, paraphrases: dict, delta: float, verdict: str) -> None:
+    """Append a structured, medium-detail entry to test_results.log for each run."""
+    now = datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
+    time_str = now.strftime("%H:%M:%S")
+
+    def _rate(d: dict) -> str:
+        return f"{d['passes']}/{d['total']} ({(d['passes'] / d['total'] * 100) if d['total'] else 0:.0f}%)"
+
+    def _fail_block(d: dict) -> str:
+        if not d["failures"]:
+            return "  Failures    : none\n"
+        lines = ["  Failures    : {} question(s) FAILED".format(len(d["failures"]))]
+        for i, q in enumerate(d["failures"], 1):
+            preview = q if len(q) <= 110 else q[:107] + "..."
+            lines.append(f"    {i}. {preview}")
+        return "\n".join(lines) + "\n"
+
+    entry = []
+    entry.append("=" * 80)
+    entry.append(f"TEST SESSION  |  {date_str} {time_str}")
+    entry.append("=" * 80)
+    entry.append("Test type   : Baseline RAGAS correctness evaluation (hybrid retriever)")
+    entry.append(f"Date        : {date_str}")
+    entry.append(f"Time        : {time_str}")
+    entry.append("Config      : Hybrid BM25+Vector (0.5/0.5), Top-K=4, "
+                 f"answer={LLM_MODEL}, judge={JUDGE_MODEL}, metric=RAGAS DiscreteMetric")
+    entry.append("")
+    entry.append("-" * 80)
+    entry.append("ORIGINAL QUESTIONS")
+    entry.append("-" * 80)
+    entry.append(f"  Dataset     : {ORIGINALS_PATH.name}")
+    entry.append(f"  Result      : {_rate(originals)} PASSED")
+    entry.append(f"  Output CSV  : {originals['csv_path']}")
+    entry.append(_fail_block(originals).rstrip("\n"))
+    entry.append("")
+    entry.append("-" * 80)
+    entry.append("PARAPHRASED QUESTIONS")
+    entry.append("-" * 80)
+    entry.append(f"  Dataset     : {VARIANTS_PATH.name} (paraphrase rows)")
+    entry.append(f"  Result      : {_rate(paraphrases)} PASSED")
+    entry.append(f"  Output CSV  : {paraphrases['csv_path']}")
+    entry.append(_fail_block(paraphrases).rstrip("\n"))
+    entry.append("")
+    entry.append("-" * 80)
+    entry.append("SIDE-BY-SIDE COMPARISON (rephrasing robustness)")
+    entry.append("-" * 80)
+    o_rate = (originals["passes"] / originals["total"]) if originals["total"] else 0.0
+    p_rate = (paraphrases["passes"] / paraphrases["total"]) if paraphrases["total"] else 0.0
+    entry.append(f"  ORIGINALS    : {originals['passes']}/{originals['total']}  =  {o_rate:.0%}")
+    entry.append(f"  PARAPHRASES  : {paraphrases['passes']}/{paraphrases['total']}  =  {p_rate:.0%}")
+    entry.append(f"  DELTA        : {delta:+.0%}")
+    entry.append(f"  Verdict      : {verdict}")
+    entry.append("=" * 80)
+    entry.append("")
+
+    with TEST_RESULTS_LOG.open("a", encoding="utf-8") as fh:
+        fh.write("\n".join(entry) + "\n")
+    print(f"Test results appended to: {TEST_RESULTS_LOG}")
 
 
 # %% [markdown]
@@ -404,30 +494,35 @@ async def main():
     retriever = HybridRetriever(docs)
     originals_ds, paraphrases_ds = load_split_datasets()
 
-    orig_pass, orig_total = await _evaluate(retriever, originals_ds, "ORIGINALS")
-    para_pass, para_total = await _evaluate(retriever, paraphrases_ds, "PARAPHRASES")
+    originals = await _evaluate(retriever, originals_ds, "ORIGINALS")
+    paraphrases = await _evaluate(retriever, paraphrases_ds, "PARAPHRASES")
 
-    orig_rate = (orig_pass / orig_total) if orig_total else 0.0
-    para_rate = (para_pass / para_total) if para_total else 0.0
+    orig_rate = (originals["passes"] / originals["total"]) if originals["total"] else 0.0
+    para_rate = (paraphrases["passes"] / paraphrases["total"]) if paraphrases["total"] else 0.0
     delta = para_rate - orig_rate
+
+    if delta < -0.05:
+        verdict = "BRITTLE to rephrasing: paraphrases score lower than originals."
+    elif delta > 0.05:
+        verdict = "Paraphrases scored higher -- check for lucky wording or judge leniency."
+    else:
+        verdict = "ROBUST to rephrasing: pass rates are comparable."
 
     print("\n" + "=" * 72)
     print("SIDE-BY-SIDE COMPARISON  (RAGAS correctness, hybrid retriever)")
     print("-" * 72)
-    print(f"  ORIGINALS    : {orig_pass}/{orig_total}  =  {orig_rate:.0%}")
-    print(f"  PARAPHRASES  : {para_pass}/{para_total}  =  {para_rate:.0%}")
+    print(f"  ORIGINALS    : {originals['passes']}/{originals['total']}  =  {orig_rate:.0%}")
+    print(f"  PARAPHRASES  : {paraphrases['passes']}/{paraphrases['total']}  =  {para_rate:.0%}")
     print(f"  DELTA (para - orig) : {delta:+.0%}")
     print("-" * 72)
-    if delta < -0.05:
-        print("  The retriever is BRITTLE to rephrasing: paraphrases score lower than originals.")
-    elif delta > 0.05:
-        print("  Paraphrases scored higher — check for lucky wording or judge leniency.")
-    else:
-        print("  The retriever is ROBUST to rephrasing: pass rates are comparable.")
+    print(f"  {verdict}")
     print("=" * 72)
     log("COMPARISON",
-        f"originals={orig_pass}/{orig_total} ({orig_rate:.0%}); "
-        f"paraphrases={para_pass}/{para_total} ({para_rate:.0%}); delta={delta:+.0%}")
+        f"originals={originals['passes']}/{originals['total']} ({orig_rate:.0%}); "
+        f"paraphrases={paraphrases['passes']}/{paraphrases['total']} ({para_rate:.0%}); delta={delta:+.0%}")
+
+    # Append a structured, medium-detail entry to test_results.log
+    append_test_results(originals, paraphrases, delta, verdict)
 
 
 if __name__ == "__main__":

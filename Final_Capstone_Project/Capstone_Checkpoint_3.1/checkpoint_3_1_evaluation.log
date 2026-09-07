@@ -1,0 +1,18 @@
+[2026-09-07T13:21:41] ORIGINALS RESULT
+97/100 passed; csv=C:\Users\migue\DevProjs\MIT_CAPSTONE\Final_Capstone_Project\Capstone_Checkpoint_3.1\ragas_experiments\experiments\distracted_hoare.csv
+------------------------------------------------------------------------
+[2026-09-07T13:37:15] PARAPHRASES RESULT
+179/182 passed; csv=C:\Users\migue\DevProjs\MIT_CAPSTONE\Final_Capstone_Project\Capstone_Checkpoint_3.1\ragas_experiments\experiments\amazing_rivest.csv
+------------------------------------------------------------------------
+[2026-09-07T13:37:15] COMPARISON
+originals=97/100 (97%); paraphrases=179/182 (98%); delta=+1%
+------------------------------------------------------------------------
+[2026-09-07T13:53:46] ORIGINALS RESULT
+0/0 passed; csv=C:\Users\migue\DevProjs\MIT_CAPSTONE\Final_Capstone_Project\Capstone_Checkpoint_3.1\ragas_experiments\experiments\loving_zuckerberg.csv
+------------------------------------------------------------------------
+[2026-09-07T13:55:44] PARAPHRASES RESULT
+0/0 passed; csv=C:\Users\migue\DevProjs\MIT_CAPSTONE\Final_Capstone_Project\Capstone_Checkpoint_3.1\ragas_experiments\experiments\fervent_ritchie.csv
+------------------------------------------------------------------------
+[2026-09-07T13:55:44] COMPARISON
+originals=0/0 (0%); paraphrases=0/0 (0%); delta=+0%
+------------------------------------------------------------------------

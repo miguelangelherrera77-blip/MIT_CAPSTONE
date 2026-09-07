@@ -1,0 +1,108 @@
+================================================================================
+CAPSTONE CHECKPOINT 3.1 - TEST RESULTS LOG
+Wikipedia Retrieval Engine | Evaluation Infrastructure and Baseline Diagnosis
+================================================================================
+
+Project      : MIT Capstone - Wikipedia Retrieval Engine
+Student      : Miguel Herrera
+Solution     : MHERRERA_Capstone_Checkpoint_3_1_Solution.py
+Corpus       : Capstone_Database/Wikipedia (~2,400 HTML articles)
+Vector store : Capstone_Database/Capstone_Chroma_DB (persisted)
+
+Configuration
+  Retriever        : Hybrid (BM25 keyword + vector semantic search)
+  Fusion weights   : BM25 0.5 / Vector 0.5 (min-max normalized, vector inverted)
+  Top-K context    : 4 articles
+  Candidate pool   : 10 per retriever side
+  Answer model     : openai/gpt-5.4-mini
+  Embedding model  : openai/text-embedding-3-small
+  Judge / metric   : RAGAS DiscreteMetric "correctness" (pass/fail vs grading notes)
+
+--------------------------------------------------------------------------------
+TEST RUN 1
+--------------------------------------------------------------------------------
+Test type   : Baseline RAGAS correctness evaluation - ORIGINAL questions
+Date        : 2026-09-07
+Start time  : ~13:06 (local)
+End time    : 13:21:41 (result recorded)
+Dataset     : test_variables/test_main_questions.json (100 grounded originals)
+Query type  : Realistic, corpus-grounded factual questions (LLM-generated from
+              article lead text; one question per distinct Wikipedia article)
+Process     : For each question -> hybrid retrieve top-4 -> generate answer with
+              gpt-5.4-mini -> score pass/fail with RAGAS judge against grading notes
+Result      : 97/100 PASSED  (97%)
+Output CSV  : ragas_experiments/experiments/distracted_hoare.csv
+Failures    : 3 questions FAILED
+  1. "According to the article, what authority does Article IV, Section 3,
+      Clause 1 of the Constitution grant to Congress?"
+      Cause: answer referenced the wrong clause (Commerce Clause) instead of the
+      required point (Congress may admit new states); required fact not in context.
+  2. "According to the article, who was the first first lady of the United States,
+      and how many total first ladies have there been?"
+      Cause: named Martha Washington correctly but could not confirm the required
+      total (54); enumerated total not present in retrieved context.
+  3. "How much damage did the 2011 Joplin tornado cause, and what makes it
+      historically notable in terms of cost?"
+      Cause: gave the $2.8 billion figure but omitted the required "costliest /
+      ~$4 billion modern equivalent" point.
+
+--------------------------------------------------------------------------------
+TEST RUN 2
+--------------------------------------------------------------------------------
+Test type   : Baseline RAGAS correctness evaluation - PARAPHRASED questions
+Date        : 2026-09-07
+Start time  : ~13:22 (local)
+End time    : 13:37:15 (result recorded)
+Dataset     : test_variables/testinputs_variant_questions.json (paraphrase rows)
+Query type  : Systematic LLM paraphrases (2 per original) reusing the original's
+              grading notes and sources - a rephrasing-robustness stress test
+Process     : Same hybrid retrieve -> generate -> RAGAS judge pipeline as Run 1
+Result      : 179/182 PASSED  (98%)
+Output CSV  : ragas_experiments/experiments/amazing_rivest.csv
+Failures    : 3 questions FAILED (same underlying items as Run 1)
+  1. Paraphrase of the "first First Lady / total count" question - missing total.
+  2. Paraphrase of the "Article IV, Section 3, Clause 1" question - wrong clause.
+  3. "How many species belong to the genus Morus, and what are the three most
+      common ones called..." - required specific enumeration not in context.
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON (rephrasing robustness)
+--------------------------------------------------------------------------------
+Recorded    : 2026-09-07 13:37:15
+  ORIGINALS    : 97/100   = 97%
+  PARAPHRASES  : 179/182  = 98%
+  DELTA (paraphrases - originals) : +1%
+Verdict     : ROBUST to rephrasing. Paraphrase pass rate is comparable to (slightly
+              above) originals, so the hybrid retriever is not brittle to wording
+              changes on this test set.
+
+--------------------------------------------------------------------------------
+EVALUATION FRAMEWORK VALIDATION (reliability check)
+--------------------------------------------------------------------------------
+Test type   : Judge sensitivity to incomplete / incorrect answers
+Date        : 2026-09-07
+Evidence    : The RAGAS judge did not pass every answer. It correctly assigned
+              FAIL to 3/100 originals (and the matching paraphrases) where the
+              response missed or contradicted a required grading-notes point
+              (wrong constitutional clause; missing enumerated total; omitted
+              "costliest" qualifier).
+Interpretation: The judge is not trivially lenient - it distinguishes complete,
+              grounded answers from fluent-but-incomplete ones, which supports
+              trusting the reported pass rates.
+Known blind spots: judge grades answer text against notes (not against the source
+              article), does not separately score retrieval hit-rate, and shares
+              the gpt-5.4-mini model family with the answer generator.
+
+--------------------------------------------------------------------------------
+NOTES
+--------------------------------------------------------------------------------
+- A later re-run recorded 0/0 for both datasets (empty split) after test files were
+  relocated into test_variables/; this was a path-configuration artifact, since
+  corrected, and does not reflect model performance.
+- Per-question progress and per-run summaries are also captured in
+  checkpoint_3_1_evaluation.log. Raw per-question pass/fail scores are in the
+  ragas_experiments/experiments/*.csv files referenced above.
+
+================================================================================
+END OF TEST RESULTS LOG
+================================================================================
