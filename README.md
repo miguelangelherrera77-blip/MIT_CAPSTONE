@@ -39,7 +39,7 @@ Goal: Build a structured evaluation framework, establish baseline performance me
         * `python Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/generate_variants.py`
     * Run the RAGAS originals-vs-paraphrases evaluation:
         * `python Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py`
-    * Per-dataset CSV results are written under `Capstone_Checkpoint_3.1/ragas_experiments/experiments/`, and a run log to `checkpoint_3_1_evaluation.log`.
+    * Per-dataset CSV results are written under `Capstone_Checkpoint_3.1/ragas_experiments_3_1/experiments/`, a per-question run log to `checkpoint_3_1_evaluation.log`, and structured per-run test results to `detailed_test_results.log`.
 
 + **Checkpoint 3.1 Configuration Requirements**
     * Add your own **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file.
@@ -107,11 +107,8 @@ MIT_CAPSTONE/
     └── Capstone_Checkpoint_3.1/            # Checkpoint 3.1: RAGAS evaluation (originals vs paraphrases)
         ├── MHERRERA_Capstone_Checkpoint_3_1_Solution.py    # Main entry point: hybrid retriever + RAGAS comparison
         ├── MHerrera_Capstone_Checkpoint_3_1_Worksheet.docx # Checkpoint worksheet
-        ├── MHERRERA_3_1_Answers.docx                       # Completed worksheet answers
-        ├── Capstone Checkpoint 3 - Sypnosis.docx           # Checkpoint synopsis
         ├── checkpoint_3_1_evaluation.log                   # Per-question run log (written by the solution)
         ├── detailed_test_results.log                       # Structured per-run test results (appended by the solution)
-        ├── ragas_experiments/                              # Per-dataset RAGAS CSV results (created on evaluation)
         └── test_variables/
             ├── generate_main_questions.py                  # Grounded main-question generator (reads Wikipedia corpus)
             ├── generate_variants.py                        # Standalone paraphrase generator (2 variants per question)

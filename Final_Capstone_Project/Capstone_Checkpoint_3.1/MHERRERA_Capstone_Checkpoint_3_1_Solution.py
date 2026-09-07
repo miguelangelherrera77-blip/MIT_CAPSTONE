@@ -81,7 +81,7 @@ ORIGINALS_PATH = CHECKPOINT_DIR / "test_variables" / "test_main_questions.json"
 # NOT one of the originals in test_main_questions.json.
 VARIANTS_PATH = CHECKPOINT_DIR / "test_variables" / "testinputs_variant_questions.json"
 
-RAGAS_ROOT = str(CHECKPOINT_DIR / "ragas_experiments")
+RAGAS_ROOT = str(CHECKPOINT_DIR / "ragas_experiments_3_1")
 LOG_PATH = CHECKPOINT_DIR / "checkpoint_3_1_evaluation.log"
 TEST_RESULTS_LOG = CHECKPOINT_DIR / "detailed_test_results.log"
 
