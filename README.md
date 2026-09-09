@@ -42,10 +42,12 @@ Goal: Build a structured evaluation framework, establish baseline performance me
     * Per-dataset CSV results are written under `Capstone_Checkpoint_3.1/ragas_experiments_3_1/experiments/`, a per-question run log to `checkpoint_3_1_evaluation.log`, and structured per-run test results to `detailed_test_results.log`.
 
 + **Checkpoint 3.1 Configuration Requirements**
-    * Add your own **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in the **.env** file.
-    * Ensure the Wikipedia corpus is at **Capstone_Database/Wikipedia** and (optionally) the persisted vector store at **Capstone_Database/Capstone_Chroma_DB**.
-    * Model: `openai/gpt-5.4-mini` (answers, judge, and generation); embeddings: `openai/text-embedding-3-small`.
-    * Packages:
+    * **Install dependencies:** create a virtual environment and run `pip install -r venv_requirements.txt` (this includes `ragas`, `langchain-*`, `chromadb`, `rank-bm25`, `beautifulsoup4`, `openai`, and `python-dotenv`).
+    * **API key:** add your own **OpenRouter API Key** to the _OPENROUTER_API_KEY_ variable in a **.env** file at the repository root (the `.env` file is not tracked in git).
+    * **Data setup (required, not included in the repo):** the Wikipedia corpus and the persisted vector store are excluded from version control because of their size. Before running, place the ~2,400 Wikipedia HTML articles at **Capstone_Database/Wikipedia/**. If you also have the prebuilt Chroma vector store, place it at **Capstone_Database/Capstone_Chroma_DB/**; otherwise the solution will build it from the Wikipedia HTML on first run (slower, and it will call the embedding model). With neither present, the retriever has no documents and the evaluation cannot produce meaningful results.
+    * **Models:** `openai/gpt-5.4-mini` (answers, judge, and generation); embeddings: `openai/text-embedding-3-small`.
+    * **Run:** `python Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py`
+    * Key packages (see `venv_requirements.txt` for the full pinned list):
         * ragas
         * beautifulsoup4
         * chromadb
