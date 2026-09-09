@@ -109,6 +109,13 @@ MIT_CAPSTONE/
         ├── MHerrera_Capstone_Checkpoint_3_1_Worksheet.docx # Checkpoint worksheet
         ├── checkpoint_3_1_evaluation.log                   # Per-question run log (written by the solution)
         ├── detailed_test_results.log                       # Structured per-run test results (appended by the solution)
+        ├── ragas_experiments_3_1/                          # RAGAS evaluation datasets and results
+        │   ├── datasets/                                   # RAGAS input datasets fed to the judge
+        │   │   ├── wiki_eval_originals.csv                 # 100 original questions + grading notes
+        │   │   └── wiki_eval_paraphrases.csv               # paraphrase questions + grading notes
+        │   └── experiments/                                # Per-question pass/fail results (question, response, score)
+        │       ├── distracted_hoare.csv                    # Originals run (100 rows)
+        │       └── amazing_rivest.csv                      # Paraphrases run (200 rows)
         └── test_variables/
             ├── generate_main_questions.py                  # Grounded main-question generator (reads Wikipedia corpus)
             ├── generate_variants.py                        # Standalone paraphrase generator (2 variants per question)
