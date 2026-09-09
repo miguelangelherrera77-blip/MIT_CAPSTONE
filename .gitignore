@@ -3,6 +3,7 @@
 .env
 .venv
 venv/
+ENV_ANALYSIS/
 ~$*.docx
 lab_solution_files/
 lab_starter_files/
@@ -10,3 +11,12 @@ lab_my_files/
 lab_databases/
 Capstone_Database/
 Final_Capstone_Project/Capstone_Database/
+lab_requirements/
+EVALUATION/
+chroma_db/
+MHERRERA_3_1_Answers.docx
+openrouter_apichecker.ps1
+Capstone Checkpoint 3 - Sypnosis.docx
+__pycache__/
+run_framework_validation.py
+ragas_experiments/
