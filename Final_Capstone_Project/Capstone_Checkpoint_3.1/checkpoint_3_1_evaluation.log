@@ -16,3 +16,9 @@ originals=97/100 (97%); paraphrases=179/182 (98%); delta=+1%
 [2026-09-07T13:55:44] COMPARISON
 originals=0/0 (0%); paraphrases=0/0 (0%); delta=+0%
 ------------------------------------------------------------------------
+[2026-09-08T18:42:09] FRAMEWORK VALIDATION
+control=pass (expected pass); manipulated=fail (expected fail); detects_manipulation=True
+------------------------------------------------------------------------
+[2026-09-08T18:47:27] FRAMEWORK VALIDATION
+control=pass (expected pass); manipulated=fail (expected fail); detects_manipulation=True
+------------------------------------------------------------------------

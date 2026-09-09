@@ -62,7 +62,7 @@ LLM_MODEL = "openai/gpt-5.4-mini"          # answer model; covered by course cre
 EMBEDDING_MODEL = "openai/text-embedding-3-small"
 JUDGE_MODEL = "openai/gpt-5.4-mini"        # RAGAS judge model
 TEMPERATURE = 0.2
-TOP_K = 3
+TOP_K = 4
 CANDIDATE_POOL = 10
 WEIGHT_BM25 = 0.5
 WEIGHT_VECTOR = 0.5
@@ -521,8 +521,62 @@ async def main():
         f"originals={originals['passes']}/{originals['total']} ({orig_rate:.0%}); "
         f"paraphrases={paraphrases['passes']}/{paraphrases['total']} ({para_rate:.0%}); delta={delta:+.0%}")
 
+    # Framework validation: confirm the judge rejects a deliberately manipulated answer
+    validate_framework()
+
     # Append a structured, medium-detail entry to test_results.log
     append_test_results(originals, paraphrases, delta, verdict)
+
+
+def validate_framework() -> None:
+    """Validate that the RAGAS judge detects a deliberately MANIPULATED (false) answer,
+    not only naturally incomplete ones. Feeds the judge a known-correct control answer
+    and a falsified answer for the same grading notes and checks the verdicts.
+    Logs to checkpoint_3_1_evaluation.log and appends a block to detailed_test_results.log."""
+    notes = "The answer must state 9.58 seconds and the year 2009 (Usain Bolt's 100 m world record)."
+    correct = ("Usain Bolt's 100 m personal best is 9.58 seconds, set in 2009 -- the world record.")
+    manipulated = "Usain Bolt's 100 m personal best is 12.4 seconds, set in 1975."
+    good_verdict = str(correctness_metric.score(llm=judge, response=correct, grading_notes=notes).value)
+    manip_verdict = str(correctness_metric.score(llm=judge, response=manipulated, grading_notes=notes).value)
+    ok = (good_verdict == "pass" and manip_verdict == "fail")
+    print("\n" + "=" * 72)
+    print("FRAMEWORK VALIDATION (manipulated-answer probe)")
+    print("-" * 72)
+    print(f"  control (correct) answer   -> {good_verdict.upper()}   (expected PASS)")
+    print(f"  manipulated (false) answer -> {manip_verdict.upper()}   (expected FAIL)")
+    print(f"  Framework detects manipulation: {'YES' if ok else 'NO'}")
+    print("=" * 72)
+    log("FRAMEWORK VALIDATION",
+        f"control={good_verdict} (expected pass); manipulated={manip_verdict} (expected fail); "
+        f"detects_manipulation={ok}")
+    append_framework_validation(good_verdict, manip_verdict, ok, correct, manipulated, notes)
+    return {"control": good_verdict, "manipulated": manip_verdict, "detects_manipulation": ok}
+
+
+def append_framework_validation(good_verdict: str, manip_verdict: str, ok: bool,
+                                correct: str, manipulated: str, notes: str) -> None:
+    """Append a FRAMEWORK VALIDATION block to detailed_test_results.log."""
+    now = datetime.now()
+    entry = []
+    entry.append("=" * 80)
+    entry.append(f"TEST SESSION  |  {now.strftime('%Y-%m-%d')} {now.strftime('%H:%M:%S')}")
+    entry.append("=" * 80)
+    entry.append("Test type   : Framework validation - manipulated-answer probe")
+    entry.append(f"Date        : {now.strftime('%Y-%m-%d')}")
+    entry.append(f"Time        : {now.strftime('%H:%M:%S')}")
+    entry.append(f"Judge       : {JUDGE_MODEL} (RAGAS DiscreteMetric 'correctness')")
+    entry.append("")
+    entry.append(f"  Grading notes       : {notes}")
+    entry.append(f"  Control answer      : {correct}")
+    entry.append(f"    -> verdict        : {good_verdict.upper()}  (expected PASS)")
+    entry.append(f"  Manipulated answer  : {manipulated}")
+    entry.append(f"    -> verdict        : {manip_verdict.upper()}  (expected FAIL)")
+    entry.append(f"  Detects manipulation: {'YES' if ok else 'NO'}")
+    entry.append("=" * 80)
+    entry.append("")
+    with TEST_RESULTS_LOG.open("a", encoding="utf-8") as fh:
+        fh.write("\n".join(entry) + "\n")
+    print(f"Framework validation appended to: {TEST_RESULTS_LOG}")
 
 
 if __name__ == "__main__":

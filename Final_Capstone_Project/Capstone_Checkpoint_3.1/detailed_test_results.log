@@ -106,3 +106,19 @@ NOTES
 ================================================================================
 END OF TEST RESULTS LOG
 ================================================================================
+================================================================================
+TEST SESSION  |  2026-09-08 18:47:27
+================================================================================
+Test type   : Framework validation - manipulated-answer probe
+Date        : 2026-09-08
+Time        : 18:47:27
+Judge       : openai/gpt-5.4-mini (RAGAS DiscreteMetric 'correctness')
+
+  Grading notes       : The answer must state 9.58 seconds and the year 2009 (Usain Bolt's 100 m world record).
+  Control answer      : Usain Bolt's 100 m personal best is 9.58 seconds, set in 2009 -- the world record.
+    -> verdict        : PASS  (expected PASS)
+  Manipulated answer  : Usain Bolt's 100 m personal best is 12.4 seconds, set in 1975.
+    -> verdict        : FAIL  (expected FAIL)
+  Detects manipulation: YES
+================================================================================
+
