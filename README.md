@@ -178,6 +178,21 @@ Setup.py creates the host-specific `.venv`, installs missing dependencies when t
 
 The `--build` jobs have different network behavior. HTML chunking, GraphDB creation, and BM25 index creation process local files only. The ChromaDB builder sends chunks to OpenRouter for embeddings when it must create a database; an existing valid Chroma database is reused. `--build --rebuild` forces new JSONL, GraphDB, and BM25 outputs, but the Chroma builder is invoked without its rebuild action by this setup script. The Checkpoint 1.1-4.1 solutions and the Checkpoint 3.1 question generators also use OpenRouter for chat responses, embeddings, or evaluation when run.
 
+#### ChromaDB token and cost estimate
+The estimate below was calculated on September 14, 2026 by tokenizing the `text` field of every JSONL record with the tokenizer selected for `text-embedding-3-small`. It covers embedding input only; it does not include chat-completion or RAGAS calls. The dollar estimate uses an assumed input price of `$0.02 per 1M tokens`, which should be replaced with the effective OpenRouter rate shown in the account before running a large build.
+
+| Measure | Current workspace | Estimate or formula |
+| --- | ---: | --- |
+| JSONL files | 2,419 | Files read by the Chroma builder |
+| JSONL chunks/records | 159,301 | Records embedded |
+| Input tokens | 41,923,588 | Exact tokenizer count of each `text` field |
+| Embedding batches | 3,187 | `ceil(159,301 / 50)` using the builder batch size |
+| Assumed input rate | $0.02 / 1M tokens | Pricing assumption, not a guaranteed OpenRouter quote |
+| Estimated first-build embedding cost | **$0.84** | `41,923,588 / 1,000,000 * $0.02` |
+| Existing valid ChromaDB | **$0.00** | The builder skips embedding when valid data already exists |
+
+An actual rebuild that recreates the Chroma database would send the corpus again and is therefore estimated at approximately `$0.84` under the same pricing assumption. Setup without `--build` does not run the Chroma builder and has no embedding cost.
+
 ## Setup and Local Data
 Run the setup utility from the repository root. This creates `.venv`, installs the dependencies from [venv_requirements.txt](venv_requirements.txt), and creates local runtime directories.
 
