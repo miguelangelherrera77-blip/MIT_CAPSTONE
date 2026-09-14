@@ -54,7 +54,11 @@ Run `Setup.py` from the repository root. It creates the host-specific `.venv`, i
 python .\Final_Capstone_Project\Utility_Scripts\Setup.py
 ```
 
-On macOS or Linux, use `python3` instead of `python` if required by the host shell. On Windows, use `py` or `python` according to the installed Python launcher.
+On macOS or Linux:
+
+```bash
+python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py
+```
 
 Create a root `.env` file containing your own key:
 
@@ -70,10 +74,16 @@ Place the Wikipedia HTML files in:
 Final_Capstone_Project/Capstone_Database/Wikipedia/
 ```
 
-The solution can read an existing Chroma database, but a complete fresh setup should prepare the local directories first:
+The solution can read an existing Chroma database, but a complete fresh setup should prepare the local directories first. The command below is only needed if Setup.py has not already been run:
 
 ```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Utility_Scripts\Setup.py
+python .\Final_Capstone_Project\Utility_Scripts\Setup.py
+```
+
+On macOS or Linux:
+
+```bash
+python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py
 ```
 
 For Checkpoint 3.1, the HTML corpus is the important source prerequisite. The 3.1 solution can scan that corpus directly and can create a Chroma database on first use if no persisted Chroma data is available. Generated databases and logs are local runtime artifacts.
@@ -155,17 +165,30 @@ To run the solution directly from the repository root:
 Setup.py creates the host-specific `.venv`, installs missing dependencies when the venv is first created, creates missing runtime directories and a root [.env](.env) template when needed, and appends generated artifact paths to the local `.gitignore` file. The `.gitignore` file is self-ignored and remains local rather than being pushed to Git. Setup output is logged to [Final_Capstone_Project/Utility_Scripts/Logs/Setup.log](Final_Capstone_Project/Utility_Scripts/Logs/Setup.log). Generated databases, corpus files, and logs remain local.
 
 ## Setup and Local Data
-Run the setup utility from the repository root:
+Run the setup utility from the repository root. This creates `.venv`, installs the dependencies from [venv_requirements.txt](venv_requirements.txt), and creates local runtime directories.
 
 ```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Utility_Scripts\Setup.py
+python .\Final_Capstone_Project\Utility_Scripts\Setup.py
+```
+
+On macOS or Linux:
+
+```bash
+python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py
 ```
 
 Use `--build` to generate the local Wikipedia JSONL corpus and retrieval databases after adding the HTML corpus. Use `--rebuild` with `--build` when regeneration is explicitly required:
 
 ```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Utility_Scripts\Setup.py --build
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Utility_Scripts\Setup.py --build --rebuild
+python .\Final_Capstone_Project\Utility_Scripts\Setup.py --build
+python .\Final_Capstone_Project\Utility_Scripts\Setup.py --build --rebuild
+```
+
+On macOS or Linux:
+
+```bash
+python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py --build
+python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py --build --rebuild
 ```
 
 Setup creates or verifies the following local paths:
