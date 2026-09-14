@@ -18,17 +18,25 @@
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
-
-from tqdm import tqdm
 
 from utility_logging import log_run
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
 REPO_ROOT = PROJECT_DIR.parent
+VENV_DIR = REPO_ROOT / ".venv"
+REQUIREMENTS_PATH = REPO_ROOT / "venv_requirements.txt"
+
+
+def virtual_environment_python() -> Path:
+    """Return the venv Python path for the current host operating system."""
+    executable_name = "python.exe" if os.name == "nt" else "python"
+    scripts_dir = "Scripts" if os.name == "nt" else "bin"
+    return VENV_DIR / scripts_dir / executable_name
 
 
 def ensure_directory(path: Path, created: list[Path]) -> None:
@@ -50,10 +58,61 @@ def ensure_env_file(created: list[Path]) -> None:
     created.append(env_path)
 
 
+def ensure_gitignore(created: list[Path]) -> None:
+    """Create or extend .gitignore with local setup and runtime artifacts."""
+    gitignore_path = REPO_ROOT / ".gitignore"
+    was_present = gitignore_path.exists()
+    existing = gitignore_path.read_text(encoding="utf-8") if was_present else ""
+    entries = [
+        ".gitignore",
+        ".venv/",
+        ".env",
+        "__pycache__/",
+        "*.py[cod]",
+        "Final_Capstone_Project/Utility_Scripts/Logs/",
+        "Final_Capstone_Project/Capstone_Database/Wikipedia/",
+        "Final_Capstone_Project/Capstone_Database/Wikipedia_JSONL/",
+        "Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/",
+        "Final_Capstone_Project/Capstone_Database/Capstone_Graph_DB/",
+        "Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/",
+    ]
+    missing_entries = [entry for entry in entries if entry not in existing.splitlines()]
+    if not missing_entries:
+        return
+
+    separator = "" if not existing or existing.endswith("\n") else "\n"
+    gitignore_path.write_text(
+        existing + separator + "\n".join(missing_entries) + "\n",
+        encoding="utf-8",
+    )
+    if not was_present:
+        created.append(gitignore_path)
+
+
+def ensure_virtual_environment(created: list[Path]) -> Path:
+    """Create the host-specific venv and install the project requirements once."""
+    python_path = virtual_environment_python()
+    if python_path.exists():
+        print(f"[venv] Using existing virtual environment at {VENV_DIR}")
+        return python_path
+
+    print(f"[venv] Creating virtual environment at {VENV_DIR} for {sys.platform}")
+    subprocess.run([sys.executable, "-m", "venv", str(VENV_DIR)], check=True)
+    created.append(VENV_DIR)
+    if not REQUIREMENTS_PATH.exists():
+        raise FileNotFoundError(f"Requirements file not found: {REQUIREMENTS_PATH}")
+
+    print(f"[venv] Installing dependencies from {REQUIREMENTS_PATH.name}")
+    subprocess.run(
+        [str(python_path), "-m", "pip", "install", "-r", str(REQUIREMENTS_PATH)],
+        check=True,
+    )
+    return python_path
+
+
 def ensure_expected_directories(created: list[Path]) -> None:
     """Create the directory structure used by the project runtime and databases."""
     required_dirs = [
-        REPO_ROOT / "Backups" / "Capstone_Chroma_DB",
         PROJECT_DIR / "Capstone_Database",
         PROJECT_DIR / "Capstone_Database" / "Capstone_Chroma_DB",
         PROJECT_DIR / "Capstone_Database" / "Capstone_Graph_DB",
@@ -68,7 +127,7 @@ def ensure_expected_directories(created: list[Path]) -> None:
         PROJECT_DIR / "Utility_Scripts" / "Logs",
     ]
 
-    for directory in tqdm(required_dirs, desc="Directories", unit="dir", leave=False):
+    for directory in required_dirs:
         ensure_directory(directory, created)
 
     # Ensure the checkpoint-specific evaluation directories that are expected by the app exist.
@@ -78,7 +137,7 @@ def ensure_expected_directories(created: list[Path]) -> None:
         PROJECT_DIR / "Capstone_Checkpoint_3.1" / "ragas_experiments_3_1" / "experiments",
         PROJECT_DIR / "Capstone_Checkpoint_4.1",
     ]
-    for directory in tqdm(checkpoint_dirs, desc="Checkpoint dirs", unit="dir", leave=False):
+    for directory in checkpoint_dirs:
         ensure_directory(directory, created)
 
 
@@ -92,7 +151,7 @@ def ensure_placeholder_files(created: list[Path]) -> None:
         PROJECT_DIR / "Capstone_Database" / "Capstone_Graph_DB" / "GraphML" / "README.txt",
     ]
 
-    for path in tqdm(placeholder_files, desc="Placeholder files", unit="file", leave=False):
+    for path in placeholder_files:
         if not path.exists():
             if path.parent.exists() or path.parent.mkdir(parents=True, exist_ok=True):
                 path.write_text(
@@ -104,16 +163,19 @@ def ensure_placeholder_files(created: list[Path]) -> None:
 
     bm25_dir = PROJECT_DIR / "Capstone_Database" / "Capstone_BM25_Lexical_Indexes"
     if bm25_dir.exists() and not any(bm25_dir.iterdir()):
-        with tqdm(total=1, desc="BM25 scaffold", unit="file", leave=False) as progress:
-            (bm25_dir / "README.txt").write_text(
-                "This directory is created by Setup.py and will be populated by the BM25 builder when the corpus is available.\n",
-                encoding="utf-8",
-            )
-            created.append(bm25_dir / "README.txt")
-            progress.update(1)
+        (bm25_dir / "README.txt").write_text(
+            "This directory is created by Setup.py and will be populated by the BM25 builder when the corpus is available.\n",
+            encoding="utf-8",
+        )
+        created.append(bm25_dir / "README.txt")
 
 
-def build_database_if_requested(build: bool, rebuild: bool = False, created: list[Path] | None = None) -> None:
+def build_database_if_requested(
+    build: bool,
+    python_path: Path,
+    rebuild: bool = False,
+    created: list[Path] | None = None,
+) -> None:
     """Optionally run the project utility scripts to populate the local databases."""
     if not build:
         print("[skip] Database build step not requested. Use --build to generate local indexes and databases.")
@@ -130,7 +192,7 @@ def build_database_if_requested(build: bool, rebuild: bool = False, created: lis
         (
             "Wikipedia_JSONL",
             [
-                sys.executable,
+                str(python_path),
                 str(SCRIPT_DIR / "Chunk_Wikipedia_HTML_To_JSONL.py"),
                 *( ["--rebuild"] if rebuild else [] ),
             ],
@@ -138,7 +200,7 @@ def build_database_if_requested(build: bool, rebuild: bool = False, created: lis
         (
             "ChromaDB",
             [
-                sys.executable,
+                str(python_path),
                 str(SCRIPT_DIR / "Build_Wikipedia_Article_ChromaDB.py"),
                 "openrouter",
             ],
@@ -146,7 +208,7 @@ def build_database_if_requested(build: bool, rebuild: bool = False, created: lis
         (
             "GraphDB",
             [
-                sys.executable,
+                str(python_path),
                 str(SCRIPT_DIR / "Build_Wikipedia_Article_GraphDB.py"),
                 *( ["--rebuild"] if rebuild else [] ),
             ],
@@ -154,7 +216,7 @@ def build_database_if_requested(build: bool, rebuild: bool = False, created: lis
         (
             "BM25",
             [
-                sys.executable,
+                str(python_path),
                 str(SCRIPT_DIR / "Build_Wikipedia_BM25_Index.py"),
                 *( ["--rebuild"] if rebuild else [] ),
             ],
@@ -174,14 +236,13 @@ def build_database_if_requested(build: bool, rebuild: bool = False, created: lis
         if path.is_file()
     }
     for database_name, command in commands:
-        with tqdm(total=1, desc=f"Build {database_name}", unit="database") as progress:
-            try:
-                subprocess.run(command, check=True, cwd=str(SCRIPT_DIR), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            except subprocess.CalledProcessError as exc:
-                print(f"[error] Command failed with exit code {exc.returncode}: {' '.join(str(part) for part in command)}")
-                print("[info] The directory scaffolding was still created; the database build requires the corpus and runtime dependencies.")
-                raise SystemExit(exc.returncode)
-            progress.update(1)
+        print(f"[build] Running {database_name}")
+        try:
+            subprocess.run(command, check=True, cwd=str(SCRIPT_DIR), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except subprocess.CalledProcessError as exc:
+            print(f"[error] Command failed with exit code {exc.returncode}: {' '.join(str(part) for part in command)}")
+            print("[info] The directory scaffolding was still created; the database build requires the corpus and runtime dependencies.")
+            raise SystemExit(exc.returncode)
     if created is not None:
         generated_files_after = {
             path
@@ -225,18 +286,18 @@ def main() -> None:
     print(f"Project root: {PROJECT_DIR}")
 
     created: list[Path] = []
-    steps = [
-        ("Environment", ensure_env_file),
-        ("Directories", ensure_expected_directories),
-        ("Placeholders", ensure_placeholder_files),
-    ]
+    ensure_env_file(created)
+    ensure_gitignore(created)
+    python_path = ensure_virtual_environment(created)
+    ensure_expected_directories(created)
+    ensure_placeholder_files(created)
 
-    for label, step in steps:
-        with tqdm(total=1, desc=label, unit="step", leave=False) as progress:
-            step(created)
-            progress.update(1)
-
-    build_database_if_requested(build=args.build, rebuild=args.rebuild, created=created)
+    build_database_if_requested(
+        build=args.build,
+        python_path=python_path,
+        rebuild=args.rebuild,
+        created=created,
+    )
 
     if created:
         print("\nSetup built the following missing items:")

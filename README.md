@@ -48,11 +48,13 @@ The solution in [Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capston
 The answer model, judge model, and embedding model are currently `openai/gpt-5.4-mini`, `openai/gpt-5.4-mini`, and `openai/text-embedding-3-small`, accessed through OpenRouter at `https://openrouter.ai/api/v1`. The answer temperature is `0.2`.
 
 #### First-time setup
-Run these commands from the repository root. PowerShell commands are shown below; use the equivalent Python command for another shell.
+Run `Setup.py` from the repository root. It creates the host-specific `.venv`, installs [venv_requirements.txt](venv_requirements.txt), creates the local runtime directories, and appends the generated paths to the local, self-ignored `.gitignore` file.
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r .\venv_requirements.txt
+python .\Final_Capstone_Project\Utility_Scripts\Setup.py
 ```
+
+On macOS or Linux, use `python3` instead of `python` if required by the host shell. On Windows, use `py` or `python` according to the installed Python launcher.
 
 Create a root `.env` file containing your own key:
 
@@ -150,7 +152,7 @@ To run the solution directly from the repository root:
 .\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_4.1\MHERRERA_Capstone_Checkpoint_4_1_Solution.py
 ```
 
-Setup.py creates missing runtime directories and a root [.env](.env) template when needed. Setup output is logged to [Final_Capstone_Project/Utility_Scripts/Logs/Setup.log](Final_Capstone_Project/Utility_Scripts/Logs/Setup.log). Generated databases, corpus files, and logs remain local.
+Setup.py creates the host-specific `.venv`, installs missing dependencies when the venv is first created, creates missing runtime directories and a root [.env](.env) template when needed, and appends generated artifact paths to the local `.gitignore` file. The `.gitignore` file is self-ignored and remains local rather than being pushed to Git. Setup output is logged to [Final_Capstone_Project/Utility_Scripts/Logs/Setup.log](Final_Capstone_Project/Utility_Scripts/Logs/Setup.log). Generated databases, corpus files, and logs remain local.
 
 ## Setup and Local Data
 Run the setup utility from the repository root:
@@ -175,6 +177,8 @@ Setup creates or verifies the following local paths:
 - [Final_Capstone_Project/Utility_Scripts/Logs/](Final_Capstone_Project/Utility_Scripts/Logs/)
 
 If the Wikipedia HTML corpus is absent, setup still creates the runtime scaffolding but skips JSONL and database generation. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
+
+ChromaDB is created only in [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/). The Chroma builder rejects alternate database paths, including backup directories.
 
 ## Key Project Areas
 - [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/) contains the checkpoint 1.1 solution and supporting artifacts.

@@ -50,6 +50,17 @@ BATCH_SIZE = 50
 PLACEHOLDER_FILENAMES = {"readme.txt", "readme.md", ".gitkeep"}
 
 
+def validate_database_directory(db_dir: Path) -> Path:
+    """Allow ChromaDB creation only in the canonical project database directory."""
+    canonical_dir = DEFAULT_DB_DIR.resolve()
+    requested_dir = db_dir.resolve()
+    if requested_dir != canonical_dir:
+        raise SystemExit(
+            f"[db] ChromaDB must be created at {canonical_dir}; received {requested_dir}"
+        )
+    return canonical_dir
+
+
 def database_has_data(db_dir: Path) -> bool:
     """Return True only when the directory contains a real persisted Chroma database."""
     if not db_dir.is_dir():
@@ -159,6 +170,7 @@ def build_database(
     route: str,
     force_rebuild: bool = False,
 ) -> None:
+    db_dir = validate_database_directory(db_dir)
     if force_rebuild and db_dir.exists():
         print(f"[db] Decision: rebuild requested; removing existing database at {db_dir}")
         shutil.rmtree(db_dir)
