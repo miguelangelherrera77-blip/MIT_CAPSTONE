@@ -21,26 +21,26 @@ This repository contains the capstone RAG project for a Wikipedia Retrieval Engi
 ## Capstone Checkpoints
 
 ### Capstone Checkpoint 1.1
-**Evaluating when retrieval is required.** This checkpoint evaluates how an LLM performs without retrieval and determines whether retrieval is required for the selected Wikipedia scenario. The solution is in `Final_Capstone_Project/Capstone_Checkpoint_1.1/`.
+**Evaluating when retrieval is required.** This checkpoint evaluates how an LLM performs without retrieval and determines whether retrieval is required for the selected Wikipedia scenario. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/).
 
 Add `OPENROUTER_API_KEY` to the root `.env` file before running the solution. The checkpoint uses `python-dotenv`, `langchain-openai`, and `langchain-core`.
 
 ### Capstone Checkpoint 2.1
-**Retrieval strategy design and baseline implementation.** This checkpoint implements Retrieval-Augmented Generation over the Wikipedia corpus using vector retrieval through ChromaDB and lexical retrieval through BM25. The solution is in `Final_Capstone_Project/Capstone_Checkpoint_2.1/`.
+**Retrieval strategy design and baseline implementation.** This checkpoint implements Retrieval-Augmented Generation over the Wikipedia corpus using vector retrieval through ChromaDB and lexical retrieval through BM25. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/).
 
-Place the Wikipedia HTML corpus in `Final_Capstone_Project/Capstone_Database/Wikipedia/` and add `OPENROUTER_API_KEY` to `.env`. The required packages are listed in `venv_requirements.txt`.
+Place the Wikipedia HTML corpus in [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/) and add `OPENROUTER_API_KEY` to [.env](.env). The required packages are listed in [venv_requirements.txt](venv_requirements.txt).
 
 ### Capstone Checkpoint 3.1
-**Evaluation infrastructure and baseline diagnosis.** This checkpoint evaluates the retrieval system with RAGAS and compares original questions with paraphrased variants to measure robustness to rephrasing. The solution and validation utilities are in `Final_Capstone_Project/Capstone_Checkpoint_3.1/`.
+**Evaluation infrastructure and baseline diagnosis.** This checkpoint evaluates the retrieval system with RAGAS and compares original questions with paraphrased variants to measure robustness to rephrasing. The solution and validation utilities are in [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/).
 
 #### What Checkpoint 3.1 evaluates
-The solution in `Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py` evaluates the Checkpoint 2.1 hybrid retriever with a RAGAS `DiscreteMetric` correctness judge. It performs the following sequence:
+The solution in [Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py) evaluates the Checkpoint 2.1 hybrid retriever with a RAGAS `DiscreteMetric` correctness judge. It performs the following sequence:
 
 1. Loads `OPENROUTER_API_KEY` from the process environment or the root `.env` file.
-2. Loads documents from the persisted Chroma database at `Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/` when it contains data. If Chroma is unavailable or cannot be read, it scans the Wikipedia HTML corpus at `Final_Capstone_Project/Capstone_Database/Wikipedia/`.
+2. Loads documents from the persisted Chroma database at [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/) when it contains data. If Chroma is unavailable or cannot be read, it scans the Wikipedia HTML corpus at [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/).
 3. Builds the hybrid retriever. BM25 provides lexical candidates and Chroma provides semantic candidates. Their normalized scores are fused with equal weights (`0.5` BM25 and `0.5` vector), using a candidate pool of `10` and returning the top `4` documents.
-4. Loads the original questions from `test_variables/test_main_questions.json`.
-5. Loads the combined original-plus-paraphrase file from `test_variables/testinputs_variant_questions.json`, then separates paraphrase rows by excluding questions that also appear in the originals file.
+4. Loads the original questions from [test_variables/test_main_questions.json](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/test_main_questions.json).
+5. Loads the combined original-plus-paraphrase file from [test_variables/testinputs_variant_questions.json](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/testinputs_variant_questions.json), then separates paraphrase rows by excluding questions that also appear in the originals file.
 6. Answers each question with the configured OpenRouter answer model and scores the answer against its `grading_notes` with the configured RAGAS judge model.
 7. Evaluates originals and paraphrases separately, reports pass rates and the delta (`paraphrase rate - original rate`), and classifies the retriever as robust or brittle to rephrasing.
 8. Runs a manipulated-answer probe to verify that the judge accepts a correct control answer and rejects a deliberately false answer.
@@ -77,10 +77,10 @@ The solution can read an existing Chroma database, but a complete fresh setup sh
 For Checkpoint 3.1, the HTML corpus is the important source prerequisite. The 3.1 solution can scan that corpus directly and can create a Chroma database on first use if no persisted Chroma data is available. Generated databases and logs are local runtime artifacts.
 
 #### Required input files
-The standard committed question files are already under `Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/`:
+The standard committed question files are already under [Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/):
 
-- `test_main_questions.json`: original questions with `question`, `grading_notes`, and `sources` fields.
-- `testinputs_variant_questions.json`: the combined file containing originals and paraphrased questions. Each paraphrase must retain the original `grading_notes` and `sources`.
+- [test_main_questions.json](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/test_main_questions.json): original questions with `question`, `grading_notes`, and `sources` fields.
+- [testinputs_variant_questions.json](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/testinputs_variant_questions.json): the combined file containing originals and paraphrased questions. Each paraphrase must retain the original `grading_notes` and `sources`.
 
 If either file is missing, the evaluator stops with a file-not-found error. Generate the files in this order:
 
@@ -111,15 +111,13 @@ The main solution has no required command-line arguments. Run it from the reposi
 The script prints progress for document loading and each evaluated question. It evaluates both datasets in one run; it does not provide a dataset-selection CLI option. At the end it prints the original pass rate, paraphrase pass rate, delta, robustness verdict, and framework-validation result.
 
 #### Outputs
-Each run writes or appends the following files under `Final_Capstone_Project/Capstone_Checkpoint_3.1/`:
+Each run writes or appends the following files under [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/):
 
-- `checkpoint_3_1_evaluation.log`: timestamped comparison and framework-validation messages.
-- `detailed_test_results.log`: structured session results, failures, CSV paths, pass rates, delta, verdict, and manipulated-answer probe.
-- `ragas_experiments_3_1/datasets/wiki_eval_originals.csv`: RAGAS local dataset for original questions.
-- `ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv`: RAGAS local dataset for paraphrase questions.
-- `ragas_experiments_3_1/experiments/wiki_eval_originals.csv`: scored original-question results.
-- `ragas_experiments_3_1/experiments/wiki_eval_paraphrases.csv`: scored paraphrase results.
-- `Capstone_Database/Capstone_Chroma_DB/`: persisted embeddings and Chroma data when the solution builds or uses the vector database.
+- [detailed_test_results.log](Final_Capstone_Project/Capstone_Checkpoint_3.1/detailed_test_results.log): structured comparison and framework-validation messages, failures, CSV paths, pass rates, delta, verdict, and manipulated-answer probe.
+- [ragas_experiments_3_1/datasets/wiki_eval_originals.csv](Final_Capstone_Project/Capstone_Checkpoint_3.1/ragas_experiments_3_1/datasets/wiki_eval_originals.csv): RAGAS local dataset for original questions.
+- [ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv](Final_Capstone_Project/Capstone_Checkpoint_3.1/ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv): RAGAS local dataset for paraphrase questions.
+- [ragas_experiments_3_1/experiments/](Final_Capstone_Project/Capstone_Checkpoint_3.1/ragas_experiments_3_1/experiments/): scored experiment CSV results. Filenames are generated by RAGAS for each run.
+- [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/): persisted embeddings and Chroma data when the solution builds or uses the vector database.
 
 The CSV results include the question, grading notes, retrieved response, retriever label, and RAGAS verdict. Existing logs are appended rather than replaced.
 
@@ -134,17 +132,17 @@ A delta below `-5%` is reported as brittle to rephrasing. A delta above `+5%` is
 
 #### Common problems
 - `OPENROUTER_API_KEY is not set`: create the root `.env` file or set the environment variable in the active shell.
-- `Originals not found`: create `test_variables/test_main_questions.json` or run `generate_main_questions.py`.
-- `Variants file not found`: run `generate_variants.py` after the originals file exists.
-- `Wikipedia directory not found`: place the HTML corpus under `Final_Capstone_Project/Capstone_Database/Wikipedia/`.
+- `Originals not found`: create [test_variables/test_main_questions.json](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/test_main_questions.json) or run [generate_main_questions.py](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/generate_main_questions.py).
+- `Variants file not found`: run [generate_variants.py](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/generate_variants.py) after the originals file exists.
+- `Wikipedia directory not found`: place the HTML corpus under [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/).
 - Chroma load or embedding errors: verify the active virtual environment, `langchain-chroma`, `langchain-openai`, `chromadb`, and the OpenRouter key; remove only a corrupted local Chroma directory before rebuilding it.
 - Empty datasets: inspect the JSON files and ensure each row contains non-empty `question` and `grading_notes` values.
 - API rate limits or timeout errors: reduce the number of generated questions or paraphrases, retry later, and review partial output before rerunning.
 
 ### Capstone Checkpoint 4.1
-**Advanced retrieval and evaluation harness.** This checkpoint combines persisted vector, graph, BM25 lexical, and hybrid retrieval strategies in an interactive evaluation workflow. The solution is in `Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py`.
+**Advanced retrieval and evaluation harness.** This checkpoint combines persisted vector, graph, BM25 lexical, and hybrid retrieval strategies in an interactive evaluation workflow. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py).
 
-On startup, the solution runs the local preflight setup before displaying the menu. It invokes `Setup.py --build`, which requires the Wikipedia HTML corpus under `Final_Capstone_Project/Capstone_Database/Wikipedia/`. The build creates or reuses the Wikipedia JSONL corpus, ChromaDB, GraphDB, and BM25 indexes, each with a separate progress stage. Existing valid generated artifacts are reused; `--rebuild` regenerates JSONL, GraphDB, and BM25 outputs when supplied directly to Setup.py.
+On startup, the solution runs the local preflight setup before displaying the menu. It invokes [Setup.py](Final_Capstone_Project/Utility_Scripts/Setup.py) with `--build`, which requires the Wikipedia HTML corpus under [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/). The build creates or reuses the Wikipedia JSONL corpus, ChromaDB, GraphDB, and BM25 indexes, each with a separate progress stage. Existing valid generated artifacts are reused; `--rebuild` regenerates JSONL, GraphDB, and BM25 outputs when supplied directly to Setup.py.
 
 To run the solution directly from the repository root:
 
@@ -152,7 +150,7 @@ To run the solution directly from the repository root:
 .\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_4.1\MHERRERA_Capstone_Checkpoint_4_1_Solution.py
 ```
 
-Setup.py creates missing runtime directories and a root `.env` template when needed. Setup output is logged to `Final_Capstone_Project/Utility_Scripts/Logs/Setup.log`. Generated databases, corpus files, and logs remain local.
+Setup.py creates missing runtime directories and a root [.env](.env) template when needed. Setup output is logged to [Final_Capstone_Project/Utility_Scripts/Logs/Setup.log](Final_Capstone_Project/Utility_Scripts/Logs/Setup.log). Generated databases, corpus files, and logs remain local.
 
 ## Setup and Local Data
 Run the setup utility from the repository root:
@@ -169,24 +167,24 @@ Use `--build` to generate the local Wikipedia JSONL corpus and retrieval databas
 ```
 
 Setup creates or verifies the following local paths:
-- `Final_Capstone_Project/Capstone_Database/Wikipedia/`
-- `Final_Capstone_Project/Capstone_Database/Wikipedia_JSONL/`
-- `Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/`
-- `Final_Capstone_Project/Capstone_Database/Capstone_Graph_DB/`
-- `Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/`
-- `Final_Capstone_Project/Utility_Scripts/Logs/`
+- [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/)
+- [Final_Capstone_Project/Capstone_Database/Wikipedia_JSONL/](Final_Capstone_Project/Capstone_Database/Wikipedia_JSONL/)
+- [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/)
+- [Final_Capstone_Project/Capstone_Database/Capstone_Graph_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Graph_DB/)
+- [Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/](Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/)
+- [Final_Capstone_Project/Utility_Scripts/Logs/](Final_Capstone_Project/Utility_Scripts/Logs/)
 
 If the Wikipedia HTML corpus is absent, setup still creates the runtime scaffolding but skips JSONL and database generation. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
 
 ## Key Project Areas
-- `Final_Capstone_Project/Capstone_Checkpoint_1.1/` contains the checkpoint 1.1 solution and supporting artifacts.
-- `Final_Capstone_Project/Capstone_Checkpoint_2.1/` contains the retrieval strategy and baseline implementation files.
-- `Final_Capstone_Project/Capstone_Checkpoint_3.1/` contains the evaluation harness, validation utilities, datasets, and experiment results.
-- `Final_Capstone_Project/Capstone_Checkpoint_4.1/` contains the advanced retrieval starter and final solution files.
-- `Final_Capstone_Project/Capstone_Database/` stores the local corpus and database artifacts used for retrieval.
-- `Final_Capstone_Project/Retrieval_Methods/` contains BM25, vector, and hybrid retrieval logic.
-- `Final_Capstone_Project/Ranking_Techniques/` contains ranking and fusion logic.
-- `Final_Capstone_Project/Ragas_Experiments/` stores evaluation logic and experiment outputs.
+- [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/) contains the checkpoint 1.1 solution and supporting artifacts.
+- [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/) contains the retrieval strategy and baseline implementation files.
+- [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/) contains the evaluation harness, validation utilities, datasets, and experiment results.
+- [Final_Capstone_Project/Capstone_Checkpoint_4.1/](Final_Capstone_Project/Capstone_Checkpoint_4.1/) contains the advanced retrieval starter and final solution files.
+- [Final_Capstone_Project/Capstone_Database/](Final_Capstone_Project/Capstone_Database/) stores the local corpus and database artifacts used for retrieval.
+- [Final_Capstone_Project/Retrieval_Methods/](Final_Capstone_Project/Retrieval_Methods/) contains BM25, vector, and hybrid retrieval logic.
+- [Final_Capstone_Project/Ranking_Techniques/](Final_Capstone_Project/Ranking_Techniques/) contains ranking and fusion logic.
+- [Final_Capstone_Project/Ragas_Experiments/](Final_Capstone_Project/Ragas_Experiments/) stores evaluation logic and experiment outputs.
 - `lab_*` directories contain the course lab scripts, starter files, and requirements for guided work.
 
 ## Notes
