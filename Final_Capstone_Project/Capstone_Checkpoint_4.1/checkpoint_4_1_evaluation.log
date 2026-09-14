@@ -76,3 +76,9 @@ control=pass (expected pass); manipulated=fail (expected fail); detects_manipula
 [2026-09-13T20:51:06] ORIGINALS RESULT
 1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_205102_main-angry_hopper.csv
 ------------------------------------------------------------------------
+[2026-09-14T11:12:45] PARAPHRASES RESULT
+2/2 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20260914_111239_paraphrased-optimistic_torvalds.csv
+------------------------------------------------------------------------
+[2026-09-14T11:16:53] PARAPHRASES RESULT
+2/2 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20260914_111647_paraphrased-lucid_wilkes.csv
+------------------------------------------------------------------------

@@ -1,4 +1,46 @@
 ================================================================================
+TEST SESSION  |  2026-09-14 11:16:53
+================================================================================
+Test type   : RAGAS correctness evaluation (Semantic search; manual-generated source)
+Date        : 2026-09-14
+Time        : 11:16:53
+Config      : Search=Semantic, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 2/2 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20260914_111647_paraphrased-lucid_wilkes.csv
+  Dataset source: manual-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 11:12:45
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
+Date        : 2026-09-14
+Time        : 11:12:45
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 2/2 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20260914_111239_paraphrased-optimistic_torvalds.csv
+  Dataset source: manual-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+================================================================================
+
+================================================================================
 TEST SESSION  |  2026-09-13 20:51:06
 ================================================================================
 Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
