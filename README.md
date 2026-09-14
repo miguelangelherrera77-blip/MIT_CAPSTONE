@@ -60,7 +60,7 @@ The solution in [Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capston
 The answer model, judge model, and embedding model are currently `openai/gpt-5.4-mini`, `openai/gpt-5.4-mini`, and `openai/text-embedding-3-small`, accessed through OpenRouter at `https://openrouter.ai/api/v1`. The answer temperature is `0.2`.
 
 #### First-time setup
-Run `Setup.py` from the repository root. It creates the host-specific `.venv`, installs [venv_requirements.txt](venv_requirements.txt), creates the local runtime directories, and appends the generated paths to the local, self-ignored `.gitignore` file.
+Run `Setup.py` from the repository root. It creates the host-specific `.venv`, installs [venv_requirements.txt](venv_requirements.txt) when the environment is new, creates the local runtime directories, and appends generated runtime paths to the local ignore file.
 
 ```powershell
 python .\Final_Capstone_Project\Utility_Scripts\Setup.py
@@ -174,7 +174,9 @@ To run the solution directly from the repository root:
 .\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_4.1\MHERRERA_Capstone_Checkpoint_4_1_Solution.py
 ```
 
-Setup.py creates the host-specific `.venv`, installs missing dependencies when the venv is first created, creates missing runtime directories and a root [.env](.env) template when needed, and appends generated artifact paths to the local `.gitignore` file. The `.gitignore` file is self-ignored and remains local rather than being pushed to Git. Setup output is logged to [Final_Capstone_Project/Utility_Scripts/Logs/Setup.log](Final_Capstone_Project/Utility_Scripts/Logs/Setup.log). Generated databases, corpus files, and logs remain local.
+Setup.py creates the host-specific `.venv`, installs missing dependencies when the venv is first created, creates missing runtime directories and a root [.env](.env) template when needed, and appends generated artifact paths to the local ignore file. Setup output is logged to [Final_Capstone_Project/Utility_Scripts/Logs/Setup.log](Final_Capstone_Project/Utility_Scripts/Logs/Setup.log). The `.env` file, generated databases, and logs are local runtime artifacts; the current repository also contains the Wikipedia HTML corpus.
+
+The `--build` jobs have different network behavior. HTML chunking, GraphDB creation, and BM25 index creation process local files only. The ChromaDB builder sends chunks to OpenRouter for embeddings when it must create a database; an existing valid Chroma database is reused. `--build --rebuild` forces new JSONL, GraphDB, and BM25 outputs, but the Chroma builder is invoked without its rebuild action by this setup script. The Checkpoint 1.1-4.1 solutions and the Checkpoint 3.1 question generators also use OpenRouter for chat responses, embeddings, or evaluation when run.
 
 ## Setup and Local Data
 Run the setup utility from the repository root. This creates `.venv`, installs the dependencies from [venv_requirements.txt](venv_requirements.txt), and creates local runtime directories.
@@ -211,7 +213,7 @@ Setup creates or verifies the following local paths:
 - [Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/](Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/)
 - [Final_Capstone_Project/Utility_Scripts/Logs/](Final_Capstone_Project/Utility_Scripts/Logs/)
 
-If both the Wikipedia HTML and JSONL corpora are absent, setup creates the runtime scaffolding but skips database generation. With JSONL files but no HTML files, setup runs ChromaDB and BM25 from JSONL, while skipping HTML chunking and GraphDB. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
+The current workspace contains 2,419 Wikipedia HTML files and 2,419 matching JSONL files. If both corpora are absent, setup creates the runtime scaffolding but skips database generation. With JSONL files but no HTML files, setup runs ChromaDB and BM25 from JSONL, while skipping HTML chunking and GraphDB. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
 
 ChromaDB is created only in [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/). The Chroma builder rejects alternate database paths, including backup directories.
 
