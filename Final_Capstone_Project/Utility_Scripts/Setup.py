@@ -183,34 +183,36 @@ def build_database_if_requested(
 
     wikipedia_dir = PROJECT_DIR / "Capstone_Database" / "Wikipedia"
     html_files = sorted(wikipedia_dir.glob("*.html")) if wikipedia_dir.is_dir() else []
-    if not html_files:
-        print("[info] No Wikipedia HTML corpus found at Final_Capstone_Project/Capstone_Database/Wikipedia/.")
-        print("[info] Add the HTML corpus first, then rerun Setup.py --build to populate the local databases.")
+    jsonl_dir = PROJECT_DIR / "Capstone_Database" / "Wikipedia_JSONL"
+    jsonl_files = sorted(jsonl_dir.glob("*.jsonl")) if jsonl_dir.is_dir() else []
+    if not html_files and not jsonl_files:
+        print("[info] No Wikipedia HTML or JSONL corpus found.")
+        print("[info] Add HTML files or JSONL files first, then rerun Setup.py --build.")
         return
 
-    commands = [
-        (
-            "Wikipedia_JSONL",
-            [
-                str(python_path),
-                str(SCRIPT_DIR / "Chunk_Wikipedia_HTML_To_JSONL.py"),
-                *( ["--rebuild"] if rebuild else [] ),
-            ],
-        ),
+    commands: list[tuple[str, list[str]]] = []
+    if html_files:
+        commands.append(
+            (
+                "Wikipedia_JSONL",
+                [
+                    str(python_path),
+                    str(SCRIPT_DIR / "Chunk_Wikipedia_HTML_To_JSONL.py"),
+                    *( ["--rebuild"] if rebuild else [] ),
+                ],
+            )
+        )
+    else:
+        print(f"[skip] Using {len(jsonl_files)} existing JSONL file(s); HTML chunking is not required.")
+
+    commands.extend(
+        [
         (
             "ChromaDB",
             [
                 str(python_path),
                 str(SCRIPT_DIR / "Build_Wikipedia_Article_ChromaDB.py"),
                 "openrouter",
-            ],
-        ),
-        (
-            "GraphDB",
-            [
-                str(python_path),
-                str(SCRIPT_DIR / "Build_Wikipedia_Article_GraphDB.py"),
-                *( ["--rebuild"] if rebuild else [] ),
             ],
         ),
         (
@@ -221,7 +223,22 @@ def build_database_if_requested(
                 *( ["--rebuild"] if rebuild else [] ),
             ],
         ),
-    ]
+        ]
+    )
+    if html_files:
+        commands.insert(
+            2,
+            (
+                "GraphDB",
+                [
+                    str(python_path),
+                    str(SCRIPT_DIR / "Build_Wikipedia_Article_GraphDB.py"),
+                    *( ["--rebuild"] if rebuild else [] ),
+                ],
+            ),
+        )
+    else:
+        print("[skip] GraphDB requires HTML files; no GraphDB job will run.")
 
     generated_files_before = {
         path

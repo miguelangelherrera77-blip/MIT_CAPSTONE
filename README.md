@@ -6,11 +6,23 @@ Miguel Herrera - Section B
 ## Project Overview
 This repository contains the capstone RAG project for a Wikipedia Retrieval Engine scenario. It includes the main project implementation, checkpoint solution files, evaluation utilities, local database directories, course labs, and supporting scripts used for retrieval, ranking, and analysis.
 
+## Project System Requirements
+
+- **Operating system:** Windows, macOS, or Linux. `Setup.py` detects the host platform and creates the virtual environment using the appropriate `Scripts` or `bin` layout.
+- **Python:** Python 3.10 or newer. Python 3.14 is supported by the current setup and logging code.
+- **Python tooling:** `venv` and `pip` must be available in the system Python installation so Setup.py can create `.venv` and install [venv_requirements.txt](venv_requirements.txt).
+- **Internet access:** Required during first-time dependency installation. It is also required for OpenRouter API calls used by embeddings, answer generation, paraphrase generation, and RAGAS judging.
+- **OpenRouter credentials:** An `OPENROUTER_API_KEY` is required for AI-backed features and ChromaDB embedding creation. Store it in the root `.env` file or provide it through the process environment.
+- **Local storage:** Sufficient free disk space is required for the `.venv`, Wikipedia HTML or JSONL corpus, generated JSONL files, ChromaDB, GraphDB, BM25 indexes, and logs. Storage needs grow with corpus size.
+- **Corpus input:** HTML files are required for HTML chunking and GraphDB creation. Existing JSONL files are sufficient for ChromaDB and BM25 creation. No corpus is required to create the initial runtime scaffolding.
+- **Terminal access:** Setup.py should be run from the repository root so it can locate the requirements file, `.env`, and project directories.
+
 ## Quick Links
 
 | Section | Description | Link |
 | --- | --- | --- |
 | Project Overview | Repository purpose and system context | [Overview](#project-overview) |
+| System Requirements | Host, Python, and runtime prerequisites | [Requirements](#project-system-requirements) |
 | Checkpoint 1.1 | Evaluating when retrieval is required | [Checkpoint 1.1](#capstone-checkpoint-11) |
 | Checkpoint 2.1 | Retrieval strategy and baseline implementation | [Checkpoint 2.1](#capstone-checkpoint-21) |
 | Checkpoint 3.1 | RAGAS evaluation and paraphrase robustness | [Checkpoint 3.1](#capstone-checkpoint-31) |
@@ -177,7 +189,7 @@ On macOS or Linux:
 python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py
 ```
 
-Use `--build` to generate the local Wikipedia JSONL corpus and retrieval databases after adding the HTML corpus. Use `--rebuild` with `--build` when regeneration is explicitly required:
+Use `--build` to generate the local Wikipedia JSONL corpus and retrieval databases after adding the HTML or JSONL corpus. Existing JSONL files are used directly by the ChromaDB and BM25 jobs. Use `--rebuild` with `--build` when regeneration is explicitly required:
 
 ```powershell
 python .\Final_Capstone_Project\Utility_Scripts\Setup.py --build
@@ -199,7 +211,7 @@ Setup creates or verifies the following local paths:
 - [Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/](Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/)
 - [Final_Capstone_Project/Utility_Scripts/Logs/](Final_Capstone_Project/Utility_Scripts/Logs/)
 
-If the Wikipedia HTML corpus is absent, setup still creates the runtime scaffolding but skips JSONL and database generation. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
+If both the Wikipedia HTML and JSONL corpora are absent, setup creates the runtime scaffolding but skips database generation. With JSONL files but no HTML files, setup runs ChromaDB and BM25 from JSONL, while skipping HTML chunking and GraphDB. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
 
 ChromaDB is created only in [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/). The Chroma builder rejects alternate database paths, including backup directories.
 
