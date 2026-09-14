@@ -120,6 +120,9 @@ class _TimestampedTee(TextIO):
     def isatty(self) -> bool:
         return self._console.isatty()
 
+    def fileno(self) -> int:
+        return self._console.fileno()
+
     @property
     def encoding(self) -> str:
         return self._console.encoding or "utf-8"
