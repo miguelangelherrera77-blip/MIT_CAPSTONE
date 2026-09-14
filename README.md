@@ -40,7 +40,7 @@ Add `OPENROUTER_API_KEY` to the root `.env` file before running the solution. Th
 ### Capstone Checkpoint 2.1
 **Retrieval strategy design and baseline implementation.** This checkpoint implements Retrieval-Augmented Generation over the Wikipedia corpus using vector retrieval through ChromaDB and lexical retrieval through BM25. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/).
 
-Place the Wikipedia HTML corpus in [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/) and add `OPENROUTER_API_KEY` to [.env](.env). The required packages are listed in [venv_requirements.txt](venv_requirements.txt).
+Place the Wikipedia HTML corpus in [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/) and add `OPENROUTER_API_KEY` to the root `.env` file. The required packages are listed in [venv_requirements.txt](venv_requirements.txt).
 
 ### Capstone Checkpoint 3.1
 **Evaluation infrastructure and baseline diagnosis.** This checkpoint evaluates the retrieval system with RAGAS and compares original questions with paraphrased variants to measure robustness to rephrasing. The solution and validation utilities are in [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/).
@@ -213,7 +213,7 @@ Setup creates or verifies the following local paths:
 - [Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/](Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/)
 - [Final_Capstone_Project/Utility_Scripts/Logs/](Final_Capstone_Project/Utility_Scripts/Logs/)
 
-The current workspace contains 2,419 Wikipedia HTML files and 2,419 matching JSONL files. If both corpora are absent, setup creates the runtime scaffolding but skips database generation. With JSONL files but no HTML files, setup runs ChromaDB and BM25 from JSONL, while skipping HTML chunking and GraphDB. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
+The current workspace contains 2,419 Wikipedia HTML files and 2,419 matching JSONL files. The committed Checkpoint 3.1 question files and evaluation datasets are also present. The generated ChromaDB, GraphDB, BM25 index, virtual environment, `.env`, and runtime log directories are created locally by setup and are not currently present in the repository. If both corpora are absent, setup creates the runtime scaffolding but skips database generation. With JSONL files but no HTML files, setup runs ChromaDB and BM25 from JSONL, while skipping HTML chunking and GraphDB. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
 
 ChromaDB is created only in [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/). The Chroma builder rejects alternate database paths, including backup directories.
 
