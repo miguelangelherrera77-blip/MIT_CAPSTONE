@@ -120,7 +120,8 @@ def build_database_if_requested(build: bool, rebuild: bool = False, created: lis
         return
 
     wikipedia_dir = PROJECT_DIR / "Capstone_Database" / "Wikipedia"
-    if not wikipedia_dir.exists() or not any(wikipedia_dir.iterdir()):
+    html_files = sorted(wikipedia_dir.glob("*.html")) if wikipedia_dir.is_dir() else []
+    if not html_files:
         print("[info] No Wikipedia HTML corpus found at Final_Capstone_Project/Capstone_Database/Wikipedia/.")
         print("[info] Add the HTML corpus first, then rerun Setup.py --build to populate the local databases.")
         return
