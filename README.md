@@ -33,9 +33,113 @@ Place the Wikipedia HTML corpus in `Final_Capstone_Project/Capstone_Database/Wik
 ### Capstone Checkpoint 3.1
 **Evaluation infrastructure and baseline diagnosis.** This checkpoint evaluates the retrieval system with RAGAS and compares original questions with paraphrased variants to measure robustness to rephrasing. The solution and validation utilities are in `Final_Capstone_Project/Capstone_Checkpoint_3.1/`.
 
-The evaluation workflow generates or loads grounded questions, creates paraphrased variants, evaluates answers with a RAGAS `DiscreteMetric` judge, and reports original-versus-paraphrase pass rates and their difference. Datasets and experiment outputs are stored under `test_variables/` and `ragas_experiments_3_1/`. The Wikipedia corpus and a usable local Chroma database are required for a complete evaluation run.
+#### What Checkpoint 3.1 evaluates
+The solution in `Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py` evaluates the Checkpoint 2.1 hybrid retriever with a RAGAS `DiscreteMetric` correctness judge. It performs the following sequence:
 
-Run the framework validation utility from the repository root with `python Final_Capstone_Project/Utility_Scripts/run_framework_validation.py`. Add `OPENROUTER_API_KEY` to `.env` before running LLM-backed evaluation.
+1. Loads `OPENROUTER_API_KEY` from the process environment or the root `.env` file.
+2. Loads documents from the persisted Chroma database at `Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/` when it contains data. If Chroma is unavailable or cannot be read, it scans the Wikipedia HTML corpus at `Final_Capstone_Project/Capstone_Database/Wikipedia/`.
+3. Builds the hybrid retriever. BM25 provides lexical candidates and Chroma provides semantic candidates. Their normalized scores are fused with equal weights (`0.5` BM25 and `0.5` vector), using a candidate pool of `10` and returning the top `4` documents.
+4. Loads the original questions from `test_variables/test_main_questions.json`.
+5. Loads the combined original-plus-paraphrase file from `test_variables/testinputs_variant_questions.json`, then separates paraphrase rows by excluding questions that also appear in the originals file.
+6. Answers each question with the configured OpenRouter answer model and scores the answer against its `grading_notes` with the configured RAGAS judge model.
+7. Evaluates originals and paraphrases separately, reports pass rates and the delta (`paraphrase rate - original rate`), and classifies the retriever as robust or brittle to rephrasing.
+8. Runs a manipulated-answer probe to verify that the judge accepts a correct control answer and rejects a deliberately false answer.
+
+The answer model, judge model, and embedding model are currently `openai/gpt-5.4-mini`, `openai/gpt-5.4-mini`, and `openai/text-embedding-3-small`, accessed through OpenRouter at `https://openrouter.ai/api/v1`. The answer temperature is `0.2`.
+
+#### First-time setup
+Run these commands from the repository root. PowerShell commands are shown below; use the equivalent Python command for another shell.
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r .\venv_requirements.txt
+```
+
+Create a root `.env` file containing your own key:
+
+```dotenv
+OPENROUTER_API_KEY=sk-or-your-key-here
+```
+
+Do not commit `.env` or expose the key in source control. The key is required for embeddings, answer generation, paraphrase generation, and RAGAS judging.
+
+Place the Wikipedia HTML files in:
+
+```text
+Final_Capstone_Project/Capstone_Database/Wikipedia/
+```
+
+The solution can read an existing Chroma database, but a complete fresh setup should prepare the local directories first:
+
+```powershell
+.\.venv\Scripts\python.exe .\Final_Capstone_Project\Utility_Scripts\Setup.py
+```
+
+For Checkpoint 3.1, the HTML corpus is the important source prerequisite. The 3.1 solution can scan that corpus directly and can create a Chroma database on first use if no persisted Chroma data is available. Generated databases and logs are local runtime artifacts.
+
+#### Required input files
+The standard committed question files are already under `Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/`:
+
+- `test_main_questions.json`: original questions with `question`, `grading_notes`, and `sources` fields.
+- `testinputs_variant_questions.json`: the combined file containing originals and paraphrased questions. Each paraphrase must retain the original `grading_notes` and `sources`.
+
+If either file is missing, the evaluator stops with a file-not-found error. Generate the files in this order:
+
+1. Generate grounded originals from the HTML corpus. The first argument is the requested number of questions; the second optional argument is the output path.
+
+```powershell
+cd .\Final_Capstone_Project\Capstone_Checkpoint_3.1\test_variables
+..\..\..\.venv\Scripts\python.exe .\generate_main_questions.py 100 .\test_main_questions.json
+```
+
+The generator samples candidate articles with a fixed random seed, excludes the four Checkpoint 2.1 articles, asks `openai/gpt-5.4-mini` for one grounded question per article, and writes the grading notes and source filename. It requires the HTML corpus and the API key.
+
+2. Generate paraphrases from the originals. The arguments are input JSON, number of paraphrases per question, and optional output JSON.
+
+```powershell
+..\..\..\.venv\Scripts\python.exe .\generate_variants.py .\test_main_questions.json 2 .\testinputs_variant_questions.json
+```
+
+This produces up to two paraphrases per original, preserves the original rows, and writes one combined file. Review the generated paraphrases before evaluation and remove any that change the meaning, add ambiguity, or duplicate another question.
+
+#### Run the Checkpoint 3.1 solution
+The main solution has no required command-line arguments. Run it from the repository root so the relative environment and project paths are unambiguous:
+
+```powershell
+.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_3.1\MHERRERA_Capstone_Checkpoint_3_1_Solution.py
+```
+
+The script prints progress for document loading and each evaluated question. It evaluates both datasets in one run; it does not provide a dataset-selection CLI option. At the end it prints the original pass rate, paraphrase pass rate, delta, robustness verdict, and framework-validation result.
+
+#### Outputs
+Each run writes or appends the following files under `Final_Capstone_Project/Capstone_Checkpoint_3.1/`:
+
+- `checkpoint_3_1_evaluation.log`: timestamped comparison and framework-validation messages.
+- `detailed_test_results.log`: structured session results, failures, CSV paths, pass rates, delta, verdict, and manipulated-answer probe.
+- `ragas_experiments_3_1/datasets/wiki_eval_originals.csv`: RAGAS local dataset for original questions.
+- `ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv`: RAGAS local dataset for paraphrase questions.
+- `ragas_experiments_3_1/experiments/wiki_eval_originals.csv`: scored original-question results.
+- `ragas_experiments_3_1/experiments/wiki_eval_paraphrases.csv`: scored paraphrase results.
+- `Capstone_Database/Capstone_Chroma_DB/`: persisted embeddings and Chroma data when the solution builds or uses the vector database.
+
+The CSV results include the question, grading notes, retrieved response, retriever label, and RAGAS verdict. Existing logs are appended rather than replaced.
+
+#### Interpreting the result
+The final comparison is calculated as:
+
+```text
+delta = paraphrase pass rate - original pass rate
+```
+
+A delta below `-5%` is reported as brittle to rephrasing. A delta above `+5%` is reported as paraphrases scoring higher and should be reviewed for lucky wording or judge leniency. Otherwise, the retriever is reported as robust because the pass rates are comparable. A failed manipulated-answer probe indicates that the evaluation judge configuration should be investigated before trusting the aggregate result.
+
+#### Common problems
+- `OPENROUTER_API_KEY is not set`: create the root `.env` file or set the environment variable in the active shell.
+- `Originals not found`: create `test_variables/test_main_questions.json` or run `generate_main_questions.py`.
+- `Variants file not found`: run `generate_variants.py` after the originals file exists.
+- `Wikipedia directory not found`: place the HTML corpus under `Final_Capstone_Project/Capstone_Database/Wikipedia/`.
+- Chroma load or embedding errors: verify the active virtual environment, `langchain-chroma`, `langchain-openai`, `chromadb`, and the OpenRouter key; remove only a corrupted local Chroma directory before rebuilding it.
+- Empty datasets: inspect the JSON files and ensure each row contains non-empty `question` and `grading_notes` values.
+- API rate limits or timeout errors: reduce the number of generated questions or paraphrases, retry later, and review partial output before rerunning.
 
 ### Capstone Checkpoint 4.1
 **Advanced retrieval and evaluation harness.** This checkpoint combines persisted vector, graph, BM25 lexical, and hybrid retrieval strategies in an interactive evaluation workflow. The solution is in `Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py`.
