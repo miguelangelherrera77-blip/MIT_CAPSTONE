@@ -28,6 +28,7 @@ This repository contains the capstone RAG project for a Wikipedia Retrieval Engi
 | Checkpoint 3.1 | RAGAS evaluation and paraphrase robustness | [Checkpoint 3.1](#capstone-checkpoint-31) |
 | Checkpoint 4.1 | Advanced retrieval and evaluation harness | [Checkpoint 4.1](#capstone-checkpoint-41) |
 | Setup and Local Data | Bootstrap commands and generated local data | [Setup](#setup-and-local-data) |
+| ChromaDB Cost Estimate | Token count and estimated embedding cost | [Cost Estimate](#chromadb-token-and-cost-estimate) |
 | Key Project Areas | Source modules and supporting project areas | [Project Areas](#key-project-areas) |
 
 ## Capstone Checkpoints
