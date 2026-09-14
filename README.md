@@ -6,6 +6,18 @@ Miguel Herrera - Section B
 ## Project Overview
 This repository contains the capstone RAG project for a Wikipedia Retrieval Engine scenario. It includes the main project implementation, checkpoint solution files, evaluation utilities, local database directories, course labs, and supporting scripts used for retrieval, ranking, and analysis.
 
+## Quick Links
+
+| Section | Description | Link |
+| --- | --- | --- |
+| Project Overview | Repository purpose and system context | [Overview](#project-overview) |
+| Checkpoint 1.1 | Evaluating when retrieval is required | [Checkpoint 1.1](#capstone-checkpoint-11) |
+| Checkpoint 2.1 | Retrieval strategy and baseline implementation | [Checkpoint 2.1](#capstone-checkpoint-21) |
+| Checkpoint 3.1 | RAGAS evaluation and paraphrase robustness | [Checkpoint 3.1](#capstone-checkpoint-31) |
+| Checkpoint 4.1 | Advanced retrieval and evaluation harness | [Checkpoint 4.1](#capstone-checkpoint-41) |
+| Setup and Local Data | Bootstrap commands and generated local data | [Setup](#setup-and-local-data) |
+| Key Project Areas | Source modules and supporting project areas | [Project Areas](#key-project-areas) |
+
 ## Capstone Checkpoints
 
 ### Capstone Checkpoint 1.1
@@ -61,95 +73,6 @@ Setup creates or verifies the following local paths:
 - `Final_Capstone_Project/Utility_Scripts/Logs/`
 
 If the Wikipedia HTML corpus is absent, setup still creates the runtime scaffolding but skips JSONL and database generation. The generated database folders must contain real artifacts before retrieval can use them; placeholder README files are only scaffolding.
-
-## Repository Inventory
-
-```text
-MIT_CAPSTONE/
-├── .env                                      # Local environment configuration for API keys and secrets
-├── README.md                                 # Project overview and repository inventory
-├── venv_requirements.txt                     # Dependency list for the project Python environment
-├── OpenRouter_API_Usage.py                   # OpenRouter API helper usage file
-├── Backups/                                  # Backup artifacts and retained database snapshots
-│   └── Capstone_Chroma_DB/
-├── ENV_ANALYSIS/                             # Environment and dependency analysis outputs
-│   └── environment_inventory.txt
-├── EVALUATION/                               # Evaluation and reporting utilities
-│   ├── build_answers_docx.py
-│   └── generate_evaluation_report.py
-├── Final_Capstone_Project/                   # Main capstone implementation and checkpoint work
-│   ├── retrieval.conf                        # Retrieval configuration values
-│   ├── Capstone_Checkpoint_1.1/
-│   │   └── MHERRERA_Capstone_Checkpoint_1_1_Solution.py
-│   ├── Capstone_Checkpoint_2.1/
-│   │   └── MHERRERA_Capstone_Checkpoint_2_1_Solution.py
-│   ├── Capstone_Checkpoint_3.1/
-│   │   ├── MHERRERA_Capstone_Checkpoint_3_1_Solution.py
-│   │   ├── run_framework_validation.py
-│   │   ├── ragas_experiments_3_1/
-│   │   └── test_variables/
-│   ├── Capstone_Checkpoint_4.1/
-│   │   ├── capstone_checkpoint_4_1_advanced_retrieval_starter.py
-│   │   ├── MHERRERA_Capstone_Checkpoint_4_1_Solution.py
-│   │   └── ...
-│   ├── Capstone_Database/
-│   │   ├── Capstone_Chroma_DB/
-│   │   ├── Capstone_Graph_DB/
-│   │   ├── Capstone_BM25_Lexical_Indexes/
-│   │   ├── Wikipedia/
-│   │   └── Wikipedia_JSONL/
-│   ├── JSON_Schemas/
-│   │   ├── Test_Main_Questions.schema.json
-│   │   ├── Test_Paraphrased_Questions.schema.json
-│   │   └── Wikipedia_JSONL_Graph_Record.schema.json
-│   ├── Ragas_Experiments/
-│   │   ├── __init__.py
-│   │   ├── ragas_experiment_logic.py
-│   │   ├── datasets/
-│   │   └── experiments/
-│   ├── Ranking_Techniques/
-│   │   ├── __init__.py
-│   │   └── weighted_fusion_ranking.py
-│   ├── Retrieval_Methods/
-│   │   ├── __init__.py
-│   │   ├── bm25_retrieval.py
-│   │   ├── hybrid_retrieval.py
-│   │   └── vector_retrieval.py
-│   ├── Test_Variables/
-│   ├── Utility_Scripts/
-│   │   ├── Setup.py
-│   │   └── Logs/
-│   └── ...
-├── lab_databases/
-│   ├── lab_1_2/
-│   ├── lab_2_1/
-│   ├── lab_2_2/
-│   ├── lab_3_1/
-│   └── lab_3_2/
-├── lab_my_files/
-├── lab_requirements/
-│   ├── lab_3_1_requirements.txt
-│   └── lab_3_2_requirements.txt
-├── lab_solution_files/
-│   ├── lab_1_1_chatbot_solution.py
-│   ├── lab_1_2_keyword_retrieval_solution.py
-│   ├── lab_2_1_vector_retrieval_solution.py
-│   ├── lab_2_2_hybrid_retrieval_solution.py
-│   ├── lab_3_1_evaluation_solution.py
-│   ├── lab_3_2_test_variants_solution.py
-│   ├── lab_4_1_multistep_retrieval_solution.py
-│   └── lab_4_2_solution_files/
-├── lab_starter_files/
-│   ├── lab_1_1_chatbot_starter.py
-│   ├── lab_1_2_keyword_retrieval_starter.py
-│   ├── lab_2_1_vector_retrieval_starter.py
-│   ├── lab_2_2_hybrid_retrieval_starter.py
-│   ├── lab_3_1_evaluation_starter.py
-│   ├── lab_3_2_test_variants_starter.py
-│   ├── lab_4_1_multistep_retrieval_starter.py
-│   └── lab_4_2_starter_files/
-└── ...
-```
 
 ## Key Project Areas
 - `Final_Capstone_Project/Capstone_Checkpoint_1.1/` contains the checkpoint 1.1 solution and supporting artifacts.
