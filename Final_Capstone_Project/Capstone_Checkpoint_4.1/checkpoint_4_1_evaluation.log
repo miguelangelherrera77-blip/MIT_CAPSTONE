@@ -1,0 +1,78 @@
+[2026-09-11T16:54:23] COMPARISON
+originals=1/1 (100%); paraphrases=1/1 (100%); delta=+0%
+------------------------------------------------------------------------
+[2026-09-11T16:54:27] FRAMEWORK VALIDATION
+control=pass (expected pass); manipulated=fail (expected fail); detects_manipulation=True
+------------------------------------------------------------------------
+[2026-09-11T17:02:30] ORIGINALS RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260911_170222_main-magical_perlis.csv
+------------------------------------------------------------------------
+[2026-09-11T17:02:33] PARAPHRASES RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260911_170230_paraphrased-tender_cerf.csv
+------------------------------------------------------------------------
+[2026-09-11T17:02:33] COMPARISON
+originals=1/1 (100%); paraphrases=1/1 (100%); delta=+0%
+------------------------------------------------------------------------
+[2026-09-11T17:02:37] FRAMEWORK VALIDATION
+control=pass (expected pass); manipulated=fail (expected fail); detects_manipulation=True
+------------------------------------------------------------------------
+[2026-09-13T16:08:12] ORIGINALS RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_160806_main-relaxed_stallman.csv
+------------------------------------------------------------------------
+[2026-09-13T17:05:12] ORIGINALS RESULT
+3/3 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_170500_main-keen_boole.csv
+------------------------------------------------------------------------
+[2026-09-13T17:09:54] ORIGINALS RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_170949_main-charming_babbage.csv
+------------------------------------------------------------------------
+[2026-09-13T17:13:18] ORIGINALS RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_171314_main-amazing_cook.csv
+------------------------------------------------------------------------
+[2026-09-13T17:17:03] ORIGINALS RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_171659_main-sad_kernighan.csv
+------------------------------------------------------------------------
+[2026-09-13T17:23:09] PARAPHRASES RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_172304_paraphrased-festive_wozniak.csv
+------------------------------------------------------------------------
+[2026-09-13T18:14:38] PARAPHRASES RESULT
+2/2 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_181430_paraphrased-silly_page.csv
+------------------------------------------------------------------------
+[2026-09-13T18:21:08] PARAPHRASES RESULT
+2/2 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_182100_paraphrased-heuristic_bezos.csv
+------------------------------------------------------------------------
+[2026-09-13T18:26:21] PARAPHRASES RESULT
+2/2 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_182614_paraphrased-elegant_gosling.csv
+------------------------------------------------------------------------
+[2026-09-13T18:36:14] PARAPHRASES RESULT
+2/2 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_183605_paraphrased-awesome_carmack.csv
+------------------------------------------------------------------------
+[2026-09-13T18:44:23] PARAPHRASES RESULT
+4/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_184400_paraphrased-epic_yao.csv
+------------------------------------------------------------------------
+[2026-09-13T18:48:32] PARAPHRASES RESULT
+4/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_184812_paraphrased-eloquent_matsumoto.csv
+------------------------------------------------------------------------
+[2026-09-13T18:52:31] PARAPHRASES RESULT
+4/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_185213_paraphrased-festive_gosling.csv
+------------------------------------------------------------------------
+[2026-09-13T18:55:50] PARAPHRASES RESULT
+4/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_185533_paraphrased-bold_backus.csv
+------------------------------------------------------------------------
+[2026-09-13T19:00:48] PARAPHRASES RESULT
+2/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190027_paraphrased-wonderful_torvalds.csv
+------------------------------------------------------------------------
+[2026-09-13T19:03:25] PARAPHRASES RESULT
+1/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190308_paraphrased-determined_dijkstra.csv
+------------------------------------------------------------------------
+[2026-09-13T19:05:22] PARAPHRASES RESULT
+4/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190502_paraphrased-epic_yao.csv
+------------------------------------------------------------------------
+[2026-09-13T19:07:05] ORIGINALS RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190659_main-dazzling_narayen.csv
+------------------------------------------------------------------------
+[2026-09-13T19:46:46] PARAPHRASES RESULT
+4/4 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_194630_paraphrased-sad_thompson.csv
+------------------------------------------------------------------------
+[2026-09-13T20:51:06] ORIGINALS RESULT
+1/1 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_205102_main-angry_hopper.csv
+------------------------------------------------------------------------

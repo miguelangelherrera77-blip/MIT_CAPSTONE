@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Test_Main_Questions.schema.json",
+  "title": "Main Test Questions",
+  "description": "Schema for LLM-generated main evaluation questions.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/questionRecord"
+  },
+  "$defs": {
+    "questionRecord": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grading_notes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "question",
+        "grading_notes",
+        "sources"
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

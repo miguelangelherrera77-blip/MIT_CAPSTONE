@@ -1,3 +1,18 @@
+#################################################################################
+# 
+# Massachusetts Institute of Technology - xPRO
+# RAG and Context Engineering: Designing and Building Production-Grade AI Systems
+# 
+# Student: Miguel Herrera
+# Section: B
+# Date and Time: 2026-09-12 11:54:44 -07:00
+#
+# Description: This script evaluates the Checkpoint 3.1 hybrid Wikipedia retriever
+#              with RAGAS, compares originals with paraphrases, validates the judge,
+#              and appends experiment and detailed-test results.
+#
+#################################################################################
+
 r"""Capstone Checkpoint 3.1 — Evaluation Infrastructure and Baseline Diagnosis (SOLUTION).
 Jupytext-style cell markers (# %% / # %% [markdown]) — runnable as a
 plain script AND openable as cells in VS Code / PyCharm / Jupytext.

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Test_Paraphrased_Questions.schema.json",
+  "title": "Paraphrased Test Questions",
+  "description": "Shared schema for LLM-generated and manually authored paraphrased evaluation questions.",
+  "type": "array",
+  "items": {
+    "oneOf": [
+      {
+        "$ref": "#/$defs/llmRecord"
+      },
+      {
+        "$ref": "#/$defs/manualRecord"
+      }
+    ]
+  },
+  "$defs": {
+    "llmRecord": {
+      "allOf": [
+        {
+          "$ref": "Test_Main_Questions.schema.json#/$defs/questionRecord"
+        }
+      ],
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grading_notes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": ["question", "grading_notes", "sources"],
+      "unevaluatedProperties": false
+    },
+    "manualRecord": {
+      "type": "object",
+      "properties": {
+        "original_question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "paraphrased_question1": {
+          "type": "string",
+          "minLength": 1
+        },
+        "paraphrased_question2": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grading_notes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "original_question",
+        "paraphrased_question1",
+        "paraphrased_question2",
+        "grading_notes",
+        "sources"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

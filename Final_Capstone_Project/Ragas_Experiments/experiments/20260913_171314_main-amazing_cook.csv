@@ -1,0 +1,2 @@
+question,grading_notes,retriever,response,score
+What is the capital and largest city of Mali?,A correct answer must name Bamako as both the capital and largest city of Mali.,lexical,The capital and largest city of Mali is **Bamako**. The excerpt says: “**Its capital and largest city is Bamako**.”,pass

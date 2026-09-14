@@ -1,0 +1,279 @@
+================================================================================
+TEST SESSION  |  2026-09-13 20:51:06
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 20:51:06
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: MAIN QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 1/1 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_205102_main-angry_hopper.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 19:46:46
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 19:46:46
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 4/4 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_194630_paraphrased-sad_thompson.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the population of Broken Arrow, Oklahoma, according to the 2020 census?
+  2 paraphrased question(s) tested for original: Why was Muhammad Ali stripped of his boxing titles in 1967?
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 19:07:05
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
+Date        : 2026-09-13
+Time        : 19:07:05
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: MAIN QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 1/1 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190659_main-dazzling_narayen.csv
+  Dataset source: manual-generated questions
+  Failures    : none
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 19:05:22
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 19:05:22
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 4/4 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190502_paraphrased-epic_yao.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: Who led Forza Italia after Silvio Berlusconi's death in 2023, and what was his role in the party before that?
+  2 paraphrased question(s) tested for original: What is the stage name of Lamont Jody Hawkins, and what does it stand for?
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 19:03:25
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 19:03:25
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 1/4 (25%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190308_paraphrased-determined_dijkstra.csv
+  Dataset source: llm-generated questions
+  Failures    : 3 question(s) FAILED
+    1. Who was the winner of the Eurovision Song Contest in 2023, and which song did they win with?
+    2. According to the lead text, what was Michael Jackson’s last album, and what was notable about its productio...
+    3. What did the lead text say was Michael Jackson’s final album, and what special distinction did it have rega...
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: Who won the Eurovision Song Contest 2023, and with which song?
+  2 paraphrased question(s) tested for original: According to the lead text, what was Michael Jackson’s final album, and what distinction does it hold in te...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 19:00:48
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 19:00:48
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 2/4 (50%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190027_paraphrased-wonderful_torvalds.csv
+  Dataset source: llm-generated questions
+  Failures    : 2 question(s) FAILED
+    1. According to the lead text, what was Michael Jackson’s last album, and what was notable about its productio...
+    2. What did the lead text say was Michael Jackson’s final album, and what special distinction did it have rega...
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: How many species are in the genus Morus, and what are the three most common species called by color-based c...
+  2 paraphrased question(s) tested for original: According to the lead text, what was Michael Jackson’s final album, and what distinction does it hold in te...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 18:55:50
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 18:55:50
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 4/4 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_185533_paraphrased-bold_backus.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
+  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 18:52:31
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 18:52:31
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 4/4 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_185213_paraphrased-festive_gosling.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
+  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 18:48:32
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 18:48:32
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 4/4 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_184812_paraphrased-eloquent_matsumoto.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
+  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 18:44:23
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 18:44:23
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 4/4 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_184400_paraphrased-epic_yao.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
+  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 18:36:14
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
+Date        : 2026-09-13
+Time        : 18:36:14
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 2/2 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_183605_paraphrased-awesome_carmack.csv
+  Dataset source: manual-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 18:26:21
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
+Date        : 2026-09-13
+Time        : 18:26:21
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 2/2 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_182614_paraphrased-elegant_gosling.csv
+  Dataset source: manual-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-13 18:21:08
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
+Date        : 2026-09-13
+Time        : 18:21:08
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 2/2 (100%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_182100_paraphrased-heuristic_bezos.csv
+  Dataset source: llm-generated questions
+  Failures    : none
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
+  0 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
+================================================================================
+

@@ -1,3 +1,18 @@
+#################################################################################
+# 
+# Massachusetts Institute of Technology - xPRO
+# RAG and Context Engineering: Designing and Building Production-Grade AI Systems
+# 
+# Student: Miguel Herrera
+# Section: B
+# Date and Time: 2026-09-12 11:54:44 -07:00
+#
+# Description: This script loads the Wikipedia corpus, builds or reuses Chroma,
+#              combines BM25 and vector retrieval, answers representative queries,
+#              and records evidence for the Checkpoint 2.1 baseline evaluation.
+#
+#################################################################################
+
 r"""Capstone Checkpoint 2.1 — Retrieval Strategy Design and Baseline Implementation (starter).
 Jupytext-style cell markers (# %% / # %% [markdown]) — runnable as a
 plain script AND openable as cells in VS Code / PyCharm / Jupytext.

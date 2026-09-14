@@ -1,0 +1,16 @@
+question,grading_notes,original_question,original_order,paraphrase_order,retriever,response,score
+"How many species belong to the genus Morus, and what are the three most common ones called using color-based common names?","A correct answer must state that Morus consists of 19 species and identify the three common species as white mulberry (Morus alba), red mulberry (Morus rubra), and black mulberry (Morus nigra).","How many species are in the genus Morus, and what are the three most common species called by color-based common names?",0,1,lexical,"The genus **Morus** “**consists of 19 species of deciduous trees** commonly known as mulberries.”
+
+The “**three most common**” are referred to as **white, red, and black mulberry**, corresponding to:
+- **Morus alba** — white
+- **Morus rubra** — red
+- **Morus nigra** — black
+
+The excerpt notes that these names come from “**the color of their dormant buds and not necessarily the fruit color**.”",pass
+"How many species are there in the genus Morus, and what are the three most common species known by their color-based common names?","A correct answer must state that Morus consists of 19 species and identify the three common species as white mulberry (Morus alba), red mulberry (Morus rubra), and black mulberry (Morus nigra).","How many species are in the genus Morus, and what are the three most common species called by color-based common names?",0,0,lexical,"The genus **Morus** “**consists of 19 species of deciduous trees** commonly known as mulberries.”
+
+The **three most common** are “**white, red, and black**,” referring to the species **“Morus alba, M. rubra, and M. nigra, respectively.”**",pass
+"What did the lead text say was Michael Jackson’s final album, and what special distinction did it have regarding production cost?",A correct answer must name Invincible (2001) and state that it is the most expensive album ever made.,"According to the lead text, what was Michael Jackson’s final album, and what distinction does it hold in terms of production cost?",1,1,lexical,"The provided excerpts do **not** say what Michael Jackson’s final album was.
+
+The only mention of a “final product” says the Jackson 5 were Motown’s final product of its “production line,” which is about the group, not a final Michael Jackson album. The excerpts also do **not** give any special distinction about a Michael Jackson album’s production cost.",fail
+"According to the lead text, what was Michael Jackson’s last album, and what was notable about its production cost?",A correct answer must name Invincible (2001) and state that it is the most expensive album ever made.,"According to the lead text, what was Michael Jackson’s final album, and what distinction does it hold in terms of production cost?",1,0,lexical,"According to the excerpt, Michael Jackson’s last album was **_Xscape_**, described as “**an album of unreleased material**,” released on May 13, 2014. The excerpt does **not** mention anything about its production cost.",fail

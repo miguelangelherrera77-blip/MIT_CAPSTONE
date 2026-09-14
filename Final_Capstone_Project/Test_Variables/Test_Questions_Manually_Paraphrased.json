@@ -1,0 +1,11 @@
+[
+  {
+    "original_question": "What is the capital and largest city of Mali?",
+    "paraphrased_question1": "Which city is both the capital and largest city of Mali?",
+    "paraphrased_question2": "What city serves as Mali's capital and largest urban center?",
+    "grading_notes": "A correct answer must name Bamako as both the capital and largest city of Mali.",
+    "sources": [
+      "Mali.html"
+    ]
+  }
+]

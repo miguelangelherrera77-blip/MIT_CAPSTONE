@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Graph_Database.schema.json",
+  "title": "Wikipedia Graph Database Schema",
+  "description": "Schema for the serialized Wikipedia Knowledge Graph Database (NetworkX Node-Link property graph representation). Defines Article and Chunk node entities, hierarchical containment, sequential intra-article adjacency, and labeled semantic hyperlink edges.",
+  "type": "object",
+  "properties": {
+    "graph": {
+      "$ref": "#/$defs/graphMetadata"
+    },
+    "directed": {
+      "type": "boolean",
+      "const": true,
+      "description": "Specifies whether the graph is directed."
+    },
+    "multigraph": {
+      "type": "boolean",
+      "description": "Specifies whether multiple parallel edges are permitted between node pairs."
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/graphNode"
+      },
+      "description": "Ordered list of graph nodes (Article and Chunk entities)."
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/graphEdge"
+      },
+      "description": "Ordered list of directed property edges between nodes."
+    }
+  },
+  "required": [
+    "directed",
+    "nodes",
+    "links"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "graphMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable name of the graph instance."
+        },
+        "description": {
+          "type": "string",
+          "description": "Overview of the graph database topology and purpose."
+        },
+        "version": {
+          "type": "string",
+          "description": "Schema or dataset version string."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO-8601 creation timestamp."
+        },
+        "node_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of nodes in the graph."
+        },
+        "edge_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of edges in the graph."
+        }
+      },
+      "additionalProperties": true
+    },
+    "graphNode": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/articleNode"
+        },
+        {
+          "$ref": "#/$defs/chunkNode"
+        }
+      ]
+    },
+    "articleNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^article:.+$",
+          "description": "Unique node identifier prefixed with article: (e.g., article:100_metres)."
+        },
+        "node_type": {
+          "type": "string",
+          "const": "Article",
+          "description": "Discriminator identifying document-level Article nodes."
+        },
+        "article_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Canonical article stem identifier matching the HTML file stem."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable Wikipedia article title."
+        },
+        "source": {
+          "type": "string",
+          "pattern": "\\.html$",
+          "description": "Source Wikipedia HTML filename (e.g., 100_metres.html)."
+        },
+        "source_suffix": {
+          "type": "string",
+          "const": ".html",
+          "description": "Source file extension."
+        },
+        "file_size_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Source HTML file size in bytes."
+        }
+      },
+      "required": [
+        "id",
+        "node_type",
+        "article_id",
+        "title",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "chunkNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^chunk:.+::chunk-\\d{4}$",
+          "description": "Unique chunk node identifier prefixed with chunk: (e.g., chunk:100_metres::chunk-0003)."
+        },
+        "node_type": {
+          "type": "string",
+          "const": "Chunk",
+          "description": "Discriminator identifying chunk-level text nodes."
+        },
+        "chunk_id": {
+          "type": "string",
+          "pattern": "^.+::chunk-\\d{4}$",
+          "description": "Stable chunk record identifier without the chunk: prefix."
+        },
+        "document_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Parent article stem identifier."
+        },
+        "source": {
+          "type": "string",
+          "pattern": "\\.html$",
+          "description": "Source Wikipedia HTML filename."
+        },
+        "chunk_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based sequential position of this chunk within its article."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Normalized text content of the chunk."
+        },
+        "start_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Character start offset in the original document text."
+        }
+      },
+      "required": [
+        "id",
+        "node_type",
+        "chunk_id",
+        "document_id",
+        "source",
+        "chunk_index",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "graphEdge": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/containsEdge"
+        },
+        {
+          "$ref": "#/$defs/nextChunkEdge"
+        },
+        {
+          "$ref": "#/$defs/previousChunkEdge"
+        },
+        {
+          "$ref": "#/$defs/linksToEdge"
+        }
+      ]
+    },
+    "containsEdge": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^article:.+$",
+          "description": "Source Article node identifier."
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^chunk:.+$",
+          "description": "Target Chunk node identifier."
+        },
+        "edge_type": {
+          "type": "string",
+          "const": "contains",
+          "description": "Parent-to-child hierarchical containment relationship."
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "edge_type"
+      ],
+      "additionalProperties": false
+    },
+    "nextChunkEdge": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^chunk:.+$",
+          "description": "Preceding Chunk node identifier."
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^chunk:.+$",
+          "description": "Succeeding Chunk node identifier."
+        },
+        "edge_type": {
+          "type": "string",
+          "const": "next_chunk",
+          "description": "Forward sequential adjacency relationship within an article."
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "edge_type"
+      ],
+      "additionalProperties": false
+    },
+    "previousChunkEdge": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^chunk:.+$",
+          "description": "Succeeding Chunk node identifier."
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^chunk:.+$",
+          "description": "Preceding Chunk node identifier."
+        },
+        "edge_type": {
+          "type": "string",
+          "const": "previous_chunk",
+          "description": "Backward sequential adjacency relationship within an article."
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "edge_type"
+      ],
+      "additionalProperties": false
+    },
+    "linksToEdge": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^chunk:.+$",
+          "description": "Referencing Chunk node identifier containing the hyperlink."
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^article:.+$",
+          "description": "Target Article node identifier referenced by the hyperlink."
+        },
+        "edge_type": {
+          "type": "string",
+          "const": "links_to",
+          "description": "Semantic inter-article hyperlink relationship."
+        },
+        "link_label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Anchor text label extracted from the HTML <a> tag (e.g., Usain Bolt, gold)."
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "edge_type",
+        "link_label"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

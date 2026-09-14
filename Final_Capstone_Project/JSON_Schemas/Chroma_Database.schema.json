@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Chroma_Database.schema.json",
+  "title": "Chroma Vector Database Schema",
+  "description": "Schema for the Capstone Chroma Vector Database collections, persisted document embeddings, index configurations, and vector search query/result payloads.",
+  "type": "object",
+  "properties": {
+    "collection_name": {
+      "type": "string",
+      "minLength": 1,
+      "default": "langchain",
+      "description": "Name of the Chroma vector collection."
+    },
+    "embedding_model": {
+      "type": "string",
+      "minLength": 1,
+      "default": "openai/text-embedding-3-small",
+      "description": "Model identifier used to produce vector embeddings."
+    },
+    "embedding_dimension": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1536,
+      "description": "Dimensionality of dense float vector embeddings."
+    },
+    "distance_metric": {
+      "type": "string",
+      "enum": [
+        "l2",
+        "cosine",
+        "ip"
+      ],
+      "default": "l2",
+      "description": "Distance function used by the HNSW index space."
+    },
+    "index_config": {
+      "$ref": "#/$defs/hnswConfig"
+    },
+    "total_records": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of documents stored in the collection."
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/chromaDocumentRecord"
+      },
+      "description": "Array of individual document records with embeddings and metadata."
+    }
+  },
+  "required": [
+    "collection_name",
+    "embedding_dimension",
+    "distance_metric",
+    "records"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "hnswConfig": {
+      "type": "object",
+      "properties": {
+        "ef_construction": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100,
+          "description": "Size of the dynamic candidate list during HNSW index construction."
+        },
+        "max_neighbors": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 16,
+          "description": "Maximum number of bidirectional outgoing links per node (M parameter)."
+        },
+        "ef_search": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 100,
+          "description": "Size of the dynamic candidate list during nearest-neighbor search."
+        },
+        "space": {
+          "type": "string",
+          "enum": [
+            "l2",
+            "cosine",
+            "ip"
+          ],
+          "default": "l2",
+          "description": "Vector distance metric."
+        },
+        "num_threads": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Worker threads allocated for index construction."
+        },
+        "batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 50,
+          "description": "Embedding insertion batch size."
+        }
+      },
+      "additionalProperties": true
+    },
+    "chromaDocumentRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^.+::chunk-\\d{4}$",
+          "description": "Globally unique chunk identifier (e.g., 100_metres::chunk-0000)."
+        },
+        "document": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Raw text content payload stored for retrieval."
+        },
+        "embedding": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1536,
+          "maxItems": 1536,
+          "description": "1536-dimensional float vector embedding produced by the embedding model."
+        },
+        "metadata": {
+          "$ref": "#/$defs/chromaChunkMetadata"
+        }
+      },
+      "required": [
+        "id",
+        "document",
+        "metadata"
+      ],
+      "additionalProperties": false
+    },
+    "chromaChunkMetadata": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "\\.html$",
+          "description": "Source Wikipedia HTML filename (e.g., 100_metres.html)."
+        },
+        "document_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable article identifier matching the HTML file stem."
+        },
+        "chunk_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based sequential index of the chunk in the parent article."
+        },
+        "start_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Character start offset in the original document text."
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^.+::chunk-\\d{4}$",
+          "description": "Optional redundant chunk identifier within metadata."
+        }
+      },
+      "required": [
+        "source",
+        "document_id",
+        "chunk_index"
+      ],
+      "additionalProperties": true
+    },
+    "vectorQueryResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Chunk identifier of the retrieved match."
+        },
+        "document": {
+          "type": "string",
+          "description": "Retrieved text content."
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Raw L2 Euclidean distance returned by Chroma."
+        },
+        "normalized_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Inverted normalized similarity score (1.0 - normalized distance)."
+        },
+        "metadata": {
+          "$ref": "#/$defs/chromaChunkMetadata"
+        }
+      },
+      "required": [
+        "id",
+        "document",
+        "distance",
+        "metadata"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
