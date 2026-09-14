@@ -54,6 +54,7 @@ import os
 import re
 import json
 import asyncio
+import sys
 from abc import ABC, abstractmethod
 from datetime import datetime
 from pathlib import Path
@@ -67,6 +68,10 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from openai import OpenAI
 from rank_bm25 import BM25Okapi
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from Final_Capstone_Project.Utility_Scripts.ragas_vertexai_shim import ensure_ragas_vertexai_shim
+
+ensure_ragas_vertexai_shim()
 from ragas import Dataset, experiment
 from ragas.llms import llm_factory
 from ragas.metrics import DiscreteMetric

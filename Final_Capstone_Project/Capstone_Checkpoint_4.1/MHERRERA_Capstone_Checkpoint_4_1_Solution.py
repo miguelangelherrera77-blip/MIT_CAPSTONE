@@ -73,7 +73,9 @@ from Final_Capstone_Project.Ranking_Techniques.weighted_fusion_ranking import (
     WEIGHT_BM25,
     WEIGHT_VECTOR,
 )
+from Final_Capstone_Project.Utility_Scripts.ragas_vertexai_shim import ensure_ragas_vertexai_shim
 
+ensure_ragas_vertexai_shim()
 from ragas import Dataset
 from ragas.llms import llm_factory
 from ragas.metrics import DiscreteMetric

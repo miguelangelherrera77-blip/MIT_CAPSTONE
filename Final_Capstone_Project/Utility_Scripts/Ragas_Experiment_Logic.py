@@ -21,6 +21,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable
 
+from Final_Capstone_Project.Utility_Scripts.ragas_vertexai_shim import ensure_ragas_vertexai_shim
+
+ensure_ragas_vertexai_shim()
 from ragas import Dataset, experiment
 
 

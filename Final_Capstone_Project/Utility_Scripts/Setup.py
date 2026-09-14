@@ -52,12 +52,25 @@ def _openrouter_key_status() -> str:
     return "missing"
 
 
+def _prompt_choice(prompt: str) -> str:
+    """Read a line of input, failing with a clear message when no TTY is available."""
+    try:
+        return input(prompt).strip().lower()
+    except EOFError:
+        raise SystemExit(
+            "[error] No input available to answer the confirmation prompt above. "
+            "Re-run Setup.py from an interactive terminal, or resolve the condition without --build."
+        ) from None
+    except KeyboardInterrupt:
+        raise SystemExit("\n[quit] Setup cancelled by user.") from None
+
+
 def confirm_continue_without_key(key_status: str) -> bool:
     """Checkpoint: warn that the OpenRouter key looks unusable before spending an API call."""
     print(f"[checkpoint] OPENROUTER_API_KEY is {key_status} in the root .env file.")
     print("[checkpoint] Update .env with your real OpenRouter key, e.g.: OPENROUTER_API_KEY=sk-or-v1-...")
     while True:
-        answer = input("[confirm] Continue with ChromaDB anyway (it will fail with a 401 error)? [y]es/[n]o/[q]uit: ").strip().lower()
+        answer = _prompt_choice("[confirm] Continue with ChromaDB anyway (it will fail with a 401 error)? [y]es/[n]o/[q]uit: ")
         if answer in ("y", "yes"):
             return True
         if answer in ("n", "no"):
@@ -233,7 +246,7 @@ def ensure_placeholder_files(created: list[Path]) -> None:
 def confirm_rebuild(job_name: str, target: str) -> bool:
     """Ask the user whether to rebuild existing output; 'q' exits Setup.py immediately."""
     while True:
-        answer = input(f"[confirm] Rebuild {job_name}? Existing output found at {target}. [y]es/[n]o/[q]uit: ").strip().lower()
+        answer = _prompt_choice(f"[confirm] Rebuild {job_name}? Existing output found at {target}. [y]es/[n]o/[q]uit: ")
         if answer in ("y", "yes"):
             return True
         if answer in ("n", "no"):

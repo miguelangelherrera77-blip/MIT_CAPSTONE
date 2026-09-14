@@ -169,6 +169,8 @@ A delta below `-5%` is reported as brittle to rephrasing. A delta above `+5%` is
 
 On startup, the solution runs the local preflight setup before displaying the menu. It invokes [Setup.py](Final_Capstone_Project/Utility_Scripts/Setup.py) with `--build`, which requires the Wikipedia HTML corpus under [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/). The build creates or reuses the Wikipedia JSONL corpus, ChromaDB, GraphDB, and BM25 indexes, each with a separate progress stage. Existing valid generated artifacts are reused; `--rebuild` regenerates JSONL, GraphDB, and BM25 outputs when supplied directly to Setup.py.
 
+Both checkpoints import `ragas`, which currently has an unrelated upstream bug ([explodinggradients/ragas#2995](https://github.com/explodinggradients/ragas/issues/2995)) that raises `ModuleNotFoundError: langchain_community.chat_models.vertexai` on import. [ragas_vertexai_shim.py](Final_Capstone_Project/Utility_Scripts/ragas_vertexai_shim.py) registers an inert stub for that module before `ragas` is imported in the Checkpoint 3.1 solution, the Checkpoint 4.1 solution, and [Ragas_Experiment_Logic.py](Final_Capstone_Project/Utility_Scripts/Ragas_Experiment_Logic.py). It is a no-op once the real module becomes importable, so it can stay in place after ragas ships an upstream fix.
+
 To run the solution directly from the repository root:
 
 ```powershell
@@ -177,7 +179,15 @@ To run the solution directly from the repository root:
 
 Setup.py creates the host-specific `.venv`, installs missing dependencies when the venv is first created, creates missing runtime directories and a root [.env](.env) template when needed, and appends generated artifact paths to the local ignore file. Setup output is logged to [Final_Capstone_Project/Utility_Scripts/Logs/Setup.log](Final_Capstone_Project/Utility_Scripts/Logs/Setup.log). The `.env` file, generated databases, and logs are local runtime artifacts; the current repository also contains the Wikipedia HTML corpus.
 
-The `--build` jobs have different network behavior. HTML chunking, GraphDB creation, and BM25 index creation process local files only. The ChromaDB builder sends chunks to OpenRouter for embeddings when it must create a database; an existing valid Chroma database is reused. `--build --rebuild` forces new JSONL, GraphDB, and BM25 outputs, but the Chroma builder is invoked without its rebuild action by this setup script. The Checkpoint 1.1-4.1 solutions and the Checkpoint 3.1 question generators also use OpenRouter for chat responses, embeddings, or evaluation when run.
+The `--build` jobs have different network behavior. HTML chunking, GraphDB creation, and BM25 index creation process local files only, and Setup.py runs them before the API-backed job so local artifacts are still produced even without a configured key. The ChromaDB builder sends chunks to OpenRouter for embeddings when it must create a database; an existing valid Chroma database is reused. `--build --rebuild` forces new JSONL, GraphDB, and BM25 outputs, but the Chroma builder is invoked without its rebuild action by this setup script. The Checkpoint 1.1-4.1 solutions and the Checkpoint 3.1 question generators also use OpenRouter for chat responses, embeddings, or evaluation when run.
+
+Setup.py checks each job's expected output before running it:
+- JSONL chunking, GraphDB, and BM25 are skipped with a `[skip] ... already exist at ...` message when valid output is already present.
+- ChromaDB is skipped the same way when the database already contains a valid collection segment (not just a bare `chroma.sqlite3`, which can exist from an interrupted run with no embedded data).
+- If `--rebuild` targets existing valid output, or if any job's directory has existing but incomplete/corrupt content, Setup.py prompts before overwriting it: `[confirm] Rebuild <job>? ... [y]es/[n]o/[q]uit:`. Answering `n` preserves the existing content and skips that job; `q` exits Setup.py immediately without touching anything further.
+- Before running ChromaDB, Setup.py checks whether `OPENROUTER_API_KEY` is still the placeholder value or unset and prompts before attempting a call that would otherwise fail with a 401 error.
+- Each job's own progress bar is shown in the console (Setup.py no longer suppresses subprocess output), alongside a `[build] Running <job> (job i/N)` header.
+- These confirmation prompts fail with a clear message rather than a raw traceback if Setup.py is ever run without an interactive terminal (no TTY).
 
 #### ChromaDB token and cost estimate
 The estimate below was calculated on September 14, 2026 by tokenizing the `text` field of every JSONL record with the tokenizer selected for `text-embedding-3-small`. It covers embedding input only; it does not include chat-completion or RAGAS calls. The dollar estimate uses an assumed input price of `$0.02 per 1M tokens`, which should be replaced with the effective OpenRouter rate shown in the account before running a large build.
