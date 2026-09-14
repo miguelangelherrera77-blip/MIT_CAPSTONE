@@ -32,6 +32,41 @@ VENV_DIR = REPO_ROOT / ".venv"
 REQUIREMENTS_PATH = REPO_ROOT / "venv_requirements.txt"
 
 
+PLACEHOLDER_OPENROUTER_KEY = "your_openrouter_key_here"
+
+
+def _openrouter_key_status() -> str:
+    """Return 'set', 'placeholder', or 'missing' for the configured OpenRouter key."""
+    env_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
+    if env_key:
+        return "placeholder" if env_key == PLACEHOLDER_OPENROUTER_KEY else "set"
+
+    env_path = REPO_ROOT / ".env"
+    if env_path.is_file():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            if line.strip().startswith("OPENROUTER_API_KEY"):
+                _, _, value = line.partition("=")
+                value = value.strip()
+                if value:
+                    return "placeholder" if value == PLACEHOLDER_OPENROUTER_KEY else "set"
+    return "missing"
+
+
+def confirm_continue_without_key(key_status: str) -> bool:
+    """Checkpoint: warn that the OpenRouter key looks unusable before spending an API call."""
+    print(f"[checkpoint] OPENROUTER_API_KEY is {key_status} in the root .env file.")
+    print("[checkpoint] Update .env with your real OpenRouter key, e.g.: OPENROUTER_API_KEY=sk-or-v1-...")
+    while True:
+        answer = input("[confirm] Continue with ChromaDB anyway (it will fail with a 401 error)? [y]es/[n]o/[q]uit: ").strip().lower()
+        if answer in ("y", "yes"):
+            return True
+        if answer in ("n", "no"):
+            return False
+        if answer in ("q", "quit"):
+            raise SystemExit("[quit] Setup cancelled by user.")
+        print("[input] Please answer y, n, or q.")
+
+
 def virtual_environment_python() -> Path:
     """Return the venv Python path for the current host operating system."""
     executable_name = "python.exe" if os.name == "nt" else "python"
@@ -141,6 +176,31 @@ def ensure_expected_directories(created: list[Path]) -> None:
         ensure_directory(directory, created)
 
 
+def _bm25_index_is_valid(index_dir: Path) -> bool:
+    """Mirror Build_Wikipedia_BM25_Index.py's own validity check."""
+    if not index_dir.is_dir():
+        return False
+    names = {path.name.lower() for path in index_dir.iterdir() if path.is_file()}
+    modern = {"params.index.json", "vocab.index.json", "documents.json"}
+    legacy = {"index.json", "documents.json"}
+    return modern.issubset(names) or legacy.issubset(names)
+
+
+def _chroma_db_has_data(db_dir: Path) -> bool:
+    """Mirror Build_Wikipedia_Article_ChromaDB.py's own validity check."""
+    if not db_dir.is_dir():
+        return False
+    sqlite_path = db_dir / "chroma.sqlite3"
+    if not sqlite_path.is_file() or sqlite_path.stat().st_size == 0:
+        return False
+    # chroma.sqlite3 alone can exist from an interrupted run with no embedded data;
+    # a collection segment directory is only written once vectors are persisted.
+    return any(
+        path.is_dir() and any(child.is_file() for child in path.iterdir())
+        for path in db_dir.iterdir()
+    )
+
+
 def ensure_placeholder_files(created: list[Path]) -> None:
     """Create lightweight placeholders for required local directories when they are empty."""
     placeholder_files = [
@@ -170,6 +230,29 @@ def ensure_placeholder_files(created: list[Path]) -> None:
         created.append(bm25_dir / "README.txt")
 
 
+def confirm_rebuild(job_name: str, target: str) -> bool:
+    """Ask the user whether to rebuild existing output; 'q' exits Setup.py immediately."""
+    while True:
+        answer = input(f"[confirm] Rebuild {job_name}? Existing output found at {target}. [y]es/[n]o/[q]uit: ").strip().lower()
+        if answer in ("y", "yes"):
+            return True
+        if answer in ("n", "no"):
+            return False
+        if answer in ("q", "quit"):
+            raise SystemExit("[quit] Setup cancelled by user.")
+        print("[input] Please answer y, n, or q.")
+
+
+def _chroma_dir_has_existing_content(db_dir: Path) -> bool:
+    """Return True if the directory holds anything beyond the placeholder scaffold file."""
+def _dir_has_existing_content(path: Path) -> bool:
+    """Return True if the directory holds anything beyond the placeholder scaffold file."""
+    if not path.is_dir():
+        return False
+    placeholder_names = {"readme.txt", "readme.md", ".gitkeep"}
+    return any(child.name.lower() not in placeholder_names for child in path.iterdir())
+
+
 def build_database_if_requested(
     build: bool,
     python_path: Path,
@@ -190,55 +273,128 @@ def build_database_if_requested(
         print("[info] Add HTML files or JSONL files first, then rerun Setup.py --build.")
         return
 
+    # Local, non-API jobs run first so they still complete when no API key is configured.
+    # Each job is only invoked when its output is missing, incomplete, or explicitly --rebuild.
+    graph_file = PROJECT_DIR / "Capstone_Database" / "Capstone_Graph_DB" / "wikipedia_articles.graphml"
+    graph_file_valid = graph_file.is_file() and graph_file.stat().st_size > 0
+    bm25_dir = PROJECT_DIR / "Capstone_Database" / "Capstone_BM25_Lexical_Indexes"
+    chroma_dir = PROJECT_DIR / "Capstone_Database" / "Capstone_Chroma_DB"
+
     commands: list[tuple[str, list[str]]] = []
-    if html_files:
+    if html_files and jsonl_files and rebuild:
+        if confirm_rebuild("HTML chunking (Wikipedia_JSONL)", str(jsonl_dir)):
+            commands.append(
+                (
+                    "Wikipedia_JSONL",
+                    [str(python_path), str(SCRIPT_DIR / "Chunk_Wikipedia_HTML_To_JSONL.py"), "--rebuild"],
+                )
+            )
+        else:
+            print(f"[skip] Keeping {len(jsonl_files)} existing JSONL file(s); rebuild declined.")
+    elif html_files and not jsonl_files:
         commands.append(
             (
                 "Wikipedia_JSONL",
-                [
-                    str(python_path),
-                    str(SCRIPT_DIR / "Chunk_Wikipedia_HTML_To_JSONL.py"),
-                    *( ["--rebuild"] if rebuild else [] ),
-                ],
+                [str(python_path), str(SCRIPT_DIR / "Chunk_Wikipedia_HTML_To_JSONL.py")],
             )
         )
     else:
-        print(f"[skip] Using {len(jsonl_files)} existing JSONL file(s); HTML chunking is not required.")
+        print(f"[skip] Wikipedia_JSONL skipped: {len(jsonl_files)} JSONL file(s) already exist at {jsonl_dir}.")
 
-    commands.extend(
-        [
-        (
-            "ChromaDB",
-            [
-                str(python_path),
-                str(SCRIPT_DIR / "Build_Wikipedia_Article_ChromaDB.py"),
-                "openrouter",
-            ],
-        ),
-        (
-            "BM25",
-            [
-                str(python_path),
-                str(SCRIPT_DIR / "Build_Wikipedia_BM25_Index.py"),
-                *( ["--rebuild"] if rebuild else [] ),
-            ],
-        ),
-        ]
-    )
-    if html_files:
-        commands.insert(
-            2,
+    if html_files and graph_file_valid and rebuild:
+        if confirm_rebuild("GraphDB", str(graph_file)):
+            commands.append(
+                (
+                    "GraphDB",
+                    [str(python_path), str(SCRIPT_DIR / "Build_Wikipedia_Article_GraphDB.py"), "--rebuild"],
+                )
+            )
+        else:
+            print(f"[skip] Keeping existing GraphML output; rebuild declined: {graph_file}")
+    elif html_files and not graph_file_valid and graph_file.exists():
+        if confirm_rebuild("GraphDB (existing output appears invalid or incomplete)", str(graph_file)):
+            commands.append(
+                (
+                    "GraphDB",
+                    [str(python_path), str(SCRIPT_DIR / "Build_Wikipedia_Article_GraphDB.py"), "--rebuild"],
+                )
+            )
+        else:
+            print(f"[skip] Keeping invalid GraphML output as-is; rebuild declined: {graph_file}")
+    elif html_files and not graph_file_valid:
+        commands.append(
             (
                 "GraphDB",
-                [
-                    str(python_path),
-                    str(SCRIPT_DIR / "Build_Wikipedia_Article_GraphDB.py"),
-                    *( ["--rebuild"] if rebuild else [] ),
-                ],
-            ),
+                [str(python_path), str(SCRIPT_DIR / "Build_Wikipedia_Article_GraphDB.py")],
+            )
         )
+    elif html_files:
+        print(f"[skip] GraphDB skipped: GraphML output already exists at {graph_file}.")
     else:
         print("[skip] GraphDB requires HTML files; no GraphDB job will run.")
+
+    bm25_valid = _bm25_index_is_valid(bm25_dir)
+    if bm25_valid and rebuild:
+        if confirm_rebuild("BM25 index", str(bm25_dir)):
+            commands.append(
+                (
+                    "BM25",
+                    [str(python_path), str(SCRIPT_DIR / "Build_Wikipedia_BM25_Index.py"), "--rebuild"],
+                )
+            )
+        else:
+            print(f"[skip] Keeping existing bm25s index; rebuild declined: {bm25_dir}")
+    elif not bm25_valid and _dir_has_existing_content(bm25_dir):
+        if confirm_rebuild("BM25 index (existing content appears invalid or incomplete)", str(bm25_dir)):
+            commands.append(
+                (
+                    "BM25",
+                    [str(python_path), str(SCRIPT_DIR / "Build_Wikipedia_BM25_Index.py"), "--rebuild"],
+                )
+            )
+        else:
+            print(f"[skip] Keeping invalid bm25s index as-is; rebuild declined: {bm25_dir}")
+    elif not bm25_valid:
+        commands.append(
+            (
+                "BM25",
+                [str(python_path), str(SCRIPT_DIR / "Build_Wikipedia_BM25_Index.py")],
+            )
+        )
+    else:
+        print(f"[skip] BM25 skipped: index already exists at {bm25_dir}.")
+
+    # ChromaDB calls the OpenRouter embedding API; run it last, and only when data is missing.
+    # Setup.py never forces a Chroma rebuild via --rebuild, to avoid re-spending on embeddings
+    # unintentionally, but an existing incomplete/corrupt directory still needs confirmation
+    # before its contents are replaced.
+    if _chroma_db_has_data(chroma_dir):
+        print(f"[skip] ChromaDB skipped: database already exists at {chroma_dir}.")
+    else:
+        proceed = True
+        if _dir_has_existing_content(chroma_dir):
+            proceed = confirm_rebuild("ChromaDB (incomplete or corrupt database found)", str(chroma_dir))
+            if not proceed:
+                print(f"[skip] Keeping incomplete Chroma database as-is; rebuild declined: {chroma_dir}")
+
+        if proceed:
+            key_status = _openrouter_key_status()
+            if key_status != "set":
+                proceed = confirm_continue_without_key(key_status)
+                if not proceed:
+                    print("[skip] ChromaDB build skipped until OPENROUTER_API_KEY is configured.")
+
+        if proceed:
+            commands.append(
+                (
+                    "ChromaDB",
+                    [
+                        str(python_path),
+                        str(SCRIPT_DIR / "Build_Wikipedia_Article_ChromaDB.py"),
+                        "openrouter",
+                    ],
+                )
+            )
 
     generated_files_before = {
         path
@@ -252,10 +408,12 @@ def build_database_if_requested(
         for path in generated_dir.rglob("*")
         if path.is_file()
     }
-    for database_name, command in commands:
-        print(f"[build] Running {database_name}")
+    total_jobs = len(commands)
+    for job_number, (database_name, command) in enumerate(commands, start=1):
+        print(f"[build] Running {database_name} (job {job_number}/{total_jobs})")
         try:
-            subprocess.run(command, check=True, cwd=str(SCRIPT_DIR), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            # Inherit stdout/stderr so each script's own tqdm progress bar is visible.
+            subprocess.run(command, check=True, cwd=str(SCRIPT_DIR))
         except subprocess.CalledProcessError as exc:
             print(f"[error] Command failed with exit code {exc.returncode}: {' '.join(str(part) for part in command)}")
             print("[info] The directory scaffolding was still created; the database build requires the corpus and runtime dependencies.")

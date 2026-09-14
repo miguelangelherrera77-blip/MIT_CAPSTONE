@@ -62,20 +62,20 @@ def validate_database_directory(db_dir: Path) -> Path:
 
 
 def database_has_data(db_dir: Path) -> bool:
-    """Return True only when the directory contains a real persisted Chroma database."""
+    """Return True only when a real persisted Chroma database with embedded vectors is present."""
     if not db_dir.is_dir():
         return False
 
-    for path in db_dir.iterdir():
-        name = path.name.lower()
-        if path.is_file() and name == "chroma.sqlite3":
-            return True
-        if path.is_dir() and any(child.is_file() for child in path.iterdir()):
-            return True
-        if path.is_file() and name not in PLACEHOLDER_FILENAMES and path.stat().st_size > 0:
-            return True
+    sqlite_path = db_dir / "chroma.sqlite3"
+    if not sqlite_path.is_file() or sqlite_path.stat().st_size == 0:
+        return False
 
-    return False
+    # Chroma only writes a collection segment directory once vectors are actually persisted;
+    # chroma.sqlite3 alone can exist from an interrupted run with no embedded data.
+    return any(
+        path.is_dir() and any(child.is_file() for child in path.iterdir())
+        for path in db_dir.iterdir()
+    )
 
 
 def ensure_jsonl(jsonl_dir: Path) -> list[Path]:
