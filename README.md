@@ -27,6 +27,8 @@ This repository contains the capstone RAG project for a Wikipedia Retrieval Engi
 | Checkpoint 2.1 | Retrieval strategy and baseline implementation | [Checkpoint 2.1](#capstone-checkpoint-21) |
 | Checkpoint 3.1 | RAGAS evaluation and paraphrase robustness | [Checkpoint 3.1](#capstone-checkpoint-31) |
 | Checkpoint 4.1 | Advanced retrieval and evaluation harness | [Checkpoint 4.1](#capstone-checkpoint-41) |
+| Checkpoint 4.1 Testing | Category-based testing results and analysis | [Testing results and analysis](#testing-results-and-analysis) |
+| Checkpoint 4.1 Test Summary | Human-readable summary of Checkpoint 4.1 test runs | [detailed_test_results.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log) |
 | Setup and Local Data | Bootstrap commands and generated local data | [Setup](#setup-and-local-data) |
 | ChromaDB Cost Estimate | Token count and estimated embedding cost | [Cost Estimate](#chromadb-token-and-cost-estimate) |
 | Key Project Areas | Source modules and supporting project areas | [Project Areas](#key-project-areas) |
@@ -194,7 +196,7 @@ Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_
 
 The recorded sample runs show that performance depends on both retrieval method and question wording. For example, a hybrid run on original questions passed `6/8` (`75%`), while a semantic run on paraphrased questions passed `11/16` (`69%`). The difference suggests some loss of robustness after rephrasing, but these are sample runs rather than a definitive ranking because the datasets, methods, and question counts differ.
 
-Use the `evaluation_category` column to analyze which capabilities are responsible for passes and failures instead of relying only on the overall average. The Checkpoint 4.1 summary reports per-category pass counts and rates, and the side-by-side report includes original-versus-paraphrase deltas for each category. The human-readable summary is stored in [Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log), with detailed per-question evidence in the experiment CSV files.
+Use the `evaluation_category` column to analyze which capabilities are responsible for passes and failures instead of relying only on the overall average. The Checkpoint 4.1 summary reports per-category pass counts and rates, and the side-by-side report includes original-versus-paraphrase deltas for each category. The human-readable [Checkpoint 4.1 test summary](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log) is stored in `detailed_test_results.log`, with detailed per-question evidence in the experiment CSV files.
 
 #### ChromaDB token and cost estimate
 The estimate below was calculated on September 14, 2026 by tokenizing the `text` field of every JSONL record with the tokenizer selected for `text-embedding-3-small`. It covers embedding input only; it does not include chat-completion or RAGAS calls. The dollar estimate uses an assumed input price of `$0.02 per 1M tokens`, which should be replaced with the effective OpenRouter rate shown in the account before running a large build.
