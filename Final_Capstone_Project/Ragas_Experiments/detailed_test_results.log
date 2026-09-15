@@ -1,321 +1,357 @@
 ================================================================================
-TEST SESSION  |  2026-09-14 11:16:53
+TEST SESSION  |  2026-09-14 21:40:55
+================================================================================
+Test type   : RAGAS correctness evaluation (All search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:40:55
+Config      : Search=All, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: MAIN QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 5/8 (62%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_214018_main-elegant_narayen.csv
+  Dataset source: manual-generated questions
+  Failures    : 3 question(s) FAILED
+    1. According to the lead text, what were the two main coalitions that fought in World War II?
+    2. Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+    3. Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/1 (0%)
+  factual_retrieval             : 2/2 (100%)
+  multi_fact                    : 1/2 (50%)
+  obscure_knowledge             : 1/1 (100%)
+  out_of_corpus_abstention      : 1/1 (100%)
+  quotation_fidelity            : 0/1 (0%)
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:39:09
+================================================================================
+Test type   : RAGAS correctness evaluation (Hybrid search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:39:09
+Config      : Search=Hybrid, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: MAIN QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 6/8 (75%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_213836_main-elastic_gosling.csv
+  Dataset source: manual-generated questions
+  Failures    : 2 question(s) FAILED
+    1. Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+    2. What is the current population of Mars, according to the latest available information? If this fact is not ...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/1 (100%)
+  factual_retrieval             : 2/2 (100%)
+  multi_fact                    : 2/2 (100%)
+  obscure_knowledge             : 1/1 (100%)
+  out_of_corpus_abstention      : 0/1 (0%)
+  quotation_fidelity            : 0/1 (0%)
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:37:32
+================================================================================
+Test type   : RAGAS correctness evaluation (Graph search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:37:32
+Config      : Search=Graph, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: MAIN QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 5/8 (62%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_213656_main-brave_lamport.csv
+  Dataset source: manual-generated questions
+  Failures    : 3 question(s) FAILED
+    1. Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+    2. Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+    3. What is the current population of Mars, according to the latest available information? If this fact is not ...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/1 (0%)
+  factual_retrieval             : 2/2 (100%)
+  multi_fact                    : 2/2 (100%)
+  obscure_knowledge             : 1/1 (100%)
+  out_of_corpus_abstention      : 0/1 (0%)
+  quotation_fidelity            : 0/1 (0%)
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:35:54
 ================================================================================
 Test type   : RAGAS correctness evaluation (Semantic search; manual-generated source)
 Date        : 2026-09-14
-Time        : 11:16:53
+Time        : 21:35:54
+Config      : Search=Semantic, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: MAIN QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 6/8 (75%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_213518_main-cranky_turing.csv
+  Dataset source: manual-generated questions
+  Failures    : 2 question(s) FAILED
+    1. Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+    2. Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/1 (0%)
+  factual_retrieval             : 2/2 (100%)
+  multi_fact                    : 2/2 (100%)
+  obscure_knowledge             : 1/1 (100%)
+  out_of_corpus_abstention      : 1/1 (100%)
+  quotation_fidelity            : 0/1 (0%)
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:34:43
+================================================================================
+Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:34:43
+Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: MAIN QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 6/8 (75%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_213412_main-frosty_wilkes.csv
+  Dataset source: manual-generated questions
+  Failures    : 2 question(s) FAILED
+    1. What is the current population of Mars, according to the latest available information? If this fact is not ...
+    2. Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/1 (100%)
+  factual_retrieval             : 2/2 (100%)
+  multi_fact                    : 2/2 (100%)
+  obscure_knowledge             : 1/1 (100%)
+  out_of_corpus_abstention      : 0/1 (0%)
+  quotation_fidelity            : 0/1 (0%)
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:23:16
+================================================================================
+Test type   : RAGAS correctness evaluation (All search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:23:16
+Config      : Search=All, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 9/16 (56%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_212201_paraphrased-sleepy_cerf.csv
+  Dataset source: manual-generated questions
+  Failures    : 7 question(s) FAILED
+    1. What city serves as Mali's capital and largest urban center?
+    2. Which Egyptian ruler was identified as the final native pharaoh in the lead?
+    3. What were the two major wartime blocs identified in the opening text about World War II?
+    4. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    5. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    6. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    7. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 2/4 (50%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+  2 paraphrased question(s) tested for original: Who was the last native pharaoh of Egypt mentioned in the lead text?
+  2 paraphrased question(s) tested for original: According to the lead text, what were the two main coalitions that fought in World War II?
+  2 paraphrased question(s) tested for original: Who created the Norman Gunston character, and what kind of TV character was he?
+  2 paraphrased question(s) tested for original: What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United ...
+  2 paraphrased question(s) tested for original: Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+  2 paraphrased question(s) tested for original: Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+  2 paraphrased question(s) tested for original: What is the current population of Mars, according to the latest available information? If this fact is not ...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:19:48
+================================================================================
+Test type   : RAGAS correctness evaluation (Graph search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:19:48
+Config      : Search=Graph, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 10/16 (62%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_211840_paraphrased-mystifying_thompson.csv
+  Dataset source: manual-generated questions
+  Failures    : 6 question(s) FAILED
+    1. What city serves as Mali's capital and largest urban center?
+    2. Which Egyptian ruler was identified as the final native pharaoh in the lead?
+    3. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    4. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    5. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    6. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 2/4 (50%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+  2 paraphrased question(s) tested for original: Who was the last native pharaoh of Egypt mentioned in the lead text?
+  2 paraphrased question(s) tested for original: According to the lead text, what were the two main coalitions that fought in World War II?
+  2 paraphrased question(s) tested for original: Who created the Norman Gunston character, and what kind of TV character was he?
+  2 paraphrased question(s) tested for original: What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United ...
+  2 paraphrased question(s) tested for original: Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+  2 paraphrased question(s) tested for original: Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+  2 paraphrased question(s) tested for original: What is the current population of Mars, according to the latest available information? If this fact is not ...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:17:20
+================================================================================
+Test type   : RAGAS correctness evaluation (Hybrid search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:17:20
+Config      : Search=Hybrid, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 11/16 (69%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_211612_paraphrased-objective_dijkstra.csv
+  Dataset source: manual-generated questions
+  Failures    : 5 question(s) FAILED
+    1. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    2. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    3. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    4. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+    5. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+  2 paraphrased question(s) tested for original: Who was the last native pharaoh of Egypt mentioned in the lead text?
+  2 paraphrased question(s) tested for original: According to the lead text, what were the two main coalitions that fought in World War II?
+  2 paraphrased question(s) tested for original: Who created the Norman Gunston character, and what kind of TV character was he?
+  2 paraphrased question(s) tested for original: What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United ...
+  2 paraphrased question(s) tested for original: Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+  2 paraphrased question(s) tested for original: Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+  2 paraphrased question(s) tested for original: What is the current population of Mars, according to the latest available information? If this fact is not ...
+================================================================================
+
+================================================================================
+TEST SESSION  |  2026-09-14 21:14:28
+================================================================================
+Test type   : RAGAS correctness evaluation (Semantic search; manual-generated source)
+Date        : 2026-09-14
+Time        : 21:14:28
 Config      : Search=Semantic, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
 
 --------------------------------------------------------------------------------
 EVALUATION DATASET: PARAPHRASED QUESTIONS
 --------------------------------------------------------------------------------
-  Result      : 2/2 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20260914_111647_paraphrased-lucid_wilkes.csv
+  Result      : 11/16 (69%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_211327_paraphrased-xenodochial_carmack.csv
   Dataset source: manual-generated questions
-  Failures    : none
+  Failures    : 5 question(s) FAILED
+    1. What did people call Stilwell, and what World War II theater was he assigned to as an American general?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    4. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    5. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/2 (50%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
 
 PARAPHRASE COVERAGE PER ORIGINAL
 --------------------------------------------------------------------------------
   2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+  2 paraphrased question(s) tested for original: Who was the last native pharaoh of Egypt mentioned in the lead text?
+  2 paraphrased question(s) tested for original: According to the lead text, what were the two main coalitions that fought in World War II?
+  2 paraphrased question(s) tested for original: Who created the Norman Gunston character, and what kind of TV character was he?
+  2 paraphrased question(s) tested for original: What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United ...
+  2 paraphrased question(s) tested for original: Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+  2 paraphrased question(s) tested for original: Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+  2 paraphrased question(s) tested for original: What is the current population of Mars, according to the latest available information? If this fact is not ...
 ================================================================================
 
 ================================================================================
-TEST SESSION  |  2026-09-14 11:12:45
+TEST SESSION  |  2026-09-14 21:09:25
 ================================================================================
 Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
 Date        : 2026-09-14
-Time        : 11:12:45
+Time        : 21:09:25
 Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
 
 --------------------------------------------------------------------------------
 EVALUATION DATASET: PARAPHRASED QUESTIONS
 --------------------------------------------------------------------------------
-  Result      : 2/2 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20260914_111239_paraphrased-optimistic_torvalds.csv
+  Result      : 9/16 (56%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260914_210831_paraphrased-elastic_jobs.csv
   Dataset source: manual-generated questions
-  Failures    : none
+  Failures    : 7 question(s) FAILED
+    1. What were the two major wartime blocs identified in the opening text about World War II?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    4. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    5. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+    6. How many people currently live on Mars? If the corpus does not contain this information, say so explicitly.
+    7. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 0/2 (0%)
+  quotation_fidelity            : 0/2 (0%)
 
 PARAPHRASE COVERAGE PER ORIGINAL
 --------------------------------------------------------------------------------
   2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 20:51:06
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 20:51:06
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: MAIN QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 1/1 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_205102_main-angry_hopper.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 19:46:46
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 19:46:46
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 4/4 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_194630_paraphrased-sad_thompson.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: What is the population of Broken Arrow, Oklahoma, according to the 2020 census?
-  2 paraphrased question(s) tested for original: Why was Muhammad Ali stripped of his boxing titles in 1967?
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 19:07:05
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
-Date        : 2026-09-13
-Time        : 19:07:05
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: MAIN QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 1/1 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190659_main-dazzling_narayen.csv
-  Dataset source: manual-generated questions
-  Failures    : none
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 19:05:22
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 19:05:22
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 4/4 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190502_paraphrased-epic_yao.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: Who led Forza Italia after Silvio Berlusconi's death in 2023, and what was his role in the party before that?
-  2 paraphrased question(s) tested for original: What is the stage name of Lamont Jody Hawkins, and what does it stand for?
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 19:03:25
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 19:03:25
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 1/4 (25%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190308_paraphrased-determined_dijkstra.csv
-  Dataset source: llm-generated questions
-  Failures    : 3 question(s) FAILED
-    1. Who was the winner of the Eurovision Song Contest in 2023, and which song did they win with?
-    2. According to the lead text, what was Michael Jackson’s last album, and what was notable about its productio...
-    3. What did the lead text say was Michael Jackson’s final album, and what special distinction did it have rega...
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: Who won the Eurovision Song Contest 2023, and with which song?
-  2 paraphrased question(s) tested for original: According to the lead text, what was Michael Jackson’s final album, and what distinction does it hold in te...
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 19:00:48
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 19:00:48
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 2/4 (50%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_190027_paraphrased-wonderful_torvalds.csv
-  Dataset source: llm-generated questions
-  Failures    : 2 question(s) FAILED
-    1. According to the lead text, what was Michael Jackson’s last album, and what was notable about its productio...
-    2. What did the lead text say was Michael Jackson’s final album, and what special distinction did it have rega...
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: How many species are in the genus Morus, and what are the three most common species called by color-based c...
-  2 paraphrased question(s) tested for original: According to the lead text, what was Michael Jackson’s final album, and what distinction does it hold in te...
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 18:55:50
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 18:55:50
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 4/4 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_185533_paraphrased-bold_backus.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
-  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 18:52:31
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 18:52:31
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 4/4 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_185213_paraphrased-festive_gosling.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
-  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 18:48:32
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 18:48:32
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 4/4 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_184812_paraphrased-eloquent_matsumoto.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
-  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 18:44:23
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 18:44:23
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 4/4 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_184400_paraphrased-epic_yao.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
-  2 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 18:36:14
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
-Date        : 2026-09-13
-Time        : 18:36:14
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 2/2 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_183605_paraphrased-awesome_carmack.csv
-  Dataset source: manual-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 18:26:21
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; manual-generated source)
-Date        : 2026-09-13
-Time        : 18:26:21
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 2/2 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_182614_paraphrased-elegant_gosling.csv
-  Dataset source: manual-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
-================================================================================
-
-================================================================================
-TEST SESSION  |  2026-09-13 18:21:08
-================================================================================
-Test type   : RAGAS correctness evaluation (Lexical search; llm-generated source)
-Date        : 2026-09-13
-Time        : 18:21:08
-Config      : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
-
---------------------------------------------------------------------------------
-EVALUATION DATASET: PARAPHRASED QUESTIONS
---------------------------------------------------------------------------------
-  Result      : 2/2 (100%) PASSED
-  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260913_182100_paraphrased-heuristic_bezos.csv
-  Dataset source: llm-generated questions
-  Failures    : none
-
-PARAPHRASE COVERAGE PER ORIGINAL
---------------------------------------------------------------------------------
-  2 paraphrased question(s) tested for original: When did Clyfford Still’s shift from representational to abstract painting occur?
-  0 paraphrased question(s) tested for original: According to the article, which Major League Baseball team holds the record for the longest overall winning...
+  2 paraphrased question(s) tested for original: Who was the last native pharaoh of Egypt mentioned in the lead text?
+  2 paraphrased question(s) tested for original: According to the lead text, what were the two main coalitions that fought in World War II?
+  2 paraphrased question(s) tested for original: Who created the Norman Gunston character, and what kind of TV character was he?
+  2 paraphrased question(s) tested for original: What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United ...
+  2 paraphrased question(s) tested for original: Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+  2 paraphrased question(s) tested for original: Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+  2 paraphrased question(s) tested for original: What is the current population of Mars, according to the latest available information? If this fact is not ...
 ================================================================================
 

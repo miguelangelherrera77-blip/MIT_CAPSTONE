@@ -128,6 +128,15 @@ async def evaluate_dataset(
     passes = sum(1 for result in ordered_results if result["score"] == "pass")
     result_total = len(ordered_results)
     failures = [result["question"] for result in ordered_results if result["score"] != "pass"]
+    category_stats: dict[str, dict[str, Any]] = {}
+    for result in ordered_results:
+        category = result.get("evaluation_category") or "untagged"
+        stats = category_stats.setdefault(category, {"passes": 0, "total": 0})
+        stats["total"] += 1
+        if result["score"] == "pass":
+            stats["passes"] += 1
+    for stats in category_stats.values():
+        stats["rate"] = stats["passes"] / stats["total"] if stats["total"] else 0.0
     results.save()
     csv_path = Path(ragas_root) / "experiments" / f"{results.name}.csv"
     rel_csv_path = _format_relative_path(csv_path)
@@ -139,4 +148,5 @@ async def evaluate_dataset(
         "total": result_total,
         "failures": failures,
         "csv_path": rel_csv_path,
+        "category_stats": category_stats,
     }

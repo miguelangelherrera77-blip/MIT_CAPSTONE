@@ -21,6 +21,7 @@ Add questions to ``MANUAL_QUESTIONS`` below. Each record should contain:
     {
         "question": "...",
         "grading_notes": "...",
+        "evaluation_category": "factual_retrieval",
         "sources": ["Article_Name.html"],
     }
 
@@ -58,7 +59,50 @@ MANUAL_QUESTIONS: list[dict[str, Any]] = [
     {
         "question": "What is the capital and largest city of Mali?",
         "grading_notes": "A correct answer must name Bamako as both the capital and largest city of Mali.",
+        "evaluation_category": "factual_retrieval",
         "sources": ["Mali.html"],
+    },
+    {
+        "question": "Who was the last native pharaoh of Egypt mentioned in the lead text?",
+        "grading_notes": "A correct answer must identify Nectanebo II. It is acceptable to mention that he was the last native pharaoh and/or that he belonged to the short-lived 30th Dynasty.",
+        "evaluation_category": "factual_retrieval",
+        "sources": ["List_of_pharaohs.html"],
+    },
+    {
+        "question": "According to the lead text, what were the two main coalitions that fought in World War II?",
+        "grading_notes": "A correct answer must name both the Allies and the Axis powers as the two main coalitions.",
+        "evaluation_category": "multi_fact",
+        "sources": ["World_War_II.html"],
+    },
+    {
+        "question": "Who created the Norman Gunston character, and what kind of TV character was he?",
+        "grading_notes": "A correct answer must identify Wendy Skelcher and Garry McDonald as the creators and describe Norman Gunston as a satirical fictional television character or persona.",
+        "evaluation_category": "obscure_knowledge",
+        "sources": ["Norman_Gunston.html"],
+    },
+    {
+        "question": "What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United States Army general?",
+        "grading_notes": "A complete answer must give Stilwell's nickname, 'Vinegar Joe,' and identify the China-Burma-India theater. Award partial credit only when one of these two required details is correct.",
+        "evaluation_category": "multi_fact",
+        "sources": ["Joseph_Stilwell.html"],
+    },
+    {
+        "question": "Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.",
+        "grading_notes": "A correct answer must reproduce the article's opening sentence verbatim, preserving its meaning and identifying details. Paraphrases or invented quotations are not fully correct.",
+        "evaluation_category": "quotation_fidelity",
+        "sources": ["13_(2010_film).html"],
+    },
+    {
+        "question": "Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major historical context shaped their work? Support each answer with a quotation from the relevant Wikipedia article.",
+        "grading_notes": "A complete answer must address both Einstein and Stilwell, explain what each was best known for, describe relevant historical context, and include one attributable quotation from each person's article. Do not award full credit for discussing only one person or for unsupported quotations.",
+        "evaluation_category": "cross_document_synthesis",
+        "sources": ["Albert_Einstein.html", "Joseph_Stilwell.html"],
+    },
+    {
+        "question": "What is the current population of Mars, according to the latest available information? If this fact is not supported by the Wikipedia corpus, clearly state that the corpus does not provide the answer.",
+        "grading_notes": "A grounded answer must recognize that Mars has no human population and that the corpus does not provide a current population figure. Do not award full credit for inventing a current population or presenting an unsupported external estimate as a corpus answer.",
+        "evaluation_category": "out_of_corpus_abstention",
+        "sources": [],
     },
 ]
 

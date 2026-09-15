@@ -4,8 +4,78 @@
     "paraphrased_question1": "Which city is both the capital and largest city of Mali?",
     "paraphrased_question2": "What city serves as Mali's capital and largest urban center?",
     "grading_notes": "A correct answer must name Bamako as both the capital and largest city of Mali.",
+    "evaluation_category": "factual_retrieval",
     "sources": [
       "Mali.html"
     ]
+  },
+  {
+    "original_question": "Who was the last native pharaoh of Egypt mentioned in the lead text?",
+    "paraphrased_question1": "Which Egyptian ruler was identified as the final native pharaoh in the lead?",
+    "paraphrased_question2": "According to the article's opening text, who was Egypt's last pharaoh of native origin?",
+    "grading_notes": "A correct answer must identify Nectanebo II. It is acceptable to mention that he was the last native pharaoh and/or that he belonged to the short-lived 30th Dynasty.",
+    "evaluation_category": "factual_retrieval",
+    "sources": [
+      "List_of_pharaohs.html"
+    ]
+  },
+  {
+    "original_question": "According to the lead text, what were the two main coalitions that fought in World War II?",
+    "paraphrased_question1": "Which two principal alliances opposed each other during World War II, according to the lead?",
+    "paraphrased_question2": "What were the two major wartime blocs identified in the opening text about World War II?",
+    "grading_notes": "A correct answer must name both the Allies and the Axis powers as the two main coalitions.",
+    "evaluation_category": "multi_fact",
+    "sources": [
+      "World_War_II.html"
+    ]
+  },
+  {
+    "original_question": "Who created the Norman Gunston character, and what kind of TV character was he?",
+    "paraphrased_question1": "Which people created Norman Gunston, and how is this television persona characterized?",
+    "paraphrased_question2": "Who were the creators of Norman Gunston, and what type of fictional TV character was he?",
+    "grading_notes": "A correct answer must identify Wendy Skelcher and Garry McDonald as the creators and describe Norman Gunston as a satirical fictional television character or persona.",
+    "evaluation_category": "obscure_knowledge",
+    "sources": [
+      "Norman_Gunston.html"
+    ]
+  },
+  {
+    "original_question": "What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United States Army general?",
+    "paraphrased_question1": "By what nickname was Joseph Warren Stilwell known, and in which World War II theater did he serve as a U.S. Army general?",
+    "paraphrased_question2": "What did people call Stilwell, and what World War II theater was he assigned to as an American general?",
+    "grading_notes": "A complete answer must give Stilwell's nickname, 'Vinegar Joe,' and identify the China-Burma-India theater. Award partial credit only when one of these two required details is correct.",
+    "evaluation_category": "multi_fact",
+    "sources": [
+      "Joseph_Stilwell.html"
+    ]
+  },
+  {
+    "original_question": "Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.",
+    "paraphrased_question1": "Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.",
+    "paraphrased_question2": "What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?",
+    "grading_notes": "A correct answer must reproduce the article's opening sentence verbatim, preserving its meaning and identifying details. Paraphrases or invented quotations are not fully correct.",
+    "evaluation_category": "quotation_fidelity",
+    "sources": [
+      "13_(2010_film).html"
+    ]
+  },
+  {
+    "original_question": "Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major historical context shaped their work? Support each answer with a quotation from the relevant Wikipedia article.",
+    "paraphrased_question1": "Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known for and the historical circumstances that influenced each of them. Include a quotation for both people.",
+    "paraphrased_question2": "How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite one supporting passage from each person's article.",
+    "grading_notes": "A complete answer must address both Einstein and Stilwell, explain what each was best known for, describe relevant historical context, and include one attributable quotation from each person's article. Do not award full credit for discussing only one person or for unsupported quotations.",
+    "evaluation_category": "cross_document_synthesis",
+    "sources": [
+      "Albert_Einstein.html",
+      "Joseph_Stilwell.html"
+    ]
+  },
+  {
+    "original_question": "What is the current population of Mars, according to the latest available information? If this fact is not supported by the Wikipedia corpus, clearly state that the corpus does not provide the answer.",
+    "paraphrased_question1": "How many people currently live on Mars? If the corpus does not contain this information, say so explicitly.",
+    "paraphrased_question2": "Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitation instead of inventing a number.",
+    "grading_notes": "A grounded answer must recognize that Mars has no human population and that the corpus does not provide a current population figure. Do not award full credit for inventing a current population or presenting an unsupported external estimate as a corpus answer.",
+    "evaluation_category": "out_of_corpus_abstention",
+    "sources": []
   }
 ]

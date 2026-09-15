@@ -189,6 +189,13 @@ Setup.py checks each job's expected output before running it:
 - Each job's own progress bar is shown in the console (Setup.py no longer suppresses subprocess output), alongside a `[build] Running <job> (job i/N)` header.
 - These confirmation prompts fail with a clear message rather than a raw traceback if Setup.py is ever run without an interactive terminal (no TTY).
 
+#### Testing results and analysis
+Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_Project/Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/). Each row includes the retriever, response, RAGAS score, and `evaluation_category`. The category values cover factual retrieval, obscure knowledge, multi-fact answers, quotation fidelity, cross-document synthesis, and out-of-corpus abstention.
+
+The recorded sample runs show that performance depends on both retrieval method and question wording. For example, a hybrid run on original questions passed `6/8` (`75%`), while a semantic run on paraphrased questions passed `11/16` (`69%`). The difference suggests some loss of robustness after rephrasing, but these are sample runs rather than a definitive ranking because the datasets, methods, and question counts differ.
+
+Use the `evaluation_category` column to analyze which capabilities are responsible for passes and failures instead of relying only on the overall average. The Checkpoint 4.1 summary reports per-category pass counts and rates, and the side-by-side report includes original-versus-paraphrase deltas for each category. The human-readable summary is stored in [Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log), with detailed per-question evidence in the experiment CSV files.
+
 #### ChromaDB token and cost estimate
 The estimate below was calculated on September 14, 2026 by tokenizing the `text` field of every JSONL record with the tokenizer selected for `text-embedding-3-small`. It covers embedding input only; it does not include chat-completion or RAGAS calls. The dollar estimate uses an assumed input price of `$0.02 per 1M tokens`, which should be replaced with the effective OpenRouter rate shown in the account before running a large build.
 

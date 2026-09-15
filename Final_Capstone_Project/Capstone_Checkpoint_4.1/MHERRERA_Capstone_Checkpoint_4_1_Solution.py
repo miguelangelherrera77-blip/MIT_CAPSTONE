@@ -350,6 +350,8 @@ def load_split_datasets(
                 dataset_row["original_order"] = r["original_order"]
             if "paraphrase_order" in r:
                 dataset_row["paraphrase_order"] = r["paraphrase_order"]
+            if "evaluation_category" in r:
+                dataset_row["evaluation_category"] = r["evaluation_category"]
             ds.append(dataset_row)
         ds.save()
         return ds
@@ -385,6 +387,18 @@ def append_single_test_results(
             lines.append(f"    {i}. {preview}")
         return "\n".join(lines) + "\n"
 
+    def _category_block(d: dict) -> list[str]:
+        stats = d.get("category_stats", {})
+        if not stats:
+            return []
+        lines = ["CATEGORY BREAKDOWN", "-" * 80]
+        for category, category_result in sorted(stats.items()):
+            lines.append(
+                f"  {category:30s}: {category_result['passes']}/{category_result['total']} "
+                f"({category_result['rate']:.0%})"
+            )
+        return lines
+
     entry = []
     entry.append("=" * 80)
     entry.append(f"TEST SESSION  |  {date_str} {time_str}")
@@ -407,6 +421,10 @@ def append_single_test_results(
     entry.append(f"  Output CSV  : {results['csv_path']}")
     entry.append(f"  Dataset source: {main_question_source}-generated questions")
     entry.append(_fail_block(results).rstrip("\n"))
+    category_lines = _category_block(results)
+    if category_lines:
+        entry.append("")
+        entry.extend(category_lines)
     if dataset_name.lower().startswith("paraphrased"):
         entry.append("")
         entry.append("PARAPHRASE COVERAGE PER ORIGINAL")
@@ -446,6 +464,18 @@ def append_test_results(
             lines.append(f"    {i}. {preview}")
         return "\n".join(lines) + "\n"
 
+    def _category_block(d: dict) -> list[str]:
+        stats = d.get("category_stats", {})
+        if not stats:
+            return []
+        lines = ["CATEGORY BREAKDOWN", "-" * 80]
+        for category, category_result in sorted(stats.items()):
+            lines.append(
+                f"  {category:30s}: {category_result['passes']}/{category_result['total']} "
+                f"({category_result['rate']:.0%})"
+            )
+        return lines
+
     orig_path = CURRENT_ORIGINALS_PATH or resolve_dataset_paths(main_question_source)[0]
     var_path = CURRENT_VARIANTS_PATH or resolve_dataset_paths(main_question_source)[1]
     entry = []
@@ -471,6 +501,10 @@ def append_test_results(
     entry.append(f"  Result      : {_rate(originals)} PASSED")
     entry.append(f"  Output CSV  : {originals['csv_path']}")
     entry.append(_fail_block(originals).rstrip("\n"))
+    original_category_lines = _category_block(originals)
+    if original_category_lines:
+        entry.append("")
+        entry.extend(original_category_lines)
     entry.append("")
     entry.append("-" * 80)
     entry.append("PARAPHRASED QUESTIONS")
@@ -479,6 +513,10 @@ def append_test_results(
     entry.append(f"  Result      : {_rate(paraphrases)} PASSED")
     entry.append(f"  Output CSV  : {paraphrases['csv_path']}")
     entry.append(_fail_block(paraphrases).rstrip("\n"))
+    paraphrase_category_lines = _category_block(paraphrases)
+    if paraphrase_category_lines:
+        entry.append("")
+        entry.extend(paraphrase_category_lines)
     entry.append("")
     entry.append("PARAPHRASE COVERAGE PER ORIGINAL")
     entry.append("-" * 80)
@@ -498,6 +536,22 @@ def append_test_results(
     entry.append(f"  PARAPHRASES  : {paraphrases['passes']}/{paraphrases['total']}  =  {p_rate:.0%}")
     entry.append(f"  DELTA        : {delta:+.0%}")
     entry.append(f"  Verdict      : {verdict}")
+    original_categories = originals.get("category_stats", {})
+    paraphrase_categories = paraphrases.get("category_stats", {})
+    if original_categories or paraphrase_categories:
+        entry.append("")
+        entry.append("CATEGORY-LEVEL DELTA ANALYSIS")
+        entry.append("-" * 80)
+        for category in sorted(set(original_categories) | set(paraphrase_categories)):
+            original_result = original_categories.get(category, {"passes": 0, "total": 0, "rate": 0.0})
+            paraphrase_result = paraphrase_categories.get(category, {"passes": 0, "total": 0, "rate": 0.0})
+            entry.append(
+                f"  {category:30s}: originals={original_result['rate']:.0%} "
+                f"({original_result['passes']}/{original_result['total']}), "
+                f"paraphrases={paraphrase_result['rate']:.0%} "
+                f"({paraphrase_result['passes']}/{paraphrase_result['total']}), "
+                f"delta={paraphrase_result['rate'] - original_result['rate']:+.0%}"
+            )
     entry.append("=" * 80)
     entry.append("")
 

@@ -19,6 +19,17 @@
           "type": "string",
           "minLength": 1
         },
+        "evaluation_category": {
+          "type": "string",
+          "enum": [
+            "factual_retrieval",
+            "obscure_knowledge",
+            "multi_fact",
+            "quotation_fidelity",
+            "cross_document_synthesis",
+            "out_of_corpus_abstention"
+          ]
+        },
         "sources": {
           "type": "array",
           "items": {
