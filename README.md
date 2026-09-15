@@ -194,21 +194,30 @@ Setup.py checks each job's expected output before running it:
 #### Testing results and analysis
 Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_Project/Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/). Each row includes the retriever, response, RAGAS score, and `evaluation_category`. The category values cover factual retrieval, obscure knowledge, multi-fact answers, quotation fidelity, cross-document synthesis, and out-of-corpus abstention.
 
-The recorded sample runs show that performance depends on both retrieval method and question wording. For example, a hybrid run on original questions passed `6/8` (`75%`), while a semantic run on paraphrased questions passed `11/16` (`69%`). The difference suggests some loss of robustness after rephrasing, but these are sample runs rather than a definitive ranking because the datasets, methods, and question counts differ.
+The detailed test log contains 10 documented runs on September 14, 2026: five runs on the eight original manual questions and five runs on their 16 paraphrases. Across all runs, `78/120` questions passed (`65%`). The results below are calculated only from the `CATEGORY BREAKDOWN` and overall result entries in [detailed_test_results.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log).
 
-The latest recorded hybrid run on the eight manual original questions provides this category breakdown:
+| Retriever | Original questions | Paraphrased questions | Combined |
+| --- | ---: | ---: | ---: |
+| Lexical | 6/8 (75%) | 9/16 (56%) | 15/24 (63%) |
+| Semantic | 6/8 (75%) | 11/16 (69%) | 17/24 (71%) |
+| Hybrid | 6/8 (75%) | 11/16 (69%) | 17/24 (71%) |
+| Graph | 5/8 (62%) | 10/16 (62%) | 15/24 (63%) |
+| All | 5/8 (62%) | 9/16 (56%) | 14/24 (58%) |
+| **All runs** | **28/40 (70%)** | **50/80 (62.5%)** | **78/120 (65%)** |
+
+The aggregate category breakdown across all 120 logged evaluations is:
 
 | Evaluation category | Passed | Total | Pass rate |
 | --- | ---: | ---: | ---: |
-| `factual_retrieval` | 3 | 3 | 100% |
-| `obscure_knowledge` | 1 | 1 | 100% |
-| `multi_fact` | 2 | 2 | 100% |
-| `cross_document_synthesis` | 1 | 1 | 100% |
-| `quotation_fidelity` | 0 | 1 | 0% |
-| `out_of_corpus_abstention` | 0 | 1 | 0% |
-| **Overall** | **6** | **8** | **75%** |
+| `factual_retrieval` | 26 | 30 | 87% |
+| `obscure_knowledge` | 15 | 15 | 100% |
+| `multi_fact` | 26 | 30 | 87% |
+| `cross_document_synthesis` | 3 | 15 | 20% |
+| `quotation_fidelity` | 0 | 15 | 0% |
+| `out_of_corpus_abstention` | 8 | 15 | 53% |
+| **Overall** | **78** | **120** | **65%** |
 
-This result suggests that the hybrid retriever handled factual, multi-fact, obscure, and cross-document questions well in this sample, but failed to retrieve the requested film article for the quotation test. The Mars response correctly stated that the corpus did not provide a population figure, but the configured correctness judge still marked that item as failed; the abstention grading criteria should therefore be reviewed separately from retrieval performance.
+The log shows a `7.5` percentage-point decrease from original questions (`70%`) to paraphrased questions (`62.5%`), indicating some brittleness to rephrasing. Obscure-knowledge questions were consistently successful, while quotation fidelity failed in every logged run because the requested film article was unavailable to retrieval. Cross-document synthesis was also weak, especially for paraphrases. Out-of-corpus results require separate interpretation because some answers correctly abstained but were still marked failed by the configured correctness judge.
 
 Use the `evaluation_category` column to analyze which capabilities are responsible for passes and failures instead of relying only on the overall average. The Checkpoint 4.1 summary reports per-category pass counts and rates, and the side-by-side report includes original-versus-paraphrase deltas for each category. The human-readable [Checkpoint 4.1 test summary](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log) is stored in `detailed_test_results.log`, with detailed per-question evidence in the experiment CSV files.
 
