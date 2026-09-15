@@ -196,6 +196,20 @@ Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_
 
 The recorded sample runs show that performance depends on both retrieval method and question wording. For example, a hybrid run on original questions passed `6/8` (`75%`), while a semantic run on paraphrased questions passed `11/16` (`69%`). The difference suggests some loss of robustness after rephrasing, but these are sample runs rather than a definitive ranking because the datasets, methods, and question counts differ.
 
+The latest recorded hybrid run on the eight manual original questions provides this category breakdown:
+
+| Evaluation category | Passed | Total | Pass rate |
+| --- | ---: | ---: | ---: |
+| `factual_retrieval` | 3 | 3 | 100% |
+| `obscure_knowledge` | 1 | 1 | 100% |
+| `multi_fact` | 2 | 2 | 100% |
+| `cross_document_synthesis` | 1 | 1 | 100% |
+| `quotation_fidelity` | 0 | 1 | 0% |
+| `out_of_corpus_abstention` | 0 | 1 | 0% |
+| **Overall** | **6** | **8** | **75%** |
+
+This result suggests that the hybrid retriever handled factual, multi-fact, obscure, and cross-document questions well in this sample, but failed to retrieve the requested film article for the quotation test. The Mars response correctly stated that the corpus did not provide a population figure, but the configured correctness judge still marked that item as failed; the abstention grading criteria should therefore be reviewed separately from retrieval performance.
+
 Use the `evaluation_category` column to analyze which capabilities are responsible for passes and failures instead of relying only on the overall average. The Checkpoint 4.1 summary reports per-category pass counts and rates, and the side-by-side report includes original-versus-paraphrase deltas for each category. The human-readable [Checkpoint 4.1 test summary](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log) is stored in `detailed_test_results.log`, with detailed per-question evidence in the experiment CSV files.
 
 #### ChromaDB token and cost estimate
