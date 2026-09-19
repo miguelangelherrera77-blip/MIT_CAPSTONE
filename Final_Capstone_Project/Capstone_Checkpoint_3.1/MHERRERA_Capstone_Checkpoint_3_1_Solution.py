@@ -93,6 +93,10 @@ SCENARIO = "wikipedia"
 CHECKPOINT_DIR = Path(__file__).resolve().parent
 FINAL_CAPSTONE_DIR = CHECKPOINT_DIR.parent
 CHROMA_DIR = str(FINAL_CAPSTONE_DIR / "Capstone_Database" / "Capstone_Chroma_DB")
+
+# Cosmetic checkpoint label derived from the folder name (e.g. "Capstone_Checkpoint_3.1"
+# -> "CAPSTONE 3.1"). Self-updating for any future Capstone_Checkpoint_x.x folder.
+CAPSTONE_LABEL = "CAPSTONE " + CHECKPOINT_DIR.name.split("_")[-1]
 WIKI_DIR = str(FINAL_CAPSTONE_DIR / "Capstone_Database" / "Wikipedia")
 
 ORIGINALS_PATH = CHECKPOINT_DIR / "test_variables" / "test_main_questions.json"
@@ -453,7 +457,7 @@ def append_test_results(originals: dict, paraphrases: dict, delta: float, verdic
 
     entry = []
     entry.append("=" * 80)
-    entry.append(f"TEST SESSION  |  {date_str} {time_str}")
+    entry.append(f"{CAPSTONE_LABEL} TEST SESSION  |  {date_str} {time_str}")
     entry.append("=" * 80)
     entry.append("Test type   : Baseline RAGAS correctness evaluation (hybrid retriever)")
     entry.append(f"Date        : {date_str}")
@@ -579,7 +583,7 @@ def append_framework_validation(good_verdict: str, manip_verdict: str, ok: bool,
     now = datetime.now()
     entry = []
     entry.append("=" * 80)
-    entry.append(f"TEST SESSION  |  {now.strftime('%Y-%m-%d')} {now.strftime('%H:%M:%S')}")
+    entry.append(f"{CAPSTONE_LABEL} TEST SESSION  |  {now.strftime('%Y-%m-%d')} {now.strftime('%H:%M:%S')}")
     entry.append("=" * 80)
     entry.append("Test type   : Framework validation - manipulated-answer probe")
     entry.append(f"Date        : {now.strftime('%Y-%m-%d')}")

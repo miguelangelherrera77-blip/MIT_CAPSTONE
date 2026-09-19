@@ -7,14 +7,14 @@
 # Section: B
 # Date and Time: 2026-09-13 18:18:45 -07:00
 #
-# Description: Interactive Checkpoint 4.1 evaluation harness for the Wikipedia RAG
+# Description: Interactive Checkpoint 5.1 evaluation harness for the Wikipedia RAG
 #              engine. Selects manual or LLM-generated original/paraphrase datasets,
 #              runs lexical BM25, semantic Chroma, graph, hybrid, or combined retrieval,
 #              evaluates generated answers with RAGAS DiscreteMetric, and records results.
 #
 #################################################################################
 
-r"""Capstone Checkpoint 4.1 — Evaluation Infrastructure and Baseline Diagnosis (SOLUTION).
+r"""Capstone Checkpoint 5.1 — Evaluation Infrastructure and Baseline Diagnosis (SOLUTION).
 Jupytext-style cell markers (# %% / # %% [markdown]) — runnable as a
 plain script AND openable as cells in VS Code / PyCharm / Jupytext.
 
@@ -29,7 +29,7 @@ Wikipedia corpus. It supports evaluating:
 """
 
 # %% [markdown]
-# # Capstone Checkpoint 4.1 — RAGAS Evaluation: Originals vs Paraphrases
+# # Capstone Checkpoint 5.1 — RAGAS Evaluation: Originals vs Paraphrases
 # **MO-LLM Module 3 / Required Capstone Checkpoint**
 #
 # Uses RAGAS `DiscreteMetric` + `experiment()` (as in Lab 3.1) with the Checkpoint 2.1
@@ -98,8 +98,8 @@ CHECKPOINT_DIR = Path(__file__).resolve().parent
 FINAL_CAPSTONE_DIR = CHECKPOINT_DIR.parent
 CHROMA_DIR = str(FINAL_CAPSTONE_DIR / "Capstone_Database" / "Capstone_Chroma_DB")
 
-# Cosmetic checkpoint label derived from the folder name (e.g. "Capstone_Checkpoint_4.1"
-# -> "CAPSTONE 4.1"). Self-updating for any future Capstone_Checkpoint_x.x folder.
+# Cosmetic checkpoint label derived from the folder name (e.g. "Capstone_Checkpoint_5.1"
+# -> "CAPSTONE 5.1"). Self-updating for any future Capstone_Checkpoint_x.x folder.
 CAPSTONE_LABEL = "CAPSTONE " + CHECKPOINT_DIR.name.split("_")[-1]
 
 TEST_VARIABLES_DIR = FINAL_CAPSTONE_DIR / "Test_Variables"
@@ -111,7 +111,7 @@ MANUAL_PARAPHRASED_EVALUATION_PATH = (
 )
 
 RAGAS_ROOT = str(FINAL_CAPSTONE_DIR / "Ragas_Experiments")
-LOG_PATH = CHECKPOINT_DIR / "checkpoint_4_1_evaluation.log"
+LOG_PATH = CHECKPOINT_DIR / "checkpoint_5_1_evaluation.log"
 TEST_RESULTS_LOG = Path(RAGAS_ROOT) / "detailed_test_results.log"
 CURRENT_ORIGINALS_PATH: Path | None = None
 CURRENT_VARIANTS_PATH: Path | None = None
@@ -709,7 +709,7 @@ async def main(
             main_question_source,
         )
 
-    console_log("Checkpoint 4.1 evaluation completed.")
+    console_log("Checkpoint 5.1 evaluation completed.")
 
 
 DATASET_MAP = {
@@ -870,7 +870,7 @@ def prompt_random_mode(number_questions: int | None) -> str:
 
 if __name__ == "__main__":
     console_log("Parsing command-line arguments.")
-    parser = argparse.ArgumentParser(description="Run the Checkpoint 4.1 RAGAS evaluation.")
+    parser = argparse.ArgumentParser(description="Run the Checkpoint 5.1 RAGAS evaluation.")
     parser.add_argument(
         "--input_type",
         "--dataset",
