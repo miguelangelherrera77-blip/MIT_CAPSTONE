@@ -1,0 +1,604 @@
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-22 19:28:58
+================================================================================
+Run ID     : 20260922_192858_cd6d30
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Hybrid + Graph, candidates=BM25:10/Vector:10, Top-K=4, Ranking=weighted fusion (BM25 0.4 / Vector 0.6), answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Hybrid + Graph
+  Result        : 9/16 (56%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192513_paraphrased-nostalgic_perlis.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 35.4K total (34.4K prompt + 945 completion)
+  Failures    : 7 question(s) FAILED
+    1. What city serves as Mali's capital and largest urban center?
+    2. Which Egyptian ruler was identified as the final native pharaoh in the lead?
+    3. Which two principal alliances opposed each other during World War II, according to the lead?
+    4. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    5. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    6. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    7. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 2/4 (50%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Hybrid + Graph base (graph expansion enabled)
+  Result        : 14/16 (88%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192641_paraphrased-determined_wozniak.csv
+  LLM calls     : plan=32, answer=16
+  Tokens        : 100.1K total (96.8K prompt + 3.3K completion)
+  Failures    : 2 question(s) FAILED
+    1. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    2. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 2/2 (100%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 9/16 (56%)   |   Agentic : 14/16 (88%)
+  Correctness delta (agent - context) : +31%
+  LLM calls     : context=16  |  agent=48 (+32)
+  Tokens        : context=35.4K  |  agent=100.1K
+  Passes / 1K tokens : context=0.25  |  agent=0.14
+  Verdict       : Agentic IMPROVES correctness — weigh against its higher token/call cost.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=0%, agent=100%, delta=+100%
+    factual_retrieval             : context=50%, agent=100%, delta=+50%
+    multi_fact                    : context=75%, agent=100%, delta=+25%
+    obscure_knowledge             : context=100%, agent=100%, delta=+0%
+    out_of_corpus_abstention      : context=100%, agent=100%, delta=+0%
+    quotation_fidelity            : context=0%, agent=0%, delta=+0%
+================================================================================
+
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-22 19:23:49
+================================================================================
+Run ID     : 20260922_192349_beb605
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Hybrid, candidates=BM25:10/Vector:10, Top-K=4, Ranking=weighted fusion (BM25 0.4 / Vector 0.6), answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Hybrid
+  Result        : 10/16 (62%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192010_paraphrased-charming_matsumoto.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 18.2K total (17.2K prompt + 1K completion)
+  Failures    : 6 question(s) FAILED
+    1. What were the two major wartime blocs identified in the opening text about World War II?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    4. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    5. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+    6. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Hybrid
+  Result        : 15/16 (94%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192126_paraphrased-compassionate_musk.csv
+  LLM calls     : plan=32, answer=16
+  Tokens        : 93K total (89.7K prompt + 3.3K completion)
+  Failures    : 1 question(s) FAILED
+    1. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 2/2 (100%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 1/2 (50%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 10/16 (62%)   |   Agentic : 15/16 (94%)
+  Correctness delta (agent - context) : +31%
+  LLM calls     : context=16  |  agent=48 (+32)
+  Tokens        : context=18.2K  |  agent=93K
+  Passes / 1K tokens : context=0.55  |  agent=0.16
+  Verdict       : Agentic IMPROVES correctness — weigh against its higher token/call cost.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=0%, agent=100%, delta=+100%
+    factual_retrieval             : context=100%, agent=100%, delta=+0%
+    multi_fact                    : context=75%, agent=100%, delta=+25%
+    obscure_knowledge             : context=100%, agent=100%, delta=+0%
+    out_of_corpus_abstention      : context=50%, agent=100%, delta=+50%
+    quotation_fidelity            : context=0%, agent=50%, delta=+50%
+================================================================================
+
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-22 19:19:11
+================================================================================
+Run ID     : 20260922_191911_06eb7f
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Semantic, candidates=BM25:10/Vector:10, Top-K=4, Ranking=vector-distance order (no fusion), answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Semantic
+  Result        : 11/16 (69%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191458_paraphrased-eloquent_backus.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 18.5K total (17.3K prompt + 1.2K completion)
+  Failures    : 5 question(s) FAILED
+    1. What did people call Stilwell, and what World War II theater was he assigned to as an American general?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    4. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    5. How many people currently live on Mars? If the corpus does not contain this information, say so explicitly.
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/2 (50%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Semantic
+  Result        : 7/16 (44%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191610_paraphrased-blissful_carmack.csv
+  LLM calls     : plan=55, answer=16
+  Tokens        : 38.2K total (32.8K prompt + 5.3K completion)
+  Failures    : 9 question(s) FAILED
+    1. What city serves as Mali's capital and largest urban center?
+    2. According to the article's opening text, who was Egypt's last pharaoh of native origin?
+    3. Which two principal alliances opposed each other during World War II, according to the lead?
+    4. What were the two major wartime blocs identified in the opening text about World War II?
+    5. Which people created Norman Gunston, and how is this television persona characterized?
+    6. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    7. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    8. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    9. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 2/4 (50%)
+  multi_fact                    : 2/4 (50%)
+  obscure_knowledge             : 1/2 (50%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 11/16 (69%)   |   Agentic : 7/16 (44%)
+  Correctness delta (agent - context) : -25%
+  LLM calls     : context=16  |  agent=71 (+55)
+  Tokens        : context=18.5K  |  agent=38.2K
+  Passes / 1K tokens : context=0.60  |  agent=0.18
+  Verdict       : Agentic UNDERPERFORMS on correctness for this config.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=50%, agent=0%, delta=-50%
+    factual_retrieval             : context=100%, agent=50%, delta=-50%
+    multi_fact                    : context=75%, agent=50%, delta=-25%
+    obscure_knowledge             : context=100%, agent=50%, delta=-50%
+    out_of_corpus_abstention      : context=50%, agent=100%, delta=+50%
+    quotation_fidelity            : context=0%, agent=0%, delta=+0%
+================================================================================
+
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-22 19:13:25
+================================================================================
+Run ID     : 20260922_191325_5dbfe6
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, Ranking=BM25 native order (no fusion), answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Lexical
+  Result        : 11/16 (69%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191054_paraphrased-agitated_pichai.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 18.3K total (17.2K prompt + 1.1K completion)
+  Failures    : 5 question(s) FAILED
+    1. What were the two major wartime blocs identified in the opening text about World War II?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    4. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+    5. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/2 (50%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Lexical
+  Result        : 13/16 (81%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191150_paraphrased-dazzling_sutherland.csv
+  LLM calls     : plan=31, answer=16
+  Tokens        : 92.6K total (89.4K prompt + 3.2K completion)
+  Failures    : 3 question(s) FAILED
+    1. Which city is both the capital and largest city of Mali?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 2/2 (100%)
+  factual_retrieval             : 3/4 (75%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 11/16 (69%)   |   Agentic : 13/16 (81%)
+  Correctness delta (agent - context) : +12%
+  LLM calls     : context=16  |  agent=47 (+31)
+  Tokens        : context=18.3K  |  agent=92.6K
+  Passes / 1K tokens : context=0.60  |  agent=0.14
+  Verdict       : Agentic IMPROVES correctness — weigh against its higher token/call cost.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=50%, agent=100%, delta=+50%
+    factual_retrieval             : context=100%, agent=75%, delta=-25%
+    multi_fact                    : context=75%, agent=100%, delta=+25%
+    obscure_knowledge             : context=100%, agent=100%, delta=+0%
+    out_of_corpus_abstention      : context=50%, agent=100%, delta=+50%
+    quotation_fidelity            : context=0%, agent=0%, delta=+0%
+================================================================================
+
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-21 22:35:38
+================================================================================
+Run ID     : 20260921_223538_f5731c
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Hybrid + Graph, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Hybrid + Graph
+  Result        : 9/16 (56%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_223203_paraphrased-clever_dijkstra.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 35.4K total (34.4K prompt + 942 completion)
+  Failures    : 7 question(s) FAILED
+    1. What city serves as Mali's capital and largest urban center?
+    2. Which Egyptian ruler was identified as the final native pharaoh in the lead?
+    3. What were the two major wartime blocs identified in the opening text about World War II?
+    4. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    5. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    6. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    7. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 2/4 (50%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Hybrid + Graph base (graph expansion enabled)
+  Result        : 14/16 (88%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_223323_paraphrased-nifty_lamport.csv
+  LLM calls     : plan=32, answer=16
+  Tokens        : 94K total (90.6K prompt + 3.4K completion)
+  Failures    : 2 question(s) FAILED
+    1. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    2. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 2/2 (100%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 1/2 (50%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 9/16 (56%)   |   Agentic : 14/16 (88%)
+  Correctness delta (agent - context) : +31%
+  LLM calls     : context=16  |  agent=48 (+32)
+  Tokens        : context=35.4K  |  agent=94K
+  Passes / 1K tokens : context=0.25  |  agent=0.15
+  Verdict       : Agentic IMPROVES correctness — weigh against its higher token/call cost.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=0%, agent=100%, delta=+100%
+    factual_retrieval             : context=50%, agent=100%, delta=+50%
+    multi_fact                    : context=75%, agent=100%, delta=+25%
+    obscure_knowledge             : context=100%, agent=100%, delta=+0%
+    out_of_corpus_abstention      : context=100%, agent=50%, delta=-50%
+    quotation_fidelity            : context=0%, agent=50%, delta=+50%
+================================================================================
+
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-21 22:30:36
+================================================================================
+Run ID     : 20260921_223036_e07286
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Hybrid, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Hybrid
+  Result        : 10/16 (62%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222713_paraphrased-sharp_hopper.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 18.3K total (17.2K prompt + 1.1K completion)
+  Failures    : 6 question(s) FAILED
+    1. Which two principal alliances opposed each other during World War II, according to the lead?
+    2. What were the two major wartime blocs identified in the opening text about World War II?
+    3. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    4. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    5. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+    6. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/2 (50%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 2/4 (50%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Hybrid
+  Result        : 14/16 (88%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222825_paraphrased-frosty_kay.csv
+  LLM calls     : plan=33, answer=16
+  Tokens        : 104.7K total (101.2K prompt + 3.5K completion)
+  Failures    : 2 question(s) FAILED
+    1. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    2. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 2/2 (100%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 10/16 (62%)   |   Agentic : 14/16 (88%)
+  Correctness delta (agent - context) : +25%
+  LLM calls     : context=16  |  agent=49 (+33)
+  Tokens        : context=18.3K  |  agent=104.7K
+  Passes / 1K tokens : context=0.55  |  agent=0.13
+  Verdict       : Agentic IMPROVES correctness — weigh against its higher token/call cost.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=50%, agent=100%, delta=+50%
+    factual_retrieval             : context=100%, agent=100%, delta=+0%
+    multi_fact                    : context=50%, agent=100%, delta=+50%
+    obscure_knowledge             : context=100%, agent=100%, delta=+0%
+    out_of_corpus_abstention      : context=50%, agent=100%, delta=+50%
+    quotation_fidelity            : context=0%, agent=0%, delta=+0%
+================================================================================
+
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-21 22:25:54
+================================================================================
+Run ID     : 20260921_222554_d90fc3
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Semantic, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Semantic
+  Result        : 13/16 (81%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222157_paraphrased-elated_zuckerberg.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 18.5K total (17.3K prompt + 1.2K completion)
+  Failures    : 3 question(s) FAILED
+    1. What did people call Stilwell, and what World War II theater was he assigned to as an American general?
+    2. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    3. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/2 (50%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 2/2 (100%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Semantic
+  Result        : 4/16 (25%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222259_paraphrased-flamboyant_minsky.csv
+  LLM calls     : plan=53, answer=16
+  Tokens        : 35.6K total (30.6K prompt + 5K completion)
+  Failures    : 12 question(s) FAILED
+    1. Which city is both the capital and largest city of Mali?
+    2. What city serves as Mali's capital and largest urban center?
+    3. Which Egyptian ruler was identified as the final native pharaoh in the lead?
+    4. According to the article's opening text, who was Egypt's last pharaoh of native origin?
+    5. Which two principal alliances opposed each other during World War II, according to the lead?
+    6. What were the two major wartime blocs identified in the opening text about World War II?
+    7. Which people created Norman Gunston, and how is this television persona characterized?
+    8. What did people call Stilwell, and what World War II theater was he assigned to as an American general?
+    9. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    10. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    11. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    12. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 0/4 (0%)
+  multi_fact                    : 1/4 (25%)
+  obscure_knowledge             : 1/2 (50%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 13/16 (81%)   |   Agentic : 4/16 (25%)
+  Correctness delta (agent - context) : -56%
+  LLM calls     : context=16  |  agent=69 (+53)
+  Tokens        : context=18.5K  |  agent=35.6K
+  Passes / 1K tokens : context=0.70  |  agent=0.11
+  Verdict       : Agentic UNDERPERFORMS on correctness for this config.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=50%, agent=0%, delta=-50%
+    factual_retrieval             : context=100%, agent=0%, delta=-100%
+    multi_fact                    : context=75%, agent=25%, delta=-50%
+    obscure_knowledge             : context=100%, agent=50%, delta=-50%
+    out_of_corpus_abstention      : context=50%, agent=100%, delta=+50%
+    quotation_fidelity            : context=100%, agent=0%, delta=-100%
+================================================================================
+
+================================================================================
+CAPSTONE 5.1 — ENGINE COMPARISON SESSION  |  2026-09-21 22:19:09
+================================================================================
+Run ID     : 20260921_221909_9962b1
+Dataset    : PARAPHRASED QUESTIONS  (manual-generated source)
+Engines    : Context-Aware retriever  vs  Agentic Dynamic (ReAct)
+Config     : Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+ENGINE: CONTEXT-AWARE RETRIEVER
+--------------------------------------------------------------------------------
+  Search method : Lexical
+  Result        : 11/16 (69%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_221631_paraphrased-magical_tarjan.csv
+  LLM calls     : plan=0 (planning is only in the Agentic Engine), answer=16
+  Tokens        : 18.3K total (17.2K prompt + 1.1K completion)
+  Failures    : 5 question(s) FAILED
+    1. What were the two major wartime blocs identified in the opening text about World War II?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    4. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+    5. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 1/2 (50%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
+
+--------------------------------------------------------------------------------
+ENGINE: AGENTIC DYNAMIC (REACT)
+--------------------------------------------------------------------------------
+  Search method : Lexical
+  Result        : 15/16 (94%) PASSED
+  Output CSV    : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_221739_paraphrased-xenodochial_knuth.csv
+  LLM calls     : plan=32, answer=16
+  Tokens        : 99.7K total (96.4K prompt + 3.3K completion)
+  Failures    : 1 question(s) FAILED
+    1. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 2/2 (100%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 4/4 (100%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 2/2 (100%)
+  quotation_fidelity            : 1/2 (50%)
+
+--------------------------------------------------------------------------------
+SIDE-BY-SIDE COMPARISON  (Context-Aware vs Agentic Dynamic)
+--------------------------------------------------------------------------------
+  Context-Aware : 11/16 (69%)   |   Agentic : 15/16 (94%)
+  Correctness delta (agent - context) : +25%
+  LLM calls     : context=16  |  agent=48 (+32)
+  Tokens        : context=18.3K  |  agent=99.7K
+  Passes / 1K tokens : context=0.60  |  agent=0.15
+  Verdict       : Agentic IMPROVES correctness — weigh against its higher token/call cost.
+
+  CATEGORY-LEVEL DELTA (agent - context)
+  ------------------------------------------------------------------------------
+    cross_document_synthesis      : context=50%, agent=100%, delta=+50%
+    factual_retrieval             : context=100%, agent=100%, delta=+0%
+    multi_fact                    : context=75%, agent=100%, delta=+25%
+    obscure_knowledge             : context=100%, agent=100%, delta=+0%
+    out_of_corpus_abstention      : context=50%, agent=100%, delta=+50%
+    quotation_fidelity            : context=0%, agent=50%, delta=+50%
+================================================================================
+

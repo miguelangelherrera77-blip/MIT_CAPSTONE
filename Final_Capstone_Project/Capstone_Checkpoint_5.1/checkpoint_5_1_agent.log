@@ -1,0 +1,51 @@
+[2026-09-21T22:01:12] PARAPHRASES RESULT
+10/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_220025_paraphrased-epic_cerf.csv
+------------------------------------------------------------------------
+[2026-09-21T22:17:35] PARAPHRASES RESULT
+11/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_221631_paraphrased-magical_tarjan.csv
+------------------------------------------------------------------------
+[2026-09-21T22:19:09] PARAPHRASES RESULT
+15/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_221739_paraphrased-xenodochial_knuth.csv
+------------------------------------------------------------------------
+[2026-09-21T22:22:59] PARAPHRASES RESULT
+13/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222157_paraphrased-elated_zuckerberg.csv
+------------------------------------------------------------------------
+[2026-09-21T22:25:54] PARAPHRASES RESULT
+4/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222259_paraphrased-flamboyant_minsky.csv
+------------------------------------------------------------------------
+[2026-09-21T22:28:21] PARAPHRASES RESULT
+10/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222713_paraphrased-sharp_hopper.csv
+------------------------------------------------------------------------
+[2026-09-21T22:30:36] PARAPHRASES RESULT
+14/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_222825_paraphrased-frosty_kay.csv
+------------------------------------------------------------------------
+[2026-09-21T22:33:04] PARAPHRASES RESULT
+9/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_223203_paraphrased-clever_dijkstra.csv
+------------------------------------------------------------------------
+[2026-09-21T22:35:38] PARAPHRASES RESULT
+14/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_223323_paraphrased-nifty_lamport.csv
+------------------------------------------------------------------------
+[2026-09-22T19:11:47] PARAPHRASES RESULT
+11/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191054_paraphrased-agitated_pichai.csv
+------------------------------------------------------------------------
+[2026-09-22T19:13:25] PARAPHRASES RESULT
+13/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191150_paraphrased-dazzling_sutherland.csv
+------------------------------------------------------------------------
+[2026-09-22T19:16:09] PARAPHRASES RESULT
+11/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191458_paraphrased-eloquent_backus.csv
+------------------------------------------------------------------------
+[2026-09-22T19:19:11] PARAPHRASES RESULT
+7/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_191610_paraphrased-blissful_carmack.csv
+------------------------------------------------------------------------
+[2026-09-22T19:21:22] PARAPHRASES RESULT
+10/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192010_paraphrased-charming_matsumoto.csv
+------------------------------------------------------------------------
+[2026-09-22T19:23:49] PARAPHRASES RESULT
+15/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192126_paraphrased-compassionate_musk.csv
+------------------------------------------------------------------------
+[2026-09-22T19:26:22] PARAPHRASES RESULT
+9/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192513_paraphrased-nostalgic_perlis.csv
+------------------------------------------------------------------------
+[2026-09-22T19:28:58] PARAPHRASES RESULT
+14/16 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260922_192641_paraphrased-determined_wozniak.csv
+------------------------------------------------------------------------

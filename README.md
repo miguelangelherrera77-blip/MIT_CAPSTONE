@@ -23,27 +23,133 @@ This repository contains the capstone Wikipedia RAG project. It includes the mai
 | --- | --- | --- |
 | Project Overview | Repository purpose and system context | [Overview](#project-overview) |
 | System Requirements | Host, Python, and runtime prerequisites | [Requirements](#project-system-requirements) |
-| Checkpoint 1.1 | Evaluating when retrieval is required | [Checkpoint 1.1](#capstone-checkpoint-11) |
-| Checkpoint 2.1 | Retrieval strategy and baseline implementation | [Checkpoint 2.1](#capstone-checkpoint-21) |
-| Checkpoint 3.1 | RAGAS evaluation and paraphrase robustness | [Checkpoint 3.1](#capstone-checkpoint-31) |
+| Checkpoint 5.1 | Dual-engine chat and agentic evaluation | [Checkpoint 5.1](#capstone-checkpoint-51) |
+| Checkpoint 5.1 Test Summary | Per-engine and comparison evaluation results | [detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log) |
 | Checkpoint 4.1 | Advanced retrieval and evaluation harness | [Checkpoint 4.1](#capstone-checkpoint-41) |
 | Checkpoint 4.1 Testing | Category-based testing results and analysis | [Testing results and analysis](#testing-results-and-analysis) |
 | Checkpoint 4.1 Test Summary | Human-readable summary of Checkpoint 4.1 test runs | [detailed_test_results.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log) |
+| Checkpoint 3.1 | RAGAS evaluation and paraphrase robustness | [Checkpoint 3.1](#capstone-checkpoint-31) |
+| Checkpoint 2.1 | Retrieval strategy and baseline implementation | [Checkpoint 2.1](#capstone-checkpoint-21) |
+| Checkpoint 1.1 | Evaluating when retrieval is required | [Checkpoint 1.1](#capstone-checkpoint-11) |
 | Setup and Local Data | Bootstrap commands and generated local data | [Setup](#setup-and-local-data) |
 | ChromaDB Cost Estimate | Token count and estimated embedding cost | [Cost Estimate](#chromadb-token-and-cost-estimate) |
 | Key Project Areas | Source modules and supporting project areas | [Project Areas](#key-project-areas) |
 
 ## Capstone Checkpoints
 
-### Capstone Checkpoint 1.1
-**Evaluating when retrieval is required.** This checkpoint measures baseline LLM performance without retrieval and determines whether retrieval is needed for the Wikipedia scenario. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/).
+Checkpoints are listed newest first.
 
-Add `OPENROUTER_API_KEY` to the root `.env` file before running the solution.
+### Capstone Checkpoint 5.1
+**Agentic tool-using retrieval with a dual-engine, comparison-ready workflow.** This checkpoint adds an interactive solution that lets the user choose a retrieval engine and either chat with it or score it through RAGAS. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py).
 
-### Capstone Checkpoint 2.1
-**Retrieval strategy design and baseline implementation.** This checkpoint builds a Wikipedia RAG workflow using ChromaDB vector retrieval and BM25 lexical retrieval. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/).
+#### Retrieval engines
+- **Context-Aware Retriever** — a history-aware, non-agentic retriever. It folds recent conversation turns into both the retrieval query and the grounded answer prompt, but performs no autonomous planning.
+- **Agentic Dynamic Retriever** — a LangGraph ReAct agent that dynamically selects one action per step (`plan → retrieve / graph_expand / clarify / answer`) with no upfront plan. Graph expansion is enabled only for the graph-enabled search method; otherwise the agent runs graph-free.
 
-Place the corpus under [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/) and keep the OpenRouter key in the project `.env` file.
+#### Search methods
+The interactive menu exposes four base search methods, reused by both engines:
+
+- **Lexical (Only)** — BM25 exact-term retrieval.
+- **Semantic (Only)** — Chroma dense-vector retrieval.
+- **Hybrid** — weighted BM25 + vector fusion.
+- **Hybrid with Graph Enabled** — hybrid retrieval plus Graph DB expansion of neighboring and linked article context.
+
+#### Modes
+- **Interactive Chat** — multi-turn conversation with history, printing per-turn token usage (plan vs answer) and a cumulative session total. Token counts are read from the provider when reported (OpenRouter model named) or estimated locally with a labeled tokenizer.
+- **RAGAS Evaluation** — scores the selected engine with the DiscreteMetric correctness judge, over originals, paraphrases, or both.
+- **Compare Both** (evaluation only) — runs both engines on the same dataset and logs a side-by-side comparison (correctness delta, LLM call/token cost, passes-per-1K-tokens, and category deltas).
+
+#### Configuration
+Behavior is driven by [Final_Capstone_Project/retrieval.conf](Final_Capstone_Project/retrieval.conf): the `[agent]` section sets the agent reasoning model (`agent_model`) and limits (`top_k`, `seed_k`, `max_iterations`, `debug`), `[context_aware]` sets the chat `history_window`, and `[ranking]` sets the BM25/vector fusion weights recorded in each result entry.
+
+#### Run the Checkpoint 5.1 solution
+```powershell
+.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_5.1\MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py
+```
+
+The script runs local preflight setup on startup, then prompts for mode, engine, and (for evaluation) dataset, search method, size, and sampling.
+
+#### Outputs
+All Checkpoint 5.1 evaluation results are written newest-first to [Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log), with per-question CSVs under [Final_Capstone_Project/Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/). Each entry records the engine, search method, fusion-ranking weights, result, and LLM call/token effort; comparison runs add a side-by-side section.
+
+#### Testing results and analysis
+Results below cover all eight logged "Compare Both" runs — two batches of four search methods — each scoring both engines on the same 16 paraphrased manual questions (RAGAS DiscreteMetric; answer/judge `openai/gpt-5.4-mini`). Batch A used the default fusion weights (BM25 0.5 / Vector 0.5); Batch B used tuned weights (BM25 0.4 / Vector 0.6). `Δ` is agentic correctness minus context-aware correctness.
+
+**Correctness by search method (both batches):**
+
+| Search method | Batch | Context-Aware | Agentic Dynamic | Δ (agent − context) |
+| --- | --- | ---: | ---: | ---: |
+| Lexical | A (0.5/0.5) | 11/16 (69%) | 15/16 (94%) | +25% |
+| Lexical | B (0.4/0.6) | 11/16 (69%) | 13/16 (81%) | +12% |
+| Semantic | A (0.5/0.5) | 13/16 (81%) | 4/16 (25%) | −56% |
+| Semantic | B (0.4/0.6) | 11/16 (69%) | 7/16 (44%) | −25% |
+| Hybrid | A (0.5/0.5) | 10/16 (62%) | 14/16 (88%) | +25% |
+| Hybrid | B (0.4/0.6) | 10/16 (62%) | 15/16 (94%) | +31% |
+| Hybrid + Graph | A (0.5/0.5) | 9/16 (56%) | 14/16 (88%) | +31% |
+| Hybrid + Graph | B (0.4/0.6) | 9/16 (56%) | 14/16 (88%) | +31% |
+
+**Cost comparison (per 16-question run):**
+
+| Engine | LLM calls / run | Tokens / run | Passes per 1K tokens |
+| --- | ---: | ---: | ---: |
+| Context-Aware | 16 (0 plan + 16 answer) | 18.2K–35.4K | ~0.55–0.70 |
+| Agentic Dynamic | 47–71 (31–55 plan + 16 answer) | 35.6K–104.7K | ~0.11–0.18 |
+
+The agent adds one plan LLM call per reasoning step on top of the 16 answer calls, so it makes roughly 3–4x the calls and 2–5x the tokens of the context-aware engine for the same 16 questions. Measured as correctness per 1K tokens, the context-aware engine is about 3–4x more cost-efficient in every configuration.
+
+Category pass rates for the strongest agentic configuration (Hybrid, Batch B, agentic 15/16):
+
+| Evaluation category | Context-Aware | Agentic Dynamic |
+| --- | ---: | ---: |
+| `factual_retrieval` | 4/4 (100%) | 4/4 (100%) |
+| `multi_fact` | 3/4 (75%) | 4/4 (100%) |
+| `cross_document_synthesis` | 0/2 (0%) | 2/2 (100%) |
+| `obscure_knowledge` | 2/2 (100%) | 2/2 (100%) |
+| `out_of_corpus_abstention` | 1/2 (50%) | 2/2 (100%) |
+| `quotation_fidelity` | 0/2 (0%) | 1/2 (50%) |
+
+Observations:
+- The Agentic Dynamic engine improved correctness on Lexical, Hybrid, and Hybrid + Graph in both batches (deltas of +12% to +31%), with its biggest gains on `cross_document_synthesis` and `multi_fact` where iterative retrieval helps.
+- Pure Semantic is the agent's clear failure mode: it dropped to 4/16 (Batch A) and 7/16 (Batch B), well below the context-aware baseline — the planning loop wandered without the lexical signal to anchor it.
+- Cost is the decisive tradeoff: the agent's correctness gains come at roughly 3–4x the LLM calls and 2–5x the tokens, so the context-aware engine remains far cheaper per correct answer (see the cost table). Choose the agent when accuracy on synthesis/multi-fact questions matters more than cost, and avoid it for Semantic-only retrieval.
+- `quotation_fidelity` (verbatim opening-sentence questions) stayed weak across both engines, batches, and methods, so it is a corpus/prompt limitation rather than an engine choice.
+
+### Capstone Checkpoint 4.1
+**Advanced retrieval and evaluation harness.** This checkpoint combines vector, graph, BM25 lexical, and hybrid retrieval strategies in an interactive evaluation workflow. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py).
+
+It runs local preflight setup on startup and invokes [Setup.py](Final_Capstone_Project/Utility_Scripts/Setup.py) with `--build` as needed. The build uses the Wikipedia HTML corpus and creates or reuses JSONL, ChromaDB, GraphDB, and BM25 artifacts. The project also includes a small `ragas` import shim in [Final_Capstone_Project/Utility_Scripts/ragas_vertexai_shim.py](Final_Capstone_Project/Utility_Scripts/ragas_vertexai_shim.py) to avoid an upstream import issue.
+
+Run it from the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_4.1\MHERRERA_Capstone_Checkpoint_4_1_Solution.py
+```
+
+#### Testing results and analysis
+Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_Project/Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/). Across all logged evaluations, `78/120` questions passed (`65%`).
+
+| Retriever | Original questions | Paraphrased questions | Combined |
+| --- | ---: | ---: | ---: |
+| Lexical | 6/8 (75%) | 9/16 (56%) | 15/24 (63%) |
+| Semantic | 6/8 (75%) | 11/16 (69%) | 17/24 (71%) |
+| Hybrid | 6/8 (75%) | 11/16 (69%) | 17/24 (71%) |
+| Graph | 5/8 (62%) | 10/16 (62%) | 15/24 (63%) |
+| All | 5/8 (62%) | 9/16 (56%) | 14/24 (58%) |
+| **All runs** | **28/40 (70%)** | **50/80 (62.5%)** | **78/120 (65%)** |
+
+Category summary:
+
+| Evaluation category | Passed | Total | Pass rate |
+| --- | ---: | ---: | ---: |
+| `factual_retrieval` | 26 | 30 | 87% |
+| `obscure_knowledge` | 15 | 15 | 100% |
+| `multi_fact` | 26 | 30 | 87% |
+| `cross_document_synthesis` | 3 | 15 | 20% |
+| `quotation_fidelity` | 0 | 15 | 0% |
+| `out_of_corpus_abstention` | 8 | 15 | 53% |
+| **Overall** | **78** | **120** | **65%** |
+
+The log indicates a `7.5` percentage-point drop from original to paraphrased questions, with the biggest weakness in `cross_document_synthesis` and `quotation_fidelity`.
 
 ### Capstone Checkpoint 3.1
 **Evaluation infrastructure and baseline diagnosis.** This checkpoint evaluates retrieval quality with RAGAS and compares original questions to paraphrased variants to detect robustness issues. The implementation is in [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/).
@@ -119,42 +225,15 @@ A delta below `-5%` indicates brittleness to rephrasing; a delta above `+5%` sug
 - ChromaDB load or embedding error
 - Empty datasets or API rate limit issues
 
-### Capstone Checkpoint 4.1
-**Advanced retrieval and evaluation harness.** This checkpoint combines vector, graph, BM25 lexical, and hybrid retrieval strategies in an interactive evaluation workflow. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py).
+### Capstone Checkpoint 2.1
+**Retrieval strategy design and baseline implementation.** This checkpoint builds a Wikipedia RAG workflow using ChromaDB vector retrieval and BM25 lexical retrieval. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/).
 
-It runs local preflight setup on startup and invokes [Setup.py](Final_Capstone_Project/Utility_Scripts/Setup.py) with `--build` as needed. The build uses the Wikipedia HTML corpus and creates or reuses JSONL, ChromaDB, GraphDB, and BM25 artifacts. The project also includes a small `ragas` import shim in [Final_Capstone_Project/Utility_Scripts/ragas_vertexai_shim.py](Final_Capstone_Project/Utility_Scripts/ragas_vertexai_shim.py) to avoid an upstream import issue.
+Place the corpus under [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/) and keep the OpenRouter key in the project `.env` file.
 
-Run it from the repository root:
+### Capstone Checkpoint 1.1
+**Evaluating when retrieval is required.** This checkpoint measures baseline LLM performance without retrieval and determines whether retrieval is needed for the Wikipedia scenario. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/).
 
-```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_4.1\MHERRERA_Capstone_Checkpoint_4_1_Solution.py
-```
-
-#### Testing results and analysis
-Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_Project/Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/). Across all logged evaluations, `78/120` questions passed (`65%`).
-
-| Retriever | Original questions | Paraphrased questions | Combined |
-| --- | ---: | ---: | ---: |
-| Lexical | 6/8 (75%) | 9/16 (56%) | 15/24 (63%) |
-| Semantic | 6/8 (75%) | 11/16 (69%) | 17/24 (71%) |
-| Hybrid | 6/8 (75%) | 11/16 (69%) | 17/24 (71%) |
-| Graph | 5/8 (62%) | 10/16 (62%) | 15/24 (63%) |
-| All | 5/8 (62%) | 9/16 (56%) | 14/24 (58%) |
-| **All runs** | **28/40 (70%)** | **50/80 (62.5%)** | **78/120 (65%)** |
-
-Category summary:
-
-| Evaluation category | Passed | Total | Pass rate |
-| --- | ---: | ---: | ---: |
-| `factual_retrieval` | 26 | 30 | 87% |
-| `obscure_knowledge` | 15 | 15 | 100% |
-| `multi_fact` | 26 | 30 | 87% |
-| `cross_document_synthesis` | 3 | 15 | 20% |
-| `quotation_fidelity` | 0 | 15 | 0% |
-| `out_of_corpus_abstention` | 8 | 15 | 53% |
-| **Overall** | **78** | **120** | **65%** |
-
-The log indicates a `7.5` percentage-point drop from original to paraphrased questions, with the biggest weakness in `cross_document_synthesis` and `quotation_fidelity`.
+Add `OPENROUTER_API_KEY` to the root `.env` file before running the solution.
 
 #### ChromaDB token and cost estimate
 | Measure | Current workspace | Estimate or formula |
@@ -203,13 +282,15 @@ Setup creates or verifies the following local paths:
 The workspace currently includes the Wikipedia HTML and JSONL corpus, question files, and evaluation outputs. Generated databases and local runtime artifacts are created on first setup and are not always committed to version control.
 
 ## Key Project Areas
-- [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/) contains the checkpoint 1.1 solution and supporting artifacts.
-- [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/) contains the retrieval strategy and baseline implementation files.
-- [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/) contains the evaluation harness, validation utilities, datasets, and experiment results.
+- [Final_Capstone_Project/Capstone_Checkpoint_5.1/](Final_Capstone_Project/Capstone_Checkpoint_5.1/) contains the dual-engine (Context-Aware and Agentic Dynamic) chat and evaluation solution.
 - [Final_Capstone_Project/Capstone_Checkpoint_4.1/](Final_Capstone_Project/Capstone_Checkpoint_4.1/) contains the advanced retrieval starter and final solution files.
+- [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/) contains the evaluation harness, validation utilities, datasets, and experiment results.
+- [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/) contains the retrieval strategy and baseline implementation files.
+- [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/) contains the checkpoint 1.1 solution and supporting artifacts.
 - [Final_Capstone_Project/Capstone_Database/](Final_Capstone_Project/Capstone_Database/) stores the local corpus and database artifacts used for retrieval.
-- [Final_Capstone_Project/Retrieval_Methods/](Final_Capstone_Project/Retrieval_Methods/) contains BM25, vector, and hybrid retrieval logic.
+- [Final_Capstone_Project/Retrieval_Methods/](Final_Capstone_Project/Retrieval_Methods/) contains BM25, vector, hybrid, context-aware, and agentic retrieval logic.
 - [Final_Capstone_Project/Ranking_Techniques/](Final_Capstone_Project/Ranking_Techniques/) contains ranking and fusion logic.
+- [Final_Capstone_Project/Utility_Scripts/](Final_Capstone_Project/Utility_Scripts/) contains shared setup, evaluation, dataset-loading, menu, token-usage, and report-writing helpers.
 - [Final_Capstone_Project/Ragas_Experiments/](Final_Capstone_Project/Ragas_Experiments/) stores evaluation logic and experiment outputs.
 - `lab_*` directories contain the course lab scripts, starter files, and requirements for guided work.
 

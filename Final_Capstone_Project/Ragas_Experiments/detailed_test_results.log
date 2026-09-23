@@ -1,4 +1,47 @@
 ================================================================================
+CAPSTONE 5.1 AGENT TEST SESSION  |  2026-09-21 22:01:12
+================================================================================
+Test type   : ReAct agent RAGAS correctness evaluation (Lexical search; manual-generated source)
+Date        : 2026-09-21
+Time        : 22:01:12
+Config      : Engine=Context-Aware retriever, Search=Lexical, candidates=BM25:10/Vector:10, Top-K=4, answer=openai/gpt-5.4-mini, judge=openai/gpt-5.4-mini, metric=RAGAS DiscreteMetric
+
+--------------------------------------------------------------------------------
+EVALUATION DATASET: PARAPHRASED QUESTIONS
+--------------------------------------------------------------------------------
+  Result      : 10/16 (62%) PASSED
+  Output CSV  : MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260921_220025_paraphrased-epic_cerf.csv
+  Dataset source: manual-generated questions
+  Failures    : 6 question(s) FAILED
+    1. What were the two major wartime blocs identified in the opening text about World War II?
+    2. Reproduce the first sentence of the '13 (2010 film)' Wikipedia article word for word.
+    3. What is the exact opening sentence of the Wikipedia entry for the film '13' released in 2010?
+    4. Using the relevant Wikipedia articles, compare what Albert Einstein and Joseph Warren Stilwell were known f...
+    5. How did Einstein's and Stilwell's main contributions differ, and what historical settings shaped them? Cite...
+    6. Does the available Wikipedia collection provide a current population figure for Mars? Explain the limitatio...
+
+CATEGORY BREAKDOWN
+--------------------------------------------------------------------------------
+  cross_document_synthesis      : 0/2 (0%)
+  factual_retrieval             : 4/4 (100%)
+  multi_fact                    : 3/4 (75%)
+  obscure_knowledge             : 2/2 (100%)
+  out_of_corpus_abstention      : 1/2 (50%)
+  quotation_fidelity            : 0/2 (0%)
+
+PARAPHRASE COVERAGE PER ORIGINAL
+--------------------------------------------------------------------------------
+  2 paraphrased question(s) tested for original: What is the capital and largest city of Mali?
+  2 paraphrased question(s) tested for original: Who was the last native pharaoh of Egypt mentioned in the lead text?
+  2 paraphrased question(s) tested for original: According to the lead text, what were the two main coalitions that fought in World War II?
+  2 paraphrased question(s) tested for original: Who created the Norman Gunston character, and what kind of TV character was he?
+  2 paraphrased question(s) tested for original: What was Joseph Warren Stilwell's nickname, and during which World War II theater did he serve as a United ...
+  2 paraphrased question(s) tested for original: Quote the opening sentence of the Wikipedia article titled '13 (2010 film)' exactly as written.
+  2 paraphrased question(s) tested for original: Compare Albert Einstein and Joseph Warren Stilwell. What was each person best known for, and what major his...
+  2 paraphrased question(s) tested for original: What is the current population of Mars, according to the latest available information? If this fact is not ...
+================================================================================
+
+================================================================================
 TEST SESSION  |  2026-09-14 21:40:55
 ================================================================================
 Test type   : RAGAS correctness evaluation (All search; manual-generated source)
