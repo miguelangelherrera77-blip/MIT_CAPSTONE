@@ -88,14 +88,37 @@ Results below cover all eight logged "Compare Both" runs — two batches of four
 | Hybrid + Graph | A (0.5/0.5) | 9/16 (56%) | 14/16 (88%) | +31% |
 | Hybrid + Graph | B (0.4/0.6) | 9/16 (56%) | 14/16 (88%) | +31% |
 
-**Cost comparison (per 16-question run):**
+**Model-call and token/cost comparison (per 16-question run):**
 
-| Engine | LLM calls / run | Tokens / run | Passes per 1K tokens |
-| --- | ---: | ---: | ---: |
-| Context-Aware | 16 (0 plan + 16 answer) | 18.2K–35.4K | ~0.55–0.70 |
-| Agentic Dynamic | 47–71 (31–55 plan + 16 answer) | 35.6K–104.7K | ~0.11–0.18 |
+Both engines make exactly 16 answer calls (one per question). The difference is the agent's planner: it makes one extra model call per reasoning step, so total calls and tokens scale with how much the agent iterates. Cost tracks tokens directly (billing is per token), so the token multiplier is the cost multiplier at a fixed model price.
 
-The agent adds one plan LLM call per reasoning step on top of the 16 answer calls, so it makes roughly 3–4x the calls and 2–5x the tokens of the context-aware engine for the same 16 questions. Measured as correctness per 1K tokens, the context-aware engine is about 3–4x more cost-efficient in every configuration.
+| Search method | Batch | Context calls | Context tokens | Agent calls (plan + answer) | Agent tokens | Token cost multiple (agent ÷ context) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Lexical | A | 16 (0 + 16) | 18.3K | 48 (32 + 16) | 99.7K | 5.4x |
+| Lexical | B | 16 (0 + 16) | 18.3K | 47 (31 + 16) | 92.6K | 5.1x |
+| Semantic | A | 16 (0 + 16) | 18.5K | 69 (53 + 16) | 35.6K | 1.9x |
+| Semantic | B | 16 (0 + 16) | 18.5K | 71 (55 + 16) | 38.2K | 2.1x |
+| Hybrid | A | 16 (0 + 16) | 18.3K | 49 (33 + 16) | 104.7K | 5.7x |
+| Hybrid | B | 16 (0 + 16) | 18.2K | 48 (32 + 16) | 93.0K | 5.1x |
+| Hybrid + Graph | A | 16 (0 + 16) | 35.4K | 48 (32 + 16) | 94.0K | 2.7x |
+| Hybrid + Graph | B | 16 (0 + 16) | 35.4K | 48 (32 + 16) | 100.1K | 2.8x |
+
+Efficiency as correctness per 1K tokens (higher is cheaper per correct answer):
+
+| Engine | Passes per 1K tokens (range across runs) |
+| --- | ---: |
+| Context-Aware | ~0.25–0.70 |
+| Agentic Dynamic | ~0.11–0.18 |
+
+The agent makes roughly **3–4.5x the model calls** and **2–5.7x the tokens** of the context-aware engine for the same 16 questions, and is about **3–5x less cost-efficient** per correct answer in every configuration. Note the Semantic rows: the agent's low token multiple there (1.9–2.1x) is not a saving — it reflects short, low-context planning loops that also produced its worst accuracy, so it spent more calls to retrieve less useful context.
+
+#### Iterative retrieval vs. the fixed pipeline
+The two engines differ structurally in how retrieval happens, which explains the accuracy/cost split above:
+
+- **Context-Aware = a fixed, single-pass pipeline.** For each question it runs exactly one retrieve → answer cycle: build one search query (folding in recent conversation), fetch the top-k chunks once, and generate the answer. The retrieval depth is fixed regardless of question difficulty, which is why its cost is flat (16 calls, ~18–35K tokens) and predictable.
+- **Agentic Dynamic = an iterative, plan-driven loop.** A plan node decides after each step whether to `retrieve` again (with new sub-queries), `graph_expand`, `clarify`, or `answer` — so a hard question can trigger several retrieval rounds while an easy one answers quickly. This adaptive depth is what lifts `cross_document_synthesis` (0/2 → 2/2) and `multi_fact` (3/4 → 4/4): the agent re-queries to assemble facts a single pass misses. It is also the direct cause of the higher cost (the 31–55 plan calls above) and of the Semantic failure mode, where the loop iterated without a lexical anchor and drifted off-target.
+
+In short, the fixed pipeline trades recall on multi-step questions for flat, low cost and stable behavior; the agent trades cost and predictability for adaptive, multi-round retrieval that wins on synthesis-heavy questions but can spiral on weak retrieval signals.
 
 Category pass rates for the strongest agentic configuration (Hybrid, Batch B, agentic 15/16):
 
@@ -109,9 +132,9 @@ Category pass rates for the strongest agentic configuration (Hybrid, Batch B, ag
 | `quotation_fidelity` | 0/2 (0%) | 1/2 (50%) |
 
 Observations:
-- The Agentic Dynamic engine improved correctness on Lexical, Hybrid, and Hybrid + Graph in both batches (deltas of +12% to +31%), with its biggest gains on `cross_document_synthesis` and `multi_fact` where iterative retrieval helps.
-- Pure Semantic is the agent's clear failure mode: it dropped to 4/16 (Batch A) and 7/16 (Batch B), well below the context-aware baseline — the planning loop wandered without the lexical signal to anchor it.
-- Cost is the decisive tradeoff: the agent's correctness gains come at roughly 3–4x the LLM calls and 2–5x the tokens, so the context-aware engine remains far cheaper per correct answer (see the cost table). Choose the agent when accuracy on synthesis/multi-fact questions matters more than cost, and avoid it for Semantic-only retrieval.
+- The Agentic Dynamic engine improved correctness on Lexical, Hybrid, and Hybrid + Graph in both batches (deltas of +12% to +31%), with its biggest gains on `cross_document_synthesis` and `multi_fact`.
+- Pure Semantic is the agent's clear failure mode: it dropped to 4/16 (Batch A) and 7/16 (Batch B), well below the context-aware baseline — the planning loop iterated without the lexical signal to anchor it.
+- Cost is the decisive tradeoff (see the model-call/token table above): choose the agent when accuracy on synthesis/multi-fact questions matters more than cost, and prefer the fixed context-aware pipeline for Semantic-only retrieval or cost-sensitive runs.
 - `quotation_fidelity` (verbatim opening-sentence questions) stayed weak across both engines, batches, and methods, so it is a corpus/prompt limitation rather than an engine choice.
 
 ### Capstone Checkpoint 4.1
