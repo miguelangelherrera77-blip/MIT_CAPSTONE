@@ -118,6 +118,31 @@ def prompt_mode() -> str | None:
         print("Invalid choice. Enter 1 (chat), 2 (evaluation), or 3 (quit).")
 
 
+def prompt_evaluation_type() -> str | None:
+    """Prompt for the Checkpoint 6.1 evaluation workflow."""
+    print("\nSelect Evaluation Type:")
+    print("  1. Standard RAGAS Evaluation")
+    print("  2. Model Ladder / Cost Experiment")
+    print("  3. View Previous Results")
+    print("  4. Quit")
+    while True:
+        try:
+            choice = input("Enter evaluation type [1-4]: ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting.")
+            return None
+        if choice == "1":
+            return "standard"
+        if choice == "2":
+            return "cost"
+        if choice == "3":
+            return "view"
+        if choice == "4":
+            print("Quit selected. Exiting without running.")
+            return None
+        print("Invalid choice. Enter 1 (standard), 2 (cost), 3 (view), or 4 (quit).")
+
+
 def prompt_engine(allow_compare: bool = True) -> str | None:
     """Prompt for the retrieval engine.
 
@@ -157,13 +182,17 @@ def prompt_engine(allow_compare: bool = True) -> str | None:
             print("Invalid choice. Enter 1 (context-aware), 2 (agentic dynamic), or 3 (quit).")
 
 
-def prompt_dataset() -> tuple[str, str] | None:
+def prompt_dataset(include_failure: bool = False) -> tuple[str, str] | None:
     """Prompt for the evaluation question source."""
     print("\nSelect Evaluation Dataset:")
     print("  1. Manually Generated Questions")
     print("  2. LLM Generated Questions")
     print("  3. Both")
-    print("  4. Quit")
+    if include_failure:
+        print("  4. Failure/Diagnostic Questions")
+        print("  5. Quit")
+    else:
+        print("  4. Quit")
     choices = {"1": "manual", "2": "llm"}
     while True:
         try:
@@ -180,10 +209,16 @@ def prompt_dataset() -> tuple[str, str] | None:
         if choice == "3":
             print("Confirmed: testing both LLM-generated Main and paraphrased questions.")
             return "both", "llm"
-        if choice == "4":
+        if include_failure and choice == "4":
+            print("Confirmed: testing manually authored failure/diagnostic questions.")
+            return "failure", "manual"
+        if choice == ("5" if include_failure else "4"):
             print("Quit selected. Exiting without running.")
             return None
-        print("Invalid choice. Enter 1 (manual), 2 (LLM), 3 (both), or 4 (quit).")
+        if include_failure:
+            print("Invalid choice. Enter 1 (manual), 2 (LLM), 3 (both), 4 (failure), or 5 (quit).")
+        else:
+            print("Invalid choice. Enter 1 (manual), 2 (LLM), 3 (both), or 4 (quit).")
 
 
 def prompt_question_set(source: str) -> str | None:

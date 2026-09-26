@@ -319,6 +319,10 @@ def _engine_section(run: EngineRun, search_method: str) -> list[str]:
         f"({format_tokens(run.plan_usage.input_tokens + run.answer_usage.input_tokens)} prompt + "
         f"{format_tokens(run.plan_usage.output_tokens + run.answer_usage.output_tokens)} completion)"
     )
+    if "latency_seconds" in r:
+        lines.append(f"  Latency       : {r['latency_seconds']:.2f}s total")
+    if "workflow_steps" in r:
+        lines.append(f"  Workflow steps: {r['workflow_steps']} total")
     lines.append(_fail_block(r).rstrip("\n"))
     category_lines = _category_block(r)
     if category_lines:

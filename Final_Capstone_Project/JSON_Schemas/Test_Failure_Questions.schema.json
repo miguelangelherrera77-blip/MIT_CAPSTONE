@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "Test_Failure_Questions.schema.json",
+  "title": "Failure and Diagnostic Test Questions",
+  "description": "Schema for manually authored RAG evaluation questions that test abstention, quotation fidelity, cross-document synthesis, and retrieval robustness.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/failureQuestionRecord"
+  },
+  "$defs": {
+    "failureQuestionRecord": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grading_notes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evaluation_category": {
+          "type": "string",
+          "enum": [
+            "factual_retrieval",
+            "obscure_knowledge",
+            "multi_fact",
+            "quotation_fidelity",
+            "cross_document_synthesis",
+            "out_of_corpus_abstention"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "question",
+        "grading_notes",
+        "evaluation_category",
+        "sources"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

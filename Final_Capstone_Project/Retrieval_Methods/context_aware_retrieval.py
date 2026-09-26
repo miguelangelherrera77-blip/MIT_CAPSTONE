@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import configparser
 import os
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -121,14 +122,22 @@ class ContextAwareRetriever:
         # this). This engine never plans, so only the answer usage accrues. Reset via
         # reset_eval_usage() before an eval and read via get_eval_usage() after.
         self._eval_answer_usage = TokenUsage()
+        self._eval_latency_seconds = 0.0
+        self._eval_steps = 0
 
     def reset_eval_usage(self) -> None:
         """Clear the cumulative evaluation token accounting before an eval run."""
         self._eval_answer_usage = TokenUsage()
+        self._eval_latency_seconds = 0.0
+        self._eval_steps = 0
 
     def get_eval_usage(self) -> tuple[TokenUsage, TokenUsage]:
         """Return the cumulative (plan_usage, answer_usage); plan is always empty here."""
         return TokenUsage(), self._eval_answer_usage
+
+    def get_eval_metrics(self) -> tuple[float, int]:
+        """Return cumulative evaluation latency seconds and workflow steps."""
+        return self._eval_latency_seconds, self._eval_steps
 
     @staticmethod
     def _format_history(history: list[dict]) -> str:
@@ -165,8 +174,11 @@ class ContextAwareRetriever:
 
         Evaluation questions are independent, so no conversation history is applied
         here; this mirrors plain single-shot retrieval for a fair comparison."""
+        started = time.perf_counter()
         answer, answer_usage = self._answer_with_history(question, [])
         self._eval_answer_usage.add(answer_usage)
+        self._eval_latency_seconds += time.perf_counter() - started
+        self._eval_steps += 1
         return answer
 
     def chat(self) -> None:

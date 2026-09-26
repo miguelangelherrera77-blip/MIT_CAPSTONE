@@ -25,6 +25,7 @@ from __future__ import annotations
 import configparser
 import json
 import os
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, TypedDict
@@ -156,6 +157,8 @@ class ToolUsingAgent:
         search_method: str = "hybrid",
         llm_model: str = LLM_MODEL,
         agent_model: str = AGENT_MODEL,
+        plan_model: str | None = None,
+        answer_model: str | None = None,
         embedding_model: str = EMBEDDING_MODEL,
         temperature: float = TEMPERATURE,
         max_tokens: int = MAX_TOKENS,
@@ -170,10 +173,19 @@ class ToolUsingAgent:
         self._search_method = str(search_method).lower()
         resolved_api_key = api_key or os.environ["OPENROUTER_API_KEY"]
         resolved_chroma_dir = chroma_dir or CHROMA_DIR
-        # The agent's plan/answer reasoning uses agent_model; the retrieval stack
-        # below keeps using llm_model (the shared [llm] model).
-        self._llm = ChatOpenAI(
-            model=agent_model,
+        # The agent's plan/answer reasoning can use separate models; both default to
+        # agent_model so existing callers retain the original behavior.
+        self._plan_model = plan_model or agent_model
+        self._answer_model = answer_model or agent_model
+        self._plan_llm = ChatOpenAI(
+            model=self._plan_model,
+            api_key=resolved_api_key,
+            base_url=base_url,
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        self._answer_llm = ChatOpenAI(
+            model=self._answer_model,
             api_key=resolved_api_key,
             base_url=base_url,
             temperature=temperature,
@@ -226,16 +238,24 @@ class ToolUsingAgent:
         # reset_eval_usage() before an eval and read via get_eval_usage() after.
         self._eval_plan_usage = TokenUsage()
         self._eval_answer_usage = TokenUsage()
+        self._eval_latency_seconds = 0.0
+        self._eval_steps = 0
         self._graph = self._build_graph()
 
     def reset_eval_usage(self) -> None:
         """Clear the cumulative evaluation token accounting before an eval run."""
         self._eval_plan_usage = TokenUsage()
         self._eval_answer_usage = TokenUsage()
+        self._eval_latency_seconds = 0.0
+        self._eval_steps = 0
 
     def get_eval_usage(self) -> tuple[TokenUsage, TokenUsage]:
         """Return the cumulative (plan_usage, answer_usage) tallied across queries."""
         return self._eval_plan_usage, self._eval_answer_usage
+
+    def get_eval_metrics(self) -> tuple[float, int]:
+        """Return cumulative evaluation latency seconds and workflow steps."""
+        return self._eval_latency_seconds, self._eval_steps
 
     def _build_graph(self):
         def retrieve_node(state: _AgentState) -> dict:
@@ -304,7 +324,7 @@ class ToolUsingAgent:
                 f"Chunks retrieved ({len(state['doc_bodies'])} total):\n\n{doc_summary}"
             )
             plan_system = PLAN_SYSTEM if self._graph_enabled else PLAN_SYSTEM_NO_GRAPH
-            response = self._llm.invoke([
+            response = self._plan_llm.invoke([
                 SystemMessage(content=plan_system),
                 HumanMessage(content=user_content),
             ])
@@ -379,7 +399,7 @@ class ToolUsingAgent:
                 parts.append(f"Interactions so far:\n{clarif_str}")
             parts.append(f"Retrieved Wikipedia excerpts:\n{doc_context}")
             answer_prompt = ANSWER_SYSTEM + "\n\n" + "\n\n".join(parts)
-            response = self._llm.invoke([
+            response = self._answer_llm.invoke([
                 SystemMessage(content=ANSWER_SYSTEM),
                 HumanMessage(content="\n\n".join(parts)),
             ])
@@ -434,7 +454,11 @@ class ToolUsingAgent:
             "answer": "",
             "done": False,
         }
-        answer = self._graph.invoke(initial)["answer"]
+        started = time.perf_counter()
+        final_state = self._graph.invoke(initial)
+        answer = final_state["answer"]
+        self._eval_latency_seconds += time.perf_counter() - started
+        self._eval_steps += self._plan_usage.calls + 1
         # Fold this turn's usage into the cumulative evaluation totals.
         self._eval_plan_usage.add(self._plan_usage)
         self._eval_answer_usage.add(self._answer_usage)
