@@ -337,6 +337,21 @@ def append_cost_experiment_report(
             f"  - Lowest estimated Agentic model cost: {lowest_cost_result.configuration} "
             f"(${lowest_cost_result.estimated_cost_usd:.5f})."
         )
+    lines.extend(["", "CATEGORY BREAKDOWN AND FAILURE QUESTIONS", "-" * 80])
+    for comparison in comparisons:
+        for engine_name, result in (
+            ("Context-Aware", comparison.context),
+            ("Agentic", comparison.agent),
+        ):
+            lines.append(f"{comparison.configuration} | {engine_name}")
+            for category, stats in sorted(result.category_stats.items()):
+                lines.append(
+                    f"  {category}: {stats['passes']}/{stats['total']} ({stats['rate']:.0%})"
+                )
+                for index, detail in enumerate(result.category_details.get(category, []), 1):
+                    lines.append(f"    {index}. Score: {detail['score'].upper()}")
+                    lines.append(f"       Failure/diagnostic question: {detail['question']}")
+                    lines.append(f"       Grading notes: {detail['grading_notes']}")
     lines.extend(["=" * 80, "",])
     COST_EXPERIMENT_LOG.parent.mkdir(parents=True, exist_ok=True)
     with COST_EXPERIMENT_LOG.open("a", encoding="utf-8") as fh:
@@ -377,6 +392,7 @@ async def run_cost_experiment(
             RAGAS_ROOT,
             log,
             kind=search_method,
+            include_category_details=True,
         )
         plan_usage, answer_usage = agent.get_eval_usage()
         experiment_results.append(
@@ -392,6 +408,8 @@ async def run_cost_experiment(
                     pair.planner,
                     pair.answer,
                 ),
+                category_stats=scored.get("category_stats", {}),
+                category_details=scored.get("category_details", {}),
             )
         )
         agent_latency, agent_steps = agent.get_eval_metrics()
@@ -413,6 +431,7 @@ async def run_cost_experiment(
             RAGAS_ROOT,
             log,
             kind=search_method,
+            include_category_details=True,
         )
         context_plan, context_answer = context_engine.get_eval_usage()
         context_result = ExperimentResult(
@@ -427,6 +446,8 @@ async def run_cost_experiment(
                 pair.planner,
                 pair.answer,
             ),
+            category_stats=context_scored.get("category_stats", {}),
+            category_details=context_scored.get("category_details", {}),
         )
         context_latency, context_steps = context_engine.get_eval_metrics()
         context_result.latency_seconds = context_latency
@@ -478,6 +499,7 @@ async def _evaluate_engine(retriever, dataset, label, search_method):
     results = await evaluate_dataset(
         retriever, judge, correctness_metric, dataset, label, RAGAS_ROOT, log,
         kind=search_method,
+        include_category_details="FAILURE" in label.upper(),
     )
     attach_eval_metrics(results, retriever)
     plan_usage, answer_usage = retriever.get_eval_usage()
@@ -674,6 +696,7 @@ async def main(
         results = await evaluate_dataset(
             retriever, judge, correctness_metric, dataset, label, RAGAS_ROOT, log,
             kind=search_method,
+            include_category_details=dataset_type == "failure",
         )
         attach_eval_metrics(results, retriever)
         plan_usage, answer_usage = retriever.get_eval_usage()

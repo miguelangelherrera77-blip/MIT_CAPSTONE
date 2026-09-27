@@ -67,24 +67,25 @@ Run from the repository root:
 
 #### Outputs
 - Unified failure-test and cost report: [checkpoint_6_1_security_performance.log](Final_Capstone_Project/Ragas_Experiments/checkpoint_6_1_security_performance.log).
+- Failure-test category breakdowns include each diagnostic question, its grading notes, and its RAGAS score.
 - Standard main/paraphrase and engine-comparison reports: [detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log).
 - Per-question RAGAS CSVs: [Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/).
 - Runtime log: [checkpoint_6_1_agent.log](Final_Capstone_Project/Capstone_Checkpoint_6.1/checkpoint_6_1_agent.log).
 - The separate [security_cost_audit_demo.py](Final_Capstone_Project/Utility_Scripts/security_cost_audit_demo.py) is a synthetic teaching demo; its output is not part of the Checkpoint 6.1 Wikipedia report.
 
 #### Testing Results and Analysis
-The recorded failure-test comparisons below used all five manually authored diagnostic questions, `openai/gpt-5.4-mini` for answers and judging, and BM25/vector fusion weights of 0.4/0.6. Latency and token counts are totals for each five-question run. Agentic workflow steps include planner calls plus the five answer steps.
+The table summarizes the latest recorded failure-test comparison for each search method, run on 2026-09-27. Each run used all five manually authored diagnostic questions, `openai/gpt-5.4-mini` for answers and judging, and BM25/vector fusion weights of 0.4/0.6 where fusion applies. Latency and token counts are totals for each five-question run. Agentic workflow steps include planner calls plus the five answer steps.
 
 | Search method | Context-Aware result | Context tokens | Context latency | Agentic result | Agentic tokens | Agentic latency | Agentic steps |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Lexical | 4/5 (80%) | 6.0K | 5.77s | 5/5 (100%) | 33.5K | 16.73s | 15 |
-| Semantic | 4/5 (80%) | 5.7K | 11.15s | 4/5 (80%) | 14.6K | 46.33s | 24 |
-| Hybrid | 5/5 (100%) | 6.3K | 12.15s | 5/5 (100%) | 34.8K | 27.13s | 15 |
-| Hybrid + Graph | 5/5 (100%) | 8.9K | 11.20s | 5/5 (100%) | 30.5K | 31.70s | 15 |
+| Lexical | 5/5 (100%) | 6.1K | 5.76s | 5/5 (100%) | 33.5K | 16.73s | 15 |
+| Semantic | 3/5 (60%) | 5.4K | 8.92s | 4/5 (80%) | 13.8K | 36.43s | 23 |
+| Hybrid | 5/5 (100%) | 6.0K | 9.31s | 5/5 (100%) | 33.4K | 19.94s | 15 |
+| Hybrid + Graph | 4/5 (80%) | 8.9K | 9.12s | 5/5 (100%) | 29.6K | 24.64s | 15 |
 
-**Observations:** Both engines passed all five questions with Hybrid and Hybrid + Graph. Lexical favored Agentic (5/5 vs. 4/5); Semantic tied at 4/5 but failed different questions: Context-Aware missed the exact-quotation question, while Agentic missed cross-document synthesis. In these runs, Agentic used about 2.6–5.6 times as many tokens and took longer than Context-Aware; the largest Agentic delay was Semantic at 46.33 seconds. Its extra planner calls and adaptive steps therefore did not improve the overall score for three of the four methods.
+**Observations:** Both engines scored 5/5 with Lexical and Hybrid. Agentic scored 5/5 versus Context-Aware's 4/5 with Hybrid + Graph, and 4/5 versus 3/5 with Semantic. The Semantic Agentic run still failed the cross-document synthesis question; Context-Aware failed both cross-document synthesis and factual retrieval. Agentic used about 2.6–5.6 times as many tokens and took about 2.1–4.1 times as long in these runs. Its accuracy gains on Semantic and Hybrid + Graph therefore came with higher latency and token use; on Lexical and Hybrid, both engines tied on correctness.
 
-These are diagnostic results from a five-question test set, not broad evidence of general reliability or a security guarantee. The recorded report currently contains the four engine comparisons above; the Model Ladder / Cost Experiment has not yet produced results. Its model-specific cost conclusions should be added here after that experiment is run.
+These are diagnostic results from a five-question test set, not broad evidence of general reliability or a security guarantee. The report contains repeated runs; the table shows the latest run for each method, not a statistical aggregate. The Model Ladder / Cost Experiment has not yet produced results. Its model-specific cost conclusions should be added here after that experiment is run.
 
 ### Capstone Checkpoint 5.1
 **Agentic tool-using retrieval with a dual-engine, comparison-ready workflow.** This checkpoint adds an interactive solution that lets the user choose a retrieval engine and either chat with it or score it through RAGAS. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py).

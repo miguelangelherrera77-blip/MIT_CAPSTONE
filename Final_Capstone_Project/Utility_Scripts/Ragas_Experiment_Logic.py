@@ -85,6 +85,7 @@ async def evaluate_dataset(
     ragas_root: str | Path,
     log: LogFunction,
     kind: str = "hybrid",
+    include_category_details: bool = False,
 ) -> dict:
     """Run, save, and summarize one RAGAS dataset evaluation."""
     total = len(dataset)
@@ -129,12 +130,19 @@ async def evaluate_dataset(
     result_total = len(ordered_results)
     failures = [result["question"] for result in ordered_results if result["score"] != "pass"]
     category_stats: dict[str, dict[str, Any]] = {}
+    category_details: dict[str, list[dict[str, str]]] = {}
     for result in ordered_results:
         category = result.get("evaluation_category") or "untagged"
         stats = category_stats.setdefault(category, {"passes": 0, "total": 0})
         stats["total"] += 1
         if result["score"] == "pass":
             stats["passes"] += 1
+        if include_category_details:
+            category_details.setdefault(category, []).append({
+                "question": result["question"],
+                "grading_notes": result["grading_notes"],
+                "score": str(result["score"]),
+            })
     for stats in category_stats.values():
         stats["rate"] = stats["passes"] / stats["total"] if stats["total"] else 0.0
     results.save()
@@ -142,7 +150,7 @@ async def evaluate_dataset(
     rel_csv_path = _format_relative_path(csv_path)
         # print(f"  {label}: {passes}/{result_total} passed  ->  {csv_path.resolve()}")
     log(f"{label} RESULT", f"{passes}/{result_total} passed; csv={rel_csv_path}")
-    return {
+    evaluation_summary = {
         "label": label,
         "passes": passes,
         "total": result_total,
@@ -150,3 +158,6 @@ async def evaluate_dataset(
         "csv_path": rel_csv_path,
         "category_stats": category_stats,
     }
+    if include_category_details:
+        evaluation_summary["category_details"] = category_details
+    return evaluation_summary

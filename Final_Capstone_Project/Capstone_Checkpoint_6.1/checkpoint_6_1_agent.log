@@ -22,3 +22,27 @@
 [2026-09-27T13:10:18] FAILURE TESTS RESULT
 5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_130925_failure tests-thirsty_perlis.csv
 ------------------------------------------------------------------------
+[2026-09-27T13:54:54] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_135437_failure tests-crazy_rossum.csv
+------------------------------------------------------------------------
+[2026-09-27T13:55:34] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_135458_failure tests-nervous_engelbart.csv
+------------------------------------------------------------------------
+[2026-09-27T13:56:54] FAILURE TESTS RESULT
+3/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_135630_failure tests-hopeful_boole.csv
+------------------------------------------------------------------------
+[2026-09-27T13:57:51] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_135654_failure tests-suspicious_cerf.csv
+------------------------------------------------------------------------
+[2026-09-27T13:59:36] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_135913_failure tests-thirsty_wing.csv
+------------------------------------------------------------------------
+[2026-09-27T14:00:19] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_135940_failure tests-vibrant_engelbart.csv
+------------------------------------------------------------------------
+[2026-09-27T14:01:56] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_140134_failure tests-musing_brin.csv
+------------------------------------------------------------------------
+[2026-09-27T14:02:59] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_140215_failure tests-festive_hopper.csv
+------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 """Prototype Lab 6.2-style cost experiment for the Checkpoint 6.1 agent."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import sys
 from pathlib import Path
 from typing import Callable, Sequence
@@ -49,6 +49,8 @@ class ExperimentResult:
     estimated_cost_usd: float
     latency_seconds: float = 0.0
     workflow_steps: int = 0
+    category_stats: dict[str, dict] = field(default_factory=dict)
+    category_details: dict[str, list[dict[str, str]]] = field(default_factory=dict)
 
     @property
     def total_tokens(self) -> int:

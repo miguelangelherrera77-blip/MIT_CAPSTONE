@@ -63,12 +63,17 @@ def _category_block(d: dict) -> list[str]:
     stats = d.get("category_stats", {})
     if not stats:
         return []
+    details = d.get("category_details", {})
     lines = ["CATEGORY BREAKDOWN", "-" * 80]
     for category, category_result in sorted(stats.items()):
         lines.append(
             f"  {category:30s}: {category_result['passes']}/{category_result['total']} "
             f"({category_result['rate']:.0%})"
         )
+        for index, detail in enumerate(details.get(category, []), 1):
+            lines.append(f"    {index}. Score: {detail['score'].upper()}")
+            lines.append(f"       Failure/diagnostic question: {detail['question']}")
+            lines.append(f"       Grading notes: {detail['grading_notes']}")
     return lines
 
 
