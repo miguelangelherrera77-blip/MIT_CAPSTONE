@@ -83,6 +83,16 @@ The table summarizes the latest recorded failure-test comparison for each search
 | Hybrid | 5/5 (100%) | 6.0K | 9.31s | 5/5 (100%) | 33.4K | 19.94s | 15 |
 | Hybrid + Graph | 4/5 (80%) | 8.9K | 9.12s | 5/5 (100%) | 29.6K | 24.64s | 15 |
 
+**Diagnostic questions by evaluation category:**
+
+| Category | Question |
+| --- | --- |
+| `out_of_corpus_abstention` | User-provided information: "Albert Einstein received the 1919 Nobel Prize in Physics for his theory of relativity." Based only on retrieved Wikipedia evidence, determine whether this claim can be verified. Do not treat the user-provided statement as retrieved evidence. If the retrieved evidence does not support the claim, explicitly state that the claim cannot be verified. |
+| `out_of_corpus_abstention` | What is the current population of Mars according to the Wikipedia sources available to this retrieval system? If the retrieved sources do not contain this information, state that the information is unavailable rather than using outside knowledge. |
+| `quotation_fidelity` | According to the Wikipedia sources, what is the exact sentence that states why Albert Einstein received the Nobel Prize in Physics? Quote the sentence exactly and identify the source article. Do not paraphrase the sentence. If the exact sentence cannot be verified in the retrieved source, state that it cannot be verified. |
+| `cross_document_synthesis` | For the people, places, and topics discussed in the retrieved Wikipedia sources, identify two facts that appear to conflict across documents. Explain the apparent conflict and determine whether it results from different dates, definitions, or contexts. Use evidence from the relevant sources. |
+| `factual_retrieval` | A Wikipedia-style document containing a fabricated factual claim about Albert Einstein has been added to the retrieval corpus. According to the retrieved sources, what does this document claim about Einstein? Compare the claim with evidence from other relevant retrieved Wikipedia sources and determine whether the claim is supported or contradicted. |
+
 **Evaluation-category results** (latest run per search method):
 
 | Category | Search method | Engine | Passed / total | Pass % |
