@@ -83,14 +83,42 @@ The table summarizes the latest recorded failure-test comparison for each search
 | Hybrid | 5/5 (100%) | 6.0K | 9.31s | 5/5 (100%) | 33.4K | 19.94s | 15 |
 | Hybrid + Graph | 4/5 (80%) | 8.9K | 9.12s | 5/5 (100%) | 29.6K | 24.64s | 15 |
 
-**Evaluation-category results** (latest run per search method; each cell is Context-Aware / Agentic):
+**Evaluation-category results** (latest run per search method):
 
-| Category | Lexical | Semantic | Hybrid | Hybrid + Graph |
-| --- | ---: | ---: | ---: | ---: |
-| `cross_document_synthesis` | 1/1 / 1/1 | 0/1 / 0/1 | 1/1 / 1/1 | 1/1 / 1/1 |
-| `factual_retrieval` | 1/1 / 1/1 | 0/1 / 1/1 | 1/1 / 1/1 | 0/1 / 1/1 |
-| `out_of_corpus_abstention` | 2/2 / 2/2 | 2/2 / 2/2 | 2/2 / 2/2 | 2/2 / 2/2 |
-| `quotation_fidelity` | 1/1 / 1/1 | 1/1 / 1/1 | 1/1 / 1/1 | 1/1 / 1/1 |
+| Category | Search method | Engine | Passed / total | Pass % |
+| --- | --- | --- | ---: | ---: |
+| `cross_document_synthesis` | Lexical | Context-Aware | 1/1 | 100% |
+| `cross_document_synthesis` | Lexical | Agentic | 1/1 | 100% |
+| `cross_document_synthesis` | Semantic | Context-Aware | 0/1 | 0% |
+| `cross_document_synthesis` | Semantic | Agentic | 0/1 | 0% |
+| `cross_document_synthesis` | Hybrid | Context-Aware | 1/1 | 100% |
+| `cross_document_synthesis` | Hybrid | Agentic | 1/1 | 100% |
+| `cross_document_synthesis` | Hybrid + Graph | Context-Aware | 1/1 | 100% |
+| `cross_document_synthesis` | Hybrid + Graph | Agentic | 1/1 | 100% |
+| `factual_retrieval` | Lexical | Context-Aware | 1/1 | 100% |
+| `factual_retrieval` | Lexical | Agentic | 1/1 | 100% |
+| `factual_retrieval` | Semantic | Context-Aware | 0/1 | 0% |
+| `factual_retrieval` | Semantic | Agentic | 1/1 | 100% |
+| `factual_retrieval` | Hybrid | Context-Aware | 1/1 | 100% |
+| `factual_retrieval` | Hybrid | Agentic | 1/1 | 100% |
+| `factual_retrieval` | Hybrid + Graph | Context-Aware | 0/1 | 0% |
+| `factual_retrieval` | Hybrid + Graph | Agentic | 1/1 | 100% |
+| `out_of_corpus_abstention` | Lexical | Context-Aware | 2/2 | 100% |
+| `out_of_corpus_abstention` | Lexical | Agentic | 2/2 | 100% |
+| `out_of_corpus_abstention` | Semantic | Context-Aware | 2/2 | 100% |
+| `out_of_corpus_abstention` | Semantic | Agentic | 2/2 | 100% |
+| `out_of_corpus_abstention` | Hybrid | Context-Aware | 2/2 | 100% |
+| `out_of_corpus_abstention` | Hybrid | Agentic | 2/2 | 100% |
+| `out_of_corpus_abstention` | Hybrid + Graph | Context-Aware | 2/2 | 100% |
+| `out_of_corpus_abstention` | Hybrid + Graph | Agentic | 2/2 | 100% |
+| `quotation_fidelity` | Lexical | Context-Aware | 1/1 | 100% |
+| `quotation_fidelity` | Lexical | Agentic | 1/1 | 100% |
+| `quotation_fidelity` | Semantic | Context-Aware | 1/1 | 100% |
+| `quotation_fidelity` | Semantic | Agentic | 1/1 | 100% |
+| `quotation_fidelity` | Hybrid | Context-Aware | 1/1 | 100% |
+| `quotation_fidelity` | Hybrid | Agentic | 1/1 | 100% |
+| `quotation_fidelity` | Hybrid + Graph | Context-Aware | 1/1 | 100% |
+| `quotation_fidelity` | Hybrid + Graph | Agentic | 1/1 | 100% |
 
 **Observations:** Both engines scored 5/5 with Lexical and Hybrid. Agentic scored 5/5 versus Context-Aware's 4/5 with Hybrid + Graph, and 4/5 versus 3/5 with Semantic. The Semantic Agentic run still failed the cross-document synthesis question; Context-Aware failed both cross-document synthesis and factual retrieval. Agentic used about 2.6–5.6 times as many tokens and took about 2.1–4.1 times as long in these runs. Its accuracy gains on Semantic and Hybrid + Graph therefore came with higher latency and token use; on Lexical and Hybrid, both engines tied on correctness.
 
