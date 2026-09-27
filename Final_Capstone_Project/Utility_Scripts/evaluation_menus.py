@@ -96,6 +96,14 @@ AGENT_BASE_RETRIEVAL_MAP = {
     "quit": "quit",
 }
 
+AGENT_GRAPH_RETRIEVAL_MAP = {
+    **AGENT_BASE_RETRIEVAL_MAP,
+    "4": "graph",
+    "graph": "graph",
+    "graph_enabled": "graph",
+    "5": "quit",
+}
+
 
 def prompt_mode() -> str | None:
     """Prompt for the top-level mode: RAGAS evaluation or interactive chat."""
@@ -269,30 +277,44 @@ def prompt_retrieval_method() -> str | None:
         print("Invalid choice. Please enter 1 (lexical), 2 (semantic), 3 (hybrid), 4 (hybrid with graph), or 5 (quit).")
 
 
-def prompt_agent_base_retrieval_method() -> str | None:
+def prompt_agent_base_retrieval_method(include_graph_tool: bool = False) -> str | None:
     """Prompt for the Dynamic Agent's base retriever.
 
-    The agent always has a graph-expansion tool available on demand, so the choice
-    here only sets the base retrieve tool (lexical / semantic / hybrid); there is no
-    standalone graph option."""
-    print("\nSelect Base Search Method (the agent adds graph expansion on demand):")
-    print("  1. Lexical base: BM25 exact-term retrieval, with graph expansion available on demand")
-    print("  2. Semantic base: Chroma dense-vector retrieval, with graph expansion available on demand")
-    print("  3. Hybrid base: BM25 + Chroma vectors, with graph expansion available on demand")
-    print("  4. Quit (Exit without running)")
+    When ``include_graph_tool`` is true, the graph option selects hybrid base
+    retrieval with the planner-controlled graph-expansion tool enabled."""
+    if include_graph_tool:
+        print("\nSelect Agentic Search Mode:")
+        print("  1. Planner-Guided Lexical Search")
+        print("  2. Planner-Guided Semantic Search")
+        print("  3. Planner-Guided Hybrid Search")
+        print("  4. Hybrid with Graph Expansion Tool (planner may invoke it when useful)")
+        print("  5. Quit (Exit without running)")
+        choices = AGENT_GRAPH_RETRIEVAL_MAP
+        prompt_range = "[1-5]"
+    else:
+        print("\nSelect Base Search Method (the agent adds graph expansion on demand):")
+        print("  1. Lexical base: BM25 exact-term retrieval, with graph expansion available on demand")
+        print("  2. Semantic base: Chroma dense-vector retrieval, with graph expansion available on demand")
+        print("  3. Hybrid base: BM25 + Chroma vectors, with graph expansion available on demand")
+        print("  4. Quit (Exit without running)")
+        choices = AGENT_BASE_RETRIEVAL_MAP
+        prompt_range = "[1-4]"
     while True:
         try:
-            choice = input("Enter base search method selection [1-4]: ").strip().lower()
+            choice = input(f"Enter selection {prompt_range}: ").strip().lower()
         except (EOFError, KeyboardInterrupt):
             print("\nExiting.")
             return None
-        if choice in AGENT_BASE_RETRIEVAL_MAP:
-            mapped = AGENT_BASE_RETRIEVAL_MAP[choice]
+        if choice in choices:
+            mapped = choices[choice]
             if mapped == "quit":
                 print("Quit selected. Exiting without running.")
                 return None
             return mapped
-        print("Invalid choice. Please enter 1 (lexical), 2 (semantic), 3 (hybrid), or 4 (quit).")
+        if include_graph_tool:
+            print("Invalid choice. Enter 1 (lexical), 2 (semantic), 3 (hybrid), 4 (hybrid + graph tool), or 5 (quit).")
+        else:
+            print("Invalid choice. Please enter 1 (lexical), 2 (semantic), 3 (hybrid), or 4 (quit).")
 
 
 def prompt_question_limit() -> int | None:

@@ -1,0 +1,24 @@
+[2026-09-27T12:47:26] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_124710_failure tests-optimistic_valiant.csv
+------------------------------------------------------------------------
+[2026-09-27T12:47:57] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_124730_failure tests-cool_adleman.csv
+------------------------------------------------------------------------
+[2026-09-27T13:02:49] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_130225_failure tests-competent_knuth.csv
+------------------------------------------------------------------------
+[2026-09-27T13:03:55] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_130250_failure tests-youthful_thiel.csv
+------------------------------------------------------------------------
+[2026-09-27T13:05:58] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_130532_failure tests-vigilant_hoare.csv
+------------------------------------------------------------------------
+[2026-09-27T13:06:50] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_130602_failure tests-pedantic_sutherland.csv
+------------------------------------------------------------------------
+[2026-09-27T13:09:06] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_130834_failure tests-stupefied_liskov.csv
+------------------------------------------------------------------------
+[2026-09-27T13:10:18] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260927_130925_failure tests-thirsty_perlis.csv
+------------------------------------------------------------------------

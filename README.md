@@ -23,6 +23,8 @@ This repository contains the capstone Wikipedia RAG project. It includes the mai
 | --- | --- | --- |
 | Project Overview | Repository purpose and system context | [Overview](#project-overview) |
 | System Requirements | Host, Python, and runtime prerequisites | [Requirements](#project-system-requirements) |
+| Checkpoint 6.1 | Security, reliability, and performance evaluation | [Checkpoint 6.1](#capstone-checkpoint-61) |
+| Checkpoint 6.1 Report | Unified security and performance report | [checkpoint_6_1_security_performance.log](Final_Capstone_Project/Ragas_Experiments/checkpoint_6_1_security_performance.log) |
 | Checkpoint 5.1 | Dual-engine chat and agentic evaluation | [Checkpoint 5.1](#capstone-checkpoint-51) |
 | Checkpoint 5.1 Test Summary | Per-engine and comparison evaluation results | [detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log) |
 | Checkpoint 4.1 | Advanced retrieval and evaluation harness | [Checkpoint 4.1](#capstone-checkpoint-41) |
@@ -39,6 +41,51 @@ This repository contains the capstone Wikipedia RAG project. It includes the mai
 
 Checkpoints are listed newest first.
 
+### Capstone Checkpoint 6.1
+**Security, reliability, and performance evaluation of the Wikipedia RAG system.** Checkpoint 6.1 evaluates the Context-Aware and Agentic Dynamic engines using the same capstone corpus and RAGAS harness. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_6.1/MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_6.1/MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py).
+
+#### Standard RAGAS evaluation
+Choose **Standard RAGAS Evaluation**, then select Context-Aware, Agentic Dynamic, or Compare Both. Select manually generated, LLM-generated, both, or the five manually authored failure/diagnostic questions in [Test_Questions_Manually_Failure.json](Final_Capstone_Project/Test_Variables/Test_Questions_Manually_Failure.json). The evaluation menu also provides **View Previous Results**, which displays saved log excerpts without making API calls.
+
+Search options depend on the engine:
+- **Context-Aware:** Lexical, Semantic, Hybrid, or Graph-Augmented Hybrid Retrieval.
+- **Agentic Dynamic:** Planner-Guided Lexical, Semantic, or Hybrid; or **Hybrid with Graph Expansion Tool**, which enables the planner to invoke graph expansion when useful.
+- **Compare Both:** Select one search setting for the paired run. Graph behavior is not identical across engines: Context-Aware performs graph-augmented retrieval, while Agentic uses Hybrid as its base and may invoke the graph tool.
+
+For a direct CLI failure-test run:
+```powershell
+.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_6.1\MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py --mode eval --engine agent --dataset failure --retrieval graph
+```
+
+#### Model Ladder / Cost Experiment
+This opt-in workflow runs the failure-question suite across free/low-cost and configured model choices, including a mixed planner/answer configuration. It also compares Context-Aware and Agentic results for the configurations. The report records pass rates, planner/answer tokens, estimated model cost, latency, and workflow-step counts. It makes multiple OpenRouter API calls and may incur charges; RAGAS judge and embedding costs are excluded from the model-cost estimate.
+
+Run from the repository root:
+```powershell
+.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_6.1\MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py --cost-experiment --retrieval hybrid --numbers 4
+```
+
+#### Outputs
+- Unified failure-test and cost report: [checkpoint_6_1_security_performance.log](Final_Capstone_Project/Ragas_Experiments/checkpoint_6_1_security_performance.log).
+- Standard main/paraphrase and engine-comparison reports: [detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log).
+- Per-question RAGAS CSVs: [Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/).
+- Runtime log: [checkpoint_6_1_agent.log](Final_Capstone_Project/Capstone_Checkpoint_6.1/checkpoint_6_1_agent.log).
+- The separate [security_cost_audit_demo.py](Final_Capstone_Project/Utility_Scripts/security_cost_audit_demo.py) is a synthetic teaching demo; its output is not part of the Checkpoint 6.1 Wikipedia report.
+
+#### Testing Results and Analysis
+The recorded failure-test comparisons below used all five manually authored diagnostic questions, `openai/gpt-5.4-mini` for answers and judging, and BM25/vector fusion weights of 0.4/0.6. Latency and token counts are totals for each five-question run. Agentic workflow steps include planner calls plus the five answer steps.
+
+| Search method | Context-Aware result | Context tokens | Context latency | Agentic result | Agentic tokens | Agentic latency | Agentic steps |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Lexical | 4/5 (80%) | 6.0K | 5.77s | 5/5 (100%) | 33.5K | 16.73s | 15 |
+| Semantic | 4/5 (80%) | 5.7K | 11.15s | 4/5 (80%) | 14.6K | 46.33s | 24 |
+| Hybrid | 5/5 (100%) | 6.3K | 12.15s | 5/5 (100%) | 34.8K | 27.13s | 15 |
+| Hybrid + Graph | 5/5 (100%) | 8.9K | 11.20s | 5/5 (100%) | 30.5K | 31.70s | 15 |
+
+**Observations:** Both engines passed all five questions with Hybrid and Hybrid + Graph. Lexical favored Agentic (5/5 vs. 4/5); Semantic tied at 4/5 but failed different questions: Context-Aware missed the exact-quotation question, while Agentic missed cross-document synthesis. In these runs, Agentic used about 2.6–5.6 times as many tokens and took longer than Context-Aware; the largest Agentic delay was Semantic at 46.33 seconds. Its extra planner calls and adaptive steps therefore did not improve the overall score for three of the four methods.
+
+These are diagnostic results from a five-question test set, not broad evidence of general reliability or a security guarantee. The recorded report currently contains the four engine comparisons above; the Model Ladder / Cost Experiment has not yet produced results. Its model-specific cost conclusions should be added here after that experiment is run.
+
 ### Capstone Checkpoint 5.1
 **Agentic tool-using retrieval with a dual-engine, comparison-ready workflow.** This checkpoint adds an interactive solution that lets the user choose a retrieval engine and either chat with it or score it through RAGAS. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py).
 
@@ -47,12 +94,10 @@ Checkpoints are listed newest first.
 - **Agentic Dynamic Retriever** — a LangGraph ReAct agent that dynamically selects one action per step (`plan → retrieve / graph_expand / clarify / answer`) with no upfront plan. Graph expansion is enabled only for the graph-enabled search method; otherwise the agent runs graph-free.
 
 #### Search methods
-The interactive menu exposes four base search methods, reused by both engines:
+Search options are engine-specific:
 
-- **Lexical (Only)** — BM25 exact-term retrieval.
-- **Semantic (Only)** — Chroma dense-vector retrieval.
-- **Hybrid** — weighted BM25 + vector fusion.
-- **Hybrid with Graph Enabled** — hybrid retrieval plus Graph DB expansion of neighboring and linked article context.
+- **Context-Aware:** Lexical (BM25), Semantic (Chroma vectors), Hybrid (weighted BM25 + vector fusion), or Hybrid with Graph Enabled.
+- **Agentic Dynamic:** Lexical, Semantic, or Hybrid base retrieval; graph expansion is enabled with the graph search setting and is available to the planner as an action.
 
 #### Modes
 - **Interactive Chat** — multi-turn conversation with history, printing per-turn token usage (plan vs answer) and a cumulative session total. Token counts are read from the provider when reported (OpenRouter model named) or estimated locally with a labeled tokenizer.
@@ -305,6 +350,7 @@ Setup creates or verifies the following local paths:
 The workspace currently includes the Wikipedia HTML and JSONL corpus, question files, and evaluation outputs. Generated databases and local runtime artifacts are created on first setup and are not always committed to version control.
 
 ## Key Project Areas
+- [Final_Capstone_Project/Capstone_Checkpoint_6.1/](Final_Capstone_Project/Capstone_Checkpoint_6.1/) contains the security/performance RAGAS solution and failure-question evaluation.
 - [Final_Capstone_Project/Capstone_Checkpoint_5.1/](Final_Capstone_Project/Capstone_Checkpoint_5.1/) contains the dual-engine (Context-Aware and Agentic Dynamic) chat and evaluation solution.
 - [Final_Capstone_Project/Capstone_Checkpoint_4.1/](Final_Capstone_Project/Capstone_Checkpoint_4.1/) contains the advanced retrieval starter and final solution files.
 - [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/) contains the evaluation harness, validation utilities, datasets, and experiment results.

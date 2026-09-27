@@ -328,6 +328,10 @@ def _engine_section(run: EngineRun, search_method: str) -> list[str]:
     if category_lines:
         lines.append("")
         lines.extend(category_lines)
+    observations = r.get("observations", [])
+    if observations:
+        lines.extend(["", "OBSERVATIONS", "-" * 80])
+        lines.extend(f"  - {observation}" for observation in observations)
     return lines
 
 

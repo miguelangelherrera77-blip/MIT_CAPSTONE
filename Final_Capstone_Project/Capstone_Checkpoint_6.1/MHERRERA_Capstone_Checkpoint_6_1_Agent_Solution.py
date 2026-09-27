@@ -103,6 +103,7 @@ from Final_Capstone_Project.Utility_Scripts.test_report import (
 )
 from Final_Capstone_Project.Utility_Scripts.evaluation_menus import (
     AGENT_BASE_RETRIEVAL_MAP,
+    AGENT_GRAPH_RETRIEVAL_MAP,
     DATASET_MAP,
     ENGINE_MAP,
     MODE_MAP,
@@ -143,7 +144,7 @@ TEST_VARIABLES_DIR = FINAL_CAPSTONE_DIR / "Test_Variables"
 RAGAS_ROOT = str(FINAL_CAPSTONE_DIR / "Ragas_Experiments")
 LOG_PATH = CHECKPOINT_DIR / "checkpoint_6_1_agent.log"
 TEST_RESULTS_LOG = Path(RAGAS_ROOT) / "detailed_test_results.log"
-CHECKPOINT_6_1_REPORT_LOG = Path(RAGAS_ROOT) / "checkpoint_6_1_security_cost.log"
+CHECKPOINT_6_1_REPORT_LOG = Path(RAGAS_ROOT) / "checkpoint_6_1_security_performance.log"
 # Engine-comparison runs write here, leaving the single-engine log above untouched.
 TEST_RESULTS_AGENTIC_LOG = Path(RAGAS_ROOT) / "detailed_test_results_agentic.log"
 TEST_RESULTS_FAILURES_LOG = CHECKPOINT_6_1_REPORT_LOG
@@ -239,10 +240,23 @@ def load_failure_dataset(number_questions: int | None = None, random_mode: str =
 
 
 def attach_eval_metrics(results: dict, retriever) -> dict:
-    """Add cumulative latency and workflow steps to an evaluation result."""
+    """Add measured latency, workflow steps, and a concise observation summary."""
     latency_seconds, workflow_steps = retriever.get_eval_metrics()
     results["latency_seconds"] = latency_seconds
     results["workflow_steps"] = workflow_steps
+    total = results["total"]
+    average_latency = latency_seconds / total if total else 0.0
+    average_steps = workflow_steps / total if total else 0.0
+    observations = [
+        f"Correctness outcome: {results['passes']}/{total} questions passed.",
+        f"Average evaluation latency: {average_latency:.2f} seconds per question.",
+        f"Average workflow depth: {average_steps:.1f} steps per question.",
+    ]
+    if results.get("failures"):
+        observations.append(
+            f"Review the {len(results['failures'])} failed question(s) and their retrieved evidence."
+        )
+    results["observations"] = observations
     return results
 
 
@@ -294,6 +308,34 @@ def append_cost_experiment_report(
             f"${context.estimated_cost_usd:.5f} | {context.latency_seconds:.2f}s | steps={context.workflow_steps}  "
             f"{agent.passes}/{agent.questions} | {format_tokens(agent.total_tokens):>7s} | "
             f"${agent.estimated_cost_usd:.5f} | {agent.latency_seconds:.2f}s | steps={agent.workflow_steps}"
+        )
+    lines.extend(["", "OBSERVATIONS", "-" * 80])
+    for comparison in comparisons:
+        context = comparison.context
+        agent = comparison.agent
+        pass_delta = agent.pass_rate - context.pass_rate
+        if pass_delta > 0:
+            quality_note = f"Agentic passed {pass_delta:.0%} more questions than Context-Aware."
+        elif pass_delta < 0:
+            quality_note = f"Agentic passed {-pass_delta:.0%} fewer questions than Context-Aware."
+        else:
+            quality_note = "Both engines had the same pass rate."
+        token_multiple = agent.total_tokens / context.total_tokens if context.total_tokens else 0.0
+        latency_multiple = agent.latency_seconds / context.latency_seconds if context.latency_seconds else 0.0
+        lines.append(f"  - {comparison.configuration}: {quality_note}")
+        lines.append(
+            f"    Agentic used {token_multiple:.1f}x the tokens and {latency_multiple:.1f}x the latency."
+        )
+    if results:
+        best_result = max(results, key=lambda result: result.pass_rate)
+        lowest_cost_result = min(results, key=lambda result: result.estimated_cost_usd)
+        lines.append(
+            f"  - Highest Agentic pass rate: {best_result.configuration} "
+            f"({best_result.passes}/{best_result.questions}, {best_result.pass_rate:.0%})."
+        )
+        lines.append(
+            f"  - Lowest estimated Agentic model cost: {lowest_cost_result.configuration} "
+            f"(${lowest_cost_result.estimated_cost_usd:.5f})."
         )
     lines.extend(["=" * 80, "",])
     COST_EXPERIMENT_LOG.parent.mkdir(parents=True, exist_ok=True)
@@ -826,8 +868,8 @@ if __name__ == "__main__":
     # The Dynamic Agent always has graph expansion available, so it uses a base-retriever
     # menu (lexical/semantic/hybrid); the Context-Aware engine uses the full search menu.
     if engine_choice == "agent":
-        retrieval_map = AGENT_BASE_RETRIEVAL_MAP
-        prompt_search_method = prompt_agent_base_retrieval_method
+        retrieval_map = AGENT_GRAPH_RETRIEVAL_MAP
+        prompt_search_method = lambda: prompt_agent_base_retrieval_method(include_graph_tool=True)
     else:
         retrieval_map = RETRIEVAL_METHOD_MAP
         prompt_search_method = prompt_retrieval_method
