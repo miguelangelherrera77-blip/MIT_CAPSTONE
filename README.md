@@ -83,6 +83,15 @@ The table summarizes the latest recorded failure-test comparison for each search
 | Hybrid | 5/5 (100%) | 6.0K | 9.31s | 5/5 (100%) | 33.4K | 19.94s | 15 |
 | Hybrid + Graph | 4/5 (80%) | 8.9K | 9.12s | 5/5 (100%) | 29.6K | 24.64s | 15 |
 
+**Evaluation-category results** (latest run per search method; each cell is Context-Aware / Agentic):
+
+| Category | Lexical | Semantic | Hybrid | Hybrid + Graph |
+| --- | ---: | ---: | ---: | ---: |
+| `cross_document_synthesis` | 1/1 / 1/1 | 0/1 / 0/1 | 1/1 / 1/1 | 1/1 / 1/1 |
+| `factual_retrieval` | 1/1 / 1/1 | 0/1 / 1/1 | 1/1 / 1/1 | 0/1 / 1/1 |
+| `out_of_corpus_abstention` | 2/2 / 2/2 | 2/2 / 2/2 | 2/2 / 2/2 | 2/2 / 2/2 |
+| `quotation_fidelity` | 1/1 / 1/1 | 1/1 / 1/1 | 1/1 / 1/1 | 1/1 / 1/1 |
+
 **Observations:** Both engines scored 5/5 with Lexical and Hybrid. Agentic scored 5/5 versus Context-Aware's 4/5 with Hybrid + Graph, and 4/5 versus 3/5 with Semantic. The Semantic Agentic run still failed the cross-document synthesis question; Context-Aware failed both cross-document synthesis and factual retrieval. Agentic used about 2.6–5.6 times as many tokens and took about 2.1–4.1 times as long in these runs. Its accuracy gains on Semantic and Hybrid + Graph therefore came with higher latency and token use; on Lexical and Hybrid, both engines tied on correctness.
 
 These are diagnostic results from a five-question test set, not broad evidence of general reliability or a security guarantee. The report contains repeated runs; the table shows the latest run for each method, not a statistical aggregate. The Model Ladder / Cost Experiment has not yet produced results. Its model-specific cost conclusions should be added here after that experiment is run.
