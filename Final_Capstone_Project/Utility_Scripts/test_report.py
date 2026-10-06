@@ -43,6 +43,10 @@ class ReportConfig:
     engine_label: str = "ReAct tool-using"
     weight_bm25: float = 0.5
     weight_vector: float = 0.5
+    # Agent hardening mode for this run: "hardened", "baseline", or "n/a" (not applicable,
+    # e.g. the Context-Aware engine, or callers that do not set it). Recorded on the Config
+    # line so a report entry is unambiguous about whether the 7.1 safeguards were active.
+    hardening_label: str = "n/a"
 
 
 def _rate(d: dict) -> str:
@@ -107,7 +111,8 @@ def _config_line(config: ReportConfig, search_method: str) -> str:
         f"Config      : Engine={config.engine_label}, Search={_search_method_label(search_method)}, "
         f"candidates=BM25:{config.bm25_candidates}/Vector:{config.vector_candidates}, "
         f"Top-K={config.fused_top_k}, Ranking={_ranking_note(config, search_method)}, "
-        f"answer={config.llm_model}, judge={config.judge_model}, metric=RAGAS DiscreteMetric"
+        f"answer={config.llm_model}, judge={config.judge_model}, "
+        f"Hardening={config.hardening_label}, metric=RAGAS DiscreteMetric"
     )
 
 
@@ -412,7 +417,8 @@ def append_engine_comparison(
         f"Config     : Search={_search_method_label(search_method)}, "
         f"candidates=BM25:{config.bm25_candidates}/Vector:{config.vector_candidates}, "
         f"Top-K={config.fused_top_k}, Ranking={_ranking_note(config, search_method)}, "
-        f"answer={config.llm_model}, judge={config.judge_model}, metric=RAGAS DiscreteMetric"
+        f"answer={config.llm_model}, judge={config.judge_model}, "
+        f"Hardening={config.hardening_label}, metric=RAGAS DiscreteMetric"
     )
     entry.append("")
     entry.extend(_engine_section(context, search_method))
@@ -449,6 +455,7 @@ def append_single_engine_result(
     entry.append(f"Run ID     : {run_id}")
     entry.append(f"Dataset    : {dataset_name}  ({main_question_source}-generated source)")
     entry.append(f"Engine     : {engine.engine_label}")
+    entry.append(f"Hardening  : {config.hardening_label}")
     entry.append(
         f"Config     : Search={_search_method_label(search_method)}, "
         f"candidates=BM25:{config.bm25_candidates}/Vector:{config.vector_candidates}, "

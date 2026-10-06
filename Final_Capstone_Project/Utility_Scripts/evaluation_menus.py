@@ -127,15 +127,16 @@ def prompt_mode() -> str | None:
 
 
 def prompt_evaluation_type() -> str | None:
-    """Prompt for the Checkpoint 6.1 evaluation workflow."""
+    """Prompt for the evaluation workflow (standard, cost, hardening, or view)."""
     print("\nSelect Evaluation Type:")
     print("  1. Standard RAGAS Evaluation")
     print("  2. Model Ladder / Cost Experiment")
-    print("  3. View Previous Results")
-    print("  4. Quit")
+    print("  3. Hardening Tests (security probes: hardened vs. baseline before/after)")
+    print("  4. View Previous Results")
+    print("  5. Quit")
     while True:
         try:
-            choice = input("Enter evaluation type [1-4]: ").strip().lower()
+            choice = input("Enter evaluation type [1-5]: ").strip().lower()
         except (EOFError, KeyboardInterrupt):
             print("\nExiting.")
             return None
@@ -144,11 +145,41 @@ def prompt_evaluation_type() -> str | None:
         if choice == "2":
             return "cost"
         if choice == "3":
-            return "view"
+            return "hardening"
         if choice == "4":
+            return "view"
+        if choice == "5":
             print("Quit selected. Exiting without running.")
             return None
-        print("Invalid choice. Enter 1 (standard), 2 (cost), 3 (view), or 4 (quit).")
+        print("Invalid choice. Enter 1 (standard), 2 (cost), 3 (hardening), 4 (view), or 5 (quit).")
+
+
+def prompt_hardening_mode() -> bool | None:
+    """Prompt whether the selected engine runs HARDENED or BASELINE.
+
+    Returns True (hardened), False (baseline), or None (quit / EOF). This choice is
+    non-skippable in the interactive flow: the user must pick hardened, baseline, or quit.
+    """
+    print("\nSelect Retrieval Hardening:")
+    print("  1. Hardened  (input, history, and retrieved-text sanitization + trust boundaries)")
+    print("  2. Baseline  (no sanitization or trust-boundary prompt)")
+    print("  3. Quit")
+    while True:
+        try:
+            choice = input("Enter hardening selection [1-3]: ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting.")
+            return None
+        if choice in {"1", "hardened", "harden"}:
+            print("Confirmed: HARDENED retrieval engine.")
+            return True
+        if choice in {"2", "baseline", "unhardened", "un-hardened"}:
+            print("Confirmed: BASELINE retrieval engine.")
+            return False
+        if choice in {"3", "quit"}:
+            print("Quit selected. Exiting without running.")
+            return None
+        print("Invalid choice. Enter 1 (hardened), 2 (baseline), or 3 (quit).")
 
 
 def prompt_engine(allow_compare: bool = True) -> str | None:
