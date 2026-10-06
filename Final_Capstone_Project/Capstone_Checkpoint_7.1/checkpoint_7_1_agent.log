@@ -1,0 +1,150 @@
+[2026-09-30T18:24:39] FAILURE TESTS RESULT
+3/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260930_182418_failure tests-nervous_musk.csv
+------------------------------------------------------------------------
+[2026-09-30T18:25:24] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE\Final_Capstone_Project\Ragas_Experiments\experiments\20260930_182443_failure tests-youthful_musk.csv
+------------------------------------------------------------------------
+[2026-10-06T06:50:18] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_065001_failure tests-cool_valiant.csv
+------------------------------------------------------------------------
+[2026-10-06T07:09:33] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_070914_failure tests-ecstatic_perlis.csv
+------------------------------------------------------------------------
+[2026-10-06T07:11:06] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071049_failure tests-dreamy_shannon.csv
+------------------------------------------------------------------------
+[2026-10-06T07:12:11] FAILURE TESTS RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071153_failure tests-xenodochial_shannon.csv
+------------------------------------------------------------------------
+[2026-10-06T07:13:03] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071245_failure tests-gallant_kernighan.csv
+------------------------------------------------------------------------
+[2026-10-06T07:14:02] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071341_failure tests-gallant_jobs.csv
+------------------------------------------------------------------------
+[2026-10-06T07:15:04] FAILURE TESTS RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071445_failure tests-reverent_rossum.csv
+------------------------------------------------------------------------
+[2026-10-06T07:16:20] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071600_failure tests-focused_minsky.csv
+------------------------------------------------------------------------
+[2026-10-06T07:17:37] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071702_failure tests-laughing_adleman.csv
+------------------------------------------------------------------------
+[2026-10-06T07:18:48] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071815_failure tests-relaxed_matsumoto.csv
+------------------------------------------------------------------------
+[2026-10-06T07:20:14] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_071925_failure tests-eloquent_goldwasser.csv
+------------------------------------------------------------------------
+[2026-10-06T07:21:38] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_072052_failure tests-compassionate_dijkstra.csv
+------------------------------------------------------------------------
+[2026-10-06T07:23:03] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_072226_failure tests-tender_chomsky.csv
+------------------------------------------------------------------------
+[2026-10-06T07:24:26] FAILURE TESTS RESULT
+5/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_072344_failure tests-pedantic_shannon.csv
+------------------------------------------------------------------------
+[2026-10-06T07:25:55] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_072516_failure tests-busy_wing.csv
+------------------------------------------------------------------------
+[2026-10-06T07:27:23] FAILURE TESTS RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_072644_failure tests-wonderful_hopcroft.csv
+------------------------------------------------------------------------
+[2026-10-06T08:19:46] COST google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_081935_cost google/gemma-4-31b-it:free-stupefied_berners_lee.csv
+------------------------------------------------------------------------
+[2026-10-06T08:19:57] COST CONTEXT-AWARE google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_081948_cost context-aware google/gemma-4-31b-it:free-frosty_matsumoto.csv
+------------------------------------------------------------------------
+[2026-10-06T08:20:57] COST openai/gpt-4o-mini RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_081959_cost openai/gpt-4o-mini-mystifying_lamport.csv
+------------------------------------------------------------------------
+[2026-10-06T08:21:14] COST CONTEXT-AWARE openai/gpt-4o-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_082100_cost context-aware openai/gpt-4o-mini-focused_shamir.csv
+------------------------------------------------------------------------
+[2026-10-06T08:21:51] COST openai/gpt-5.4-mini RESULT
+5/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_082116_cost openai/gpt-5.4-mini-youthful_rossum.csv
+------------------------------------------------------------------------
+[2026-10-06T08:22:10] COST CONTEXT-AWARE openai/gpt-5.4-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_082153_cost context-aware openai/gpt-5.4-mini-elated_wilkes.csv
+------------------------------------------------------------------------
+[2026-10-06T08:30:05] COST mixed: strong planner + economical answer RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_082213_cost mixed: strong planner + economical answer-distracted_gates.csv
+------------------------------------------------------------------------
+[2026-10-06T08:30:25] COST CONTEXT-AWARE mixed: strong planner + economical answer RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083008_cost context-aware mixed: strong planner + economical answer-charming_neumann.csv
+------------------------------------------------------------------------
+[2026-10-06T08:36:23] COST google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083615_cost google/gemma-4-31b-it:free-romantic_perlis.csv
+------------------------------------------------------------------------
+[2026-10-06T08:36:34] COST CONTEXT-AWARE google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083624_cost context-aware google/gemma-4-31b-it:free-upbeat_dijkstra.csv
+------------------------------------------------------------------------
+[2026-10-06T08:37:43] COST openai/gpt-4o-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083634_cost openai/gpt-4o-mini-cranky_curry.csv
+------------------------------------------------------------------------
+[2026-10-06T08:38:01] COST CONTEXT-AWARE openai/gpt-4o-mini RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083743_cost context-aware openai/gpt-4o-mini-hungry_gates.csv
+------------------------------------------------------------------------
+[2026-10-06T08:38:50] COST openai/gpt-5.4-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083801_cost openai/gpt-5.4-mini-bold_rivest.csv
+------------------------------------------------------------------------
+[2026-10-06T08:39:07] COST CONTEXT-AWARE openai/gpt-5.4-mini RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083850_cost context-aware openai/gpt-5.4-mini-angry_yao.csv
+------------------------------------------------------------------------
+[2026-10-06T08:49:06] COST mixed: strong planner + economical answer RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_083907_cost mixed: strong planner + economical answer-eloquent_jobs.csv
+------------------------------------------------------------------------
+[2026-10-06T08:49:22] COST CONTEXT-AWARE mixed: strong planner + economical answer RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_084906_cost context-aware mixed: strong planner + economical answer-mystifying_dijkstra.csv
+------------------------------------------------------------------------
+[2026-10-06T08:50:25] COST google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_085016_cost google/gemma-4-31b-it:free-boring_tarjan.csv
+------------------------------------------------------------------------
+[2026-10-06T08:50:38] COST CONTEXT-AWARE google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_085028_cost context-aware google/gemma-4-31b-it:free-zen_thompson.csv
+------------------------------------------------------------------------
+[2026-10-06T08:51:47] COST openai/gpt-4o-mini RESULT
+3/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_085041_cost openai/gpt-4o-mini-flamboyant_diffie.csv
+------------------------------------------------------------------------
+[2026-10-06T08:52:08] COST CONTEXT-AWARE openai/gpt-4o-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_085151_cost context-aware openai/gpt-4o-mini-lucid_lovelace.csv
+------------------------------------------------------------------------
+[2026-10-06T08:52:46] COST openai/gpt-5.4-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_085211_cost openai/gpt-5.4-mini-ecstatic_chomsky.csv
+------------------------------------------------------------------------
+[2026-10-06T08:53:08] COST CONTEXT-AWARE openai/gpt-5.4-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_085250_cost context-aware openai/gpt-5.4-mini-crazy_thompson.csv
+------------------------------------------------------------------------
+[2026-10-06T09:00:46] COST mixed: strong planner + economical answer RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_085311_cost mixed: strong planner + economical answer-sweet_postel.csv
+------------------------------------------------------------------------
+[2026-10-06T09:01:07] COST CONTEXT-AWARE mixed: strong planner + economical answer RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090050_cost context-aware mixed: strong planner + economical answer-goofy_postel.csv
+------------------------------------------------------------------------
+[2026-10-06T09:02:28] COST google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090219_cost google/gemma-4-31b-it:free-upbeat_goldwasser.csv
+------------------------------------------------------------------------
+[2026-10-06T09:02:57] COST CONTEXT-AWARE google/gemma-4-31b-it:free RESULT
+0/0 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090241_cost context-aware google/gemma-4-31b-it:free-laughing_carmack.csv
+------------------------------------------------------------------------
+[2026-10-06T09:04:45] COST openai/gpt-4o-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090330_cost openai/gpt-4o-mini-infallible_cerf.csv
+------------------------------------------------------------------------
+[2026-10-06T09:05:25] COST CONTEXT-AWARE openai/gpt-4o-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090504_cost context-aware openai/gpt-4o-mini-trusting_wilkes.csv
+------------------------------------------------------------------------
+[2026-10-06T09:06:38] COST openai/gpt-5.4-mini RESULT
+5/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090600_cost openai/gpt-5.4-mini-quizzical_tarjan.csv
+------------------------------------------------------------------------
+[2026-10-06T09:07:42] COST CONTEXT-AWARE openai/gpt-5.4-mini RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090723_cost context-aware openai/gpt-5.4-mini-naughty_page.csv
+------------------------------------------------------------------------
+[2026-10-06T09:15:55] COST mixed: strong planner + economical answer RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_090802_cost mixed: strong planner + economical answer-tender_andreessen.csv
+------------------------------------------------------------------------
+[2026-10-06T09:16:36] COST CONTEXT-AWARE mixed: strong planner + economical answer RESULT
+4/5 passed; csv=MIT_CAPSTONE/Final_Capstone_Project/Ragas_Experiments/experiments/20261006_091615_cost context-aware mixed: strong planner + economical answer-hungry_andreessen.csv
+------------------------------------------------------------------------
