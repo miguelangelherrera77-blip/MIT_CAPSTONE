@@ -47,10 +47,10 @@ Checkpoints are listed newest first.
 **Production hardening and model-cost evaluation for the Wikipedia RAG engines.** Checkpoint 7.1 builds on the dual-engine evaluation workflow with baseline/hardened runs, security probes, and a model ladder. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py](Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py).
 
 #### Engines and hardening
-- **Context-Aware:** a history-aware, single-pass retriever. Hardened mode sanitizes the question, prior turns, and retrieved context; escapes untrusted text; and separates the question, conversation history, and documents in the prompt.
-- **Agentic Dynamic:** a LangGraph ReAct planner that selects retrieval, graph expansion, clarification, or answer actions. Hardened mode applies input/chunk sanitization and the tagged trust boundary.
-- Both engines support baseline and hardened modes. The interactive menu asks for the hardening mode; scripted standard runs accept `--harden` or `--no-harden`. Compare Both applies the selected mode to both engines.
-- Sanitization and prompt boundaries are defense-in-depth, not guarantees against prompt injection. The hardening suite uses single-turn probes and does not measure multi-turn chat attacks.
+- **Context-Aware:** a history-aware, single-pass retriever. Hardened mode sanitizes the current question and prior turns before retrieval, sanitizes retrieved context, and places the question, history, and documents in separate escaped prompt sections.
+- **Agentic Dynamic:** a LangGraph ReAct planner for retrieval, graph expansion, clarification, and answering. Hardened mode sanitizes the current input and retrieved chunks and uses tagged prompt sections. It does **not** sanitize prior chat turns or clarification replies.
+- The shared sanitizer escapes XML metacharacters and neutralizes recognized instruction overrides, persona/role changes, spoofed role labels, and fake-authority markers. The prompt treats system instructions as trusted, user input/history as untrusted, and retrieved documents as evidence rather than instructions.
+- Both engines support baseline and hardened modes. The menu prompts for the choice; scripted standard runs accept `--harden` or `--no-harden`. Compare Both applies the selection to both engines. These are defense-in-depth measures, not a guarantee against prompt injection; the probes are single-turn and do not test the Agentic chat-history/clarification gap.
 
 #### Evaluation workflows
 - **Standard RAGAS:** evaluates the selected engine and dataset in one mode. The failure/diagnostic dataset contains five probes: claim verification, quotation fidelity, cross-document synthesis, out-of-corpus abstention, and corpus-poisoning diagnosis.
