@@ -46,13 +46,17 @@ Checkpoints are listed newest first.
 ### Capstone Checkpoint 7.1
 **Production hardening and model-cost evaluation for the Wikipedia RAG engines.** Checkpoint 7.1 builds on the dual-engine evaluation workflow with baseline/hardened runs, security probes, and a model ladder. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py](Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py).
 
-#### Engines and hardening
-- **Context-Aware:** a history-aware, single-pass retriever. Hardened mode sanitizes the current question and prior turns before retrieval, sanitizes retrieved context, and places the question, history, and documents in separate escaped prompt sections.
-- **Agentic Dynamic:** a LangGraph ReAct planner for retrieval, graph expansion, clarification, and answering. Hardened mode sanitizes the current input and retrieved chunks and uses tagged prompt sections. It does **not** sanitize prior chat turns or clarification replies.
-- The shared sanitizer escapes XML metacharacters and neutralizes recognized instruction overrides, persona changes, spoofed chat-role labels, and fake-authority markers. The prompt treats system instructions as trusted, user input/history as untrusted, and retrieved documents as evidence rather than instructions.
-- The Agentic planner only gets the graph-expansion action when graph search is enabled and has a `max_iterations` limit. Clarification actions do not increment that counter, so repeated clarifications can still reach LangGraph's recursion limit.
-- Both engines support baseline and hardened modes. Baseline disables the sanitizer and tagged trust-boundary prompt; the menu prompts for the choice, and scripted standard runs accept `--harden` or `--no-harden`. Compare Both applies the selection to both engines.
-- These are defense-in-depth measures, not a guarantee against prompt injection: the filters match known patterns. The probes are single-turn and do not test the Agentic chat-history/clarification gap.
+#### Engines
+- **Context-Aware:** a history-aware, single-pass retriever. Hardened mode sanitizes the current question and prior turns before retrieval, then sanitizes retrieved context.
+- **Agentic Dynamic:** a LangGraph ReAct planner for retrieval, graph expansion, clarification, and answering. Hardened mode sanitizes the current input and retrieved chunks, but not prior chat turns or clarification replies.
+- Both engines support baseline and hardened modes. Baseline disables sanitization and tagged trust-boundary prompting. The menu prompts for the mode; scripted standard runs accept `--harden` or `--no-harden`. Compare Both applies the selection to both engines.
+
+#### Guardrails
+- **Sanitize and escape:** escape XML metacharacters and neutralize recognized instruction overrides, persona changes, spoofed chat-role labels, and fake-authority markers in protected inputs and retrieved text.
+- **Separate trust levels:** place system instructions, user questions, conversation history, and retrieved documents in distinct prompt sections. Treat user content as untrusted and retrieved documents as evidence, never as instructions.
+- **Ground answers:** use retrieved evidence only, abstain when it is insufficient, and refuse if the prompt tag structure appears tampered with.
+- **Limit agent actions:** expose graph expansion only for graph-enabled search and cap Agentic planning with `max_iterations`. Clarification actions do not increment that counter, so repeated clarifications can still reach LangGraph's recursion limit.
+- These are defense-in-depth measures, not a guarantee against prompt injection. The filters match known patterns; the probes are single-turn and do not test the Agentic chat-history/clarification gap.
 
 #### Evaluation workflows
 - **Standard RAGAS:** evaluates the selected engine and dataset in one mode. The failure/diagnostic dataset contains five probes: claim verification, quotation fidelity, cross-document synthesis, out-of-corpus abstention, and corpus-poisoning diagnosis.
