@@ -35,8 +35,6 @@ are preserved separately and are not certification of the current implementation
 | Capstone_Database | Wikipedia HTML/JSONL and persisted BM25, Chroma, and graph artifacts | Local-only corpus/indexes |
 | Capstone_Final_Solution | Isolated final application, local configuration, guide, and tests | Local-only |
 | Capstone_Presentation | Design-review presentation and final-solution diagrams | Local-only |
-| Architecture_Diagrams and Backup_Questions | Optional supporting materials at repository root | Local-only |
-| Course lab folders | Guided lab scripts and supporting files | Separate from capstone runtime requirements; may be local-only |
 
 **Local-only resources are excluded from Git.** A fresh clone does not supply
 them. In an existing development workspace:
@@ -58,8 +56,7 @@ them. In an existing development workspace:
   macOS/Linux execution are not certified.
 - [venv_requirements.txt](venv_requirements.txt) lists direct dependencies for
   checkpoints, the final solution, and setup/evaluation utilities. Pip resolves
-  transitive dependencies; course labs and document/presentation tools need
-  their own dependencies.
+  transitive dependencies automatically.
 - Follow the checkpoint guide from the repository root. Setup installs
   dependencies only when creating the virtual environment; it does not refresh
   an existing environment or populate indexes without a build request.

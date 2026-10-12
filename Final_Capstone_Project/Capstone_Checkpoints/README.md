@@ -21,8 +21,7 @@ methodology, model-cost comparisons, embedding budget, and limitations.
 - The corpus and indexes remain in [Capstone_Database](../Capstone_Database/).
   They were not moved or copied during checkpoint organization.
 - Shared checkpoint code, schemas, question datasets, configuration, and
-  evaluation outputs live here. Optional [architecture diagrams](../../Architecture_Diagrams/)
-  and [backup questions](../../Backup_Questions/) live at the repository root.
+  evaluation outputs live here.
 - The [isolated final solution](../Capstone_Final_Solution/README.md) has its own
   code/configuration and separate run instructions. It is not interchangeable
   with the checkpoint launchers.
@@ -47,13 +46,14 @@ python3 ./Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/Setup.py
 local directories/placeholders, and the repository `.venv`. It installs
 [venv_requirements.txt](../../venv_requirements.txt) only when creating that
 virtual environment. **An existing environment is reused without installing
-or updating dependencies.** If it is incomplete, install the declared dependencies:
+or updating dependencies.**
 
 The root requirements list only direct dependencies for checkpoints, their
 setup/evaluation utilities, and the isolated final solution. Pip resolves
-transitive dependencies automatically. Course-lab and document/presentation
-tooling must use their own requirements; removing an entry does not uninstall
+transitive dependencies automatically. Removing an entry does not uninstall
 packages already present in an existing environment.
+
+If the environment is incomplete, install the declared dependencies:
 
 **Windows (PowerShell)**
 
