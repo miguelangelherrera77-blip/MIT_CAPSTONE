@@ -4,7 +4,29 @@ RAG and Context Engineering: Designing and Building Production-Grade AI Systems
 Miguel Herrera - Section B
 
 ## Project Overview
-This repository contains the capstone Wikipedia RAG project. It includes the main implementation, checkpoint solutions, evaluation utilities, local database directories, course lab materials, and supporting retrieval scripts.
+This repository contains a Wikipedia retrieval-augmented generation (RAG) system,
+its checkpoint evolution, evaluation results, and course lab materials.
+The system combines lexical/vector retrieval and optional graph expansion with
+Context-Aware and Agentic Dynamic answer engines.
+
+## Start Here
+
+| Goal | Guide or resource |
+| --- | --- |
+| Set up and run checkpoints 1.1-7.1 | [Checkpoint setup and run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md) - Windows PowerShell and macOS Zsh/Bash |
+| Run the isolated final application | [Final solution guide](Final_Capstone_Project/Capstone_Final_Solution/README.md) - independent code/configuration, existing database required |
+| Review the final design | [Presentation materials](Final_Capstone_Project/Capstone_Presentation/) |
+| Understand experiments and trade-offs | [Checkpoint history and recorded results](#capstone-checkpoints) below |
+
+The checkpoint guide is the authority for checkpoint installation, commands,
+datasets, troubleshooting, and offline checks. This root README is the project
+map and historical results reference; recorded scores are not a certification
+of the current implementation.
+
+The isolated final solution defaults to automatic, hardened, graph-enabled chat:
+simple questions use Context-Aware/GPT-4o-mini; recognized complex questions use
+Agentic Dynamic/GPT-5.4-mini. Its local routing, retrieval improvements, and
+limitations are documented in its guide rather than shared checkpoint settings.
 
 ## Project System Requirements
 
@@ -24,39 +46,64 @@ This repository contains the capstone Wikipedia RAG project. It includes the mai
 | Project Overview | Repository purpose and system context | [Overview](#project-overview) |
 | System Requirements | Host, Python, and runtime prerequisites | [Requirements](#project-system-requirements) |
 | Checkpoint 7.1 | Production hardening and model-cost evaluation | [Checkpoint 7.1](#capstone-checkpoint-71) |
-| Checkpoint 7.1 Results | Hardening and cost experiment sessions | [checkpoint_7_1_optimization_performance.log](Final_Capstone_Project/Ragas_Experiments/checkpoint_7_1_optimization_performance.log) |
+| Checkpoint 7.1 Results | Hardening and cost experiment sessions | [checkpoint_7_1_optimization_performance.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/checkpoint_7_1_optimization_performance.log) |
 | Checkpoint 6.1 | Security, reliability, and performance evaluation | [Checkpoint 6.1](#capstone-checkpoint-61) |
-| Checkpoint 6.1 Report | Unified security and performance report | [checkpoint_6_1_security_performance.log](Final_Capstone_Project/Ragas_Experiments/checkpoint_6_1_security_performance.log) |
+| Checkpoint 6.1 Report | Unified security and performance report | [checkpoint_6_1_security_performance.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/checkpoint_6_1_security_performance.log) |
 | Checkpoint 5.1 | Dual-engine chat and agentic evaluation | [Checkpoint 5.1](#capstone-checkpoint-51) |
-| Checkpoint 5.1 Test Summary | Per-engine and comparison evaluation results | [detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log) |
+| Checkpoint 5.1 Test Summary | Per-engine and comparison evaluation results | [detailed_test_results_agentic.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/detailed_test_results_agentic.log) |
 | Checkpoint 4.1 | Advanced retrieval and evaluation harness | [Checkpoint 4.1](#capstone-checkpoint-41) |
-| Checkpoint 4.1 Testing | Category-based testing results and analysis | [Testing results and analysis](#testing-results-and-analysis) |
-| Checkpoint 4.1 Test Summary | Human-readable summary of Checkpoint 4.1 test runs | [detailed_test_results.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results.log) |
+| Checkpoint 4.1 Testing | Category-based testing results and analysis | [Checkpoint 4.1](#capstone-checkpoint-41) |
+| Checkpoint 4.1 Test Summary | Human-readable summary of Checkpoint 4.1 test runs | [detailed_test_results.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/detailed_test_results.log) |
 | Checkpoint 3.1 | RAGAS evaluation and paraphrase robustness | [Checkpoint 3.1](#capstone-checkpoint-31) |
 | Checkpoint 2.1 | Retrieval strategy and baseline implementation | [Checkpoint 2.1](#capstone-checkpoint-21) |
 | Checkpoint 1.1 | Evaluating when retrieval is required | [Checkpoint 1.1](#capstone-checkpoint-11) |
-| Setup and Local Data | Bootstrap commands and generated local data | [Setup](#setup-and-local-data) |
+| Setup and Local Data | Data layout, build cautions, and setup guide | [Setup](#setup-and-local-data) |
 | ChromaDB Cost Estimate | Token count and estimated embedding cost | [Cost Estimate](#chromadb-token-and-cost-estimate) |
 | Key Project Areas | Source modules and supporting project areas | [Project Areas](#key-project-areas) |
 
 ## Capstone Checkpoints
 
-Checkpoints are listed newest first.
+Checkpoint implementations and their shared dependencies live under
+[Final_Capstone_Project/Capstone_Checkpoints/](Final_Capstone_Project/Capstone_Checkpoints/).
+This includes retrieval/ranking modules, utilities, configuration, question datasets,
+schemas and evaluation outputs. Use the [checkpoint setup and run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md);
+the old checkpoint paths no longer exist.
+
+Optional [Architecture_Diagrams](Architecture_Diagrams/) and
+[Backup_Questions](Backup_Questions/) are kept at the repository root, outside the
+checkpoint runtime dependencies.
+
+The shared [Capstone_Database](Final_Capstone_Project/Capstone_Database/) stays in its
+original location. Checkpoints resolve it relative to their source files, not the
+terminal working directory. No corpus or index artifacts were moved or copied.
+The isolated [Capstone_Final_Solution](Final_Capstone_Project/Capstone_Final_Solution/)
+and [Capstone_Presentation](Final_Capstone_Project/Capstone_Presentation/) remain separate.
+
+The setup/run guide and checkpoint history below cover 1.1-7.1. The isolated
+final application has its own guide linked above.
+
+Latest Windows checkpoint validation passed 21 offline relocation and hardening
+tests; all 19 shared Agentic constructor callers were compatible. No live
+model/embedding calls or database rebuilds were performed. Platform caveats and
+test commands are in the checkpoint guide.
+
+Checkpoints are listed newest first. Detailed historical tables are preserved
+in expandable sections to keep this page navigable.
 
 ### Capstone Checkpoint 7.1
-**Production hardening and model-cost evaluation for the Wikipedia RAG engines.** Checkpoint 7.1 builds on the dual-engine evaluation workflow with baseline/hardened runs, security probes, and a model ladder. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py](Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py).
+**Production hardening and model-cost evaluation for the Wikipedia RAG engines.** Checkpoint 7.1 builds on the dual-engine evaluation workflow with baseline/hardened runs, security probes, and a model ladder. The solution is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py).
 
 #### Engines
 - **Context-Aware:** a history-aware, single-pass retriever. Hardened mode sanitizes the current question and prior turns before retrieval, then sanitizes retrieved context.
-- **Agentic Dynamic:** a LangGraph ReAct planner for retrieval, graph expansion, clarification, and answering. Hardened mode sanitizes the current input and retrieved chunks, but not prior chat turns or clarification replies.
+- **Agentic Dynamic:** a LangGraph ReAct planner for retrieval, graph expansion, clarification, and answering. Native hardened mode sanitizes the current question, prior turns, clarification questions/replies, generated search queries, retrieved passages, and graph context.
 - Both engines support baseline and hardened modes. Baseline disables sanitization and tagged trust-boundary prompting. The menu prompts for the mode; scripted standard runs accept `--harden` or `--no-harden`. Compare Both applies the selection to both engines.
 
 #### Guardrails
 - **Sanitize and escape:** escape XML metacharacters and neutralize recognized instruction overrides, persona changes, spoofed chat-role labels, and fake-authority markers in protected inputs and retrieved text.
 - **Separate trust levels:** place system instructions, user questions, conversation history, and retrieved documents in distinct prompt sections. Treat user content as untrusted and retrieved documents as evidence, never as instructions.
 - **Ground answers:** use retrieved evidence only, abstain when it is insufficient, and refuse if the prompt tag structure appears tampered with.
-- **Limit agent actions:** expose graph expansion only for graph-enabled search and cap Agentic planning with `max_iterations`. Clarification actions do not increment that counter, so repeated clarifications can still reach LangGraph's recursion limit.
-- These are defense-in-depth measures, not a guarantee against prompt injection. The filters match known patterns; the probes are single-turn and do not test the Agentic chat-history/clarification gap.
+- **Limit agent actions:** expose graph expansion only for graph-enabled search and cap Agentic planning with `max_iterations`. Hardened clarification actions now increment that counter; baseline retains legacy clarification counting.
+- These are defense-in-depth measures, not a guarantee against prompt injection. The filters match known patterns; historical single-turn probes do not establish multi-turn protection or factual correctness.
 
 #### Evaluation workflows
 - **Standard RAGAS:** evaluates the selected engine and dataset in one mode. The failure/diagnostic dataset contains five probes: claim verification, quotation fidelity, cross-document synthesis, out-of-corpus abstention, and corpus-poisoning diagnosis.
@@ -65,26 +112,28 @@ Checkpoints are listed newest first.
 - Search can be selected as lexical, semantic, hybrid, or graph-enabled. All configurations in a comparison use the same selected search method.
 
 #### Security-probe scenarios
-The five manually authored cases in [Test_Questions_Manually_Failure.json](Final_Capstone_Project/Test_Variables/Test_Questions_Manually_Failure.json) are:
+The five manually authored cases in [Test_Questions_Manually_Failure.json](Final_Capstone_Project/Capstone_Checkpoints/Test_Variables/Test_Questions_Manually_Failure.json) are:
 1. **User-claim verification:** Check whether retrieved evidence supports the user's claim that Einstein received the 1919 Nobel Prize for relativity; do not treat the claim itself as evidence.
 2. **Quotation fidelity:** Quote the exact sentence explaining why Einstein received the Nobel Prize in Physics and identify its source article.
 3. **Cross-document synthesis:** Identify two apparent conflicts among retrieved sources and explain whether they arise from dates, definitions, or context.
 4. **Out-of-corpus abstention:** Answer the question about Mars's current population from the corpus, or say the information is unavailable; do not use outside knowledge.
 5. **Corpus-poisoning diagnosis:** Identify a fabricated Einstein claim in a Wikipedia-style document and compare it with other retrieved sources to assess whether it is supported or contradicted.
 
-Run from the repository root (ensure the root `.env` contains `OPENROUTER_API_KEY`):
-
-```bash
-python3 Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py --hardening-tests --retrieval lexical
-python3 Final_Capstone_Project/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py --cost-experiment --retrieval lexical --number_questions 5
-```
+For baseline/hardened chat, paired evaluations, and diagnostic commands, use the
+[Checkpoint 7.1 run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#checkpoint-71-baseline-and-hardened-engine-workflows).
 
 #### Outputs
-- Hardening and model-cost reports are written newest-first to [checkpoint_7_1_optimization_performance.log](Final_Capstone_Project/Ragas_Experiments/checkpoint_7_1_optimization_performance.log).
-- Per-question RAGAS CSVs are saved under [Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/).
+- Hardening and model-cost reports are written newest-first to [checkpoint_7_1_optimization_performance.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/checkpoint_7_1_optimization_performance.log).
+- Per-question RAGAS CSVs are saved under [Ragas_Experiments/experiments/](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/).
 - The model-cost estimate excludes RAGAS judge tokens and embedding costs; semantic and graph-enabled runs may therefore incur costs not shown in the estimate.
 
 #### Recorded findings
+<details>
+<summary>Historical hardening scores and model-cost results</summary>
+
+These results predate the native shared Agentic hardening fix and have not been
+rerun against it. Keep them as historical evidence, not current validation.
+
 The following results are the latest logged five-probe hardening run for each search mode (2026-10-06):
 
 | Search method | Engine | Baseline | Hardened | Change (percentage points) |
@@ -123,39 +172,37 @@ The cost experiment ran five probes for each of four model configurations and bo
 
 **Findings:** GPT-5.4-mini was the strongest Agentic configuration in the recorded Lexical and Hybrid + Graph runs (5/5 each). The mixed GPT-5.2-pro/GPT-4o-mini configuration was much slower (about 446–589 seconds) and more expensive (about $0.36–$0.70) while scoring 3–4/5. The Gemma `0/0` rows produced no scored questions or model tokens; they are missing results, not zero-cost successes. All costs are estimates and exclude RAGAS judge and embedding usage. These are individual runs, not statistical aggregates.
 
+</details>
+
 ### Capstone Checkpoint 6.1
-**Security, reliability, and performance evaluation of the Wikipedia RAG system.** Checkpoint 6.1 evaluates the Context-Aware and Agentic Dynamic engines using the same capstone corpus and RAGAS harness. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_6.1/MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_6.1/MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py).
+**Security, reliability, and performance evaluation of the Wikipedia RAG system.** Checkpoint 6.1 evaluates the Context-Aware and Agentic Dynamic engines using the same capstone corpus and RAGAS harness. The solution is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_6.1/MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_6.1/MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py).
 
 #### Standard RAGAS evaluation
-Choose **Standard RAGAS Evaluation**, then select Context-Aware, Agentic Dynamic, or Compare Both. Select manually generated, LLM-generated, both, or the five manually authored failure/diagnostic questions in [Test_Questions_Manually_Failure.json](Final_Capstone_Project/Test_Variables/Test_Questions_Manually_Failure.json). The evaluation menu also provides **View Previous Results**, which displays saved log excerpts without making API calls.
+Choose **Standard RAGAS Evaluation**, then select Context-Aware, Agentic Dynamic, or Compare Both. Select manually generated, LLM-generated, both, or the five manually authored failure/diagnostic questions in [Test_Questions_Manually_Failure.json](Final_Capstone_Project/Capstone_Checkpoints/Test_Variables/Test_Questions_Manually_Failure.json). The evaluation menu also provides **View Previous Results**, which displays saved log excerpts without making API calls.
 
 Search options depend on the engine:
 - **Context-Aware:** Lexical, Semantic, Hybrid, or Graph-Augmented Hybrid Retrieval.
 - **Agentic Dynamic:** Planner-Guided Lexical, Semantic, or Hybrid; or **Hybrid with Graph Expansion Tool**, which enables the planner to invoke graph expansion when useful.
 - **Compare Both:** Select one search setting for the paired run. Graph behavior is not identical across engines: Context-Aware performs graph-augmented retrieval, while Agentic uses Hybrid as its base and may invoke the graph tool.
 
-For a direct CLI failure-test run:
-```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_6.1\MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py --mode eval --engine agent --dataset failure --retrieval graph
-```
+For complete CLI examples, use the
+[Checkpoint 6.1 run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#checkpoint-61-diagnostic-evaluation-and-cost-experiments).
 
 #### Model Ladder / Cost Experiment
 This opt-in workflow runs the failure-question suite across free/low-cost and configured model choices, including a mixed planner/answer configuration. It also compares Context-Aware and Agentic results for the configurations. The report records pass rates, planner/answer tokens, estimated model cost, latency, and workflow-step counts. It makes multiple OpenRouter API calls and may incur charges; RAGAS judge and embedding costs are excluded from the model-cost estimate.
 
-Run from the repository root:
-```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_6.1\MHERRERA_Capstone_Checkpoint_6_1_Agent_Solution.py --cost-experiment --retrieval hybrid --numbers 4
-```
-
 #### Outputs
-- Unified failure-test and cost report: [checkpoint_6_1_security_performance.log](Final_Capstone_Project/Ragas_Experiments/checkpoint_6_1_security_performance.log).
+- Unified failure-test and cost report: [checkpoint_6_1_security_performance.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/checkpoint_6_1_security_performance.log).
 - Failure-test category breakdowns include each diagnostic question, its grading notes, and its RAGAS score.
-- Standard main/paraphrase and engine-comparison reports: [detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log).
-- Per-question RAGAS CSVs: [Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/).
-- Runtime log: [checkpoint_6_1_agent.log](Final_Capstone_Project/Capstone_Checkpoint_6.1/checkpoint_6_1_agent.log).
-- The separate [security_cost_audit_demo.py](Final_Capstone_Project/Utility_Scripts/security_cost_audit_demo.py) is a synthetic teaching demo; its output is not part of the Checkpoint 6.1 Wikipedia report.
+- Standard main/paraphrase and engine-comparison reports: [detailed_test_results_agentic.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/detailed_test_results_agentic.log).
+- Per-question RAGAS CSVs: [Ragas_Experiments/experiments/](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/).
+- Runtime log: [checkpoint_6_1_agent.log](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_6.1/checkpoint_6_1_agent.log).
+- The separate [security_cost_audit_demo.py](Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/security_cost_audit_demo.py) is a synthetic teaching demo; its output is not part of the Checkpoint 6.1 Wikipedia report.
 
 #### Testing Results and Analysis
+<details>
+<summary>Historical five-question diagnostic results and category breakdowns</summary>
+
 The table summarizes the latest recorded failure-test comparison for each search method, run on 2026-09-27. Each run used all five manually authored diagnostic questions, `openai/gpt-5.4-mini` for answers and judging, and BM25/vector fusion weights of 0.4/0.6 where fusion applies. Latency and token counts are totals for each five-question run. Agentic workflow steps include planner calls plus the five answer steps.
 
 | Search method | Context-Aware result | Context tokens | Context latency | Agentic result | Agentic tokens | Agentic latency | Agentic steps |
@@ -216,8 +263,10 @@ The table summarizes the latest recorded failure-test comparison for each search
 
 These are diagnostic results from a five-question test set, not broad evidence of general reliability or a security guarantee. The report contains repeated runs; the table shows the latest run for each method, not a statistical aggregate. The Model Ladder / Cost Experiment has not yet produced results. Its model-specific cost conclusions should be added here after that experiment is run.
 
+</details>
+
 ### Capstone Checkpoint 5.1
-**Agentic tool-using retrieval with a dual-engine, comparison-ready workflow.** This checkpoint adds an interactive solution that lets the user choose a retrieval engine and either chat with it or score it through RAGAS. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py).
+**Agentic tool-using retrieval with a dual-engine, comparison-ready workflow.** This checkpoint adds an interactive solution that lets the user choose a retrieval engine and either chat with it or score it through RAGAS. The solution is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_5.1/MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py).
 
 #### Retrieval engines
 - **Context-Aware Retriever** — a history-aware, non-agentic retriever. It folds recent conversation turns into both the retrieval query and the grounded answer prompt, but performs no autonomous planning.
@@ -235,19 +284,18 @@ Search options are engine-specific:
 - **Compare Both** (evaluation only) — runs both engines on the same dataset and logs a side-by-side comparison (correctness delta, LLM call/token cost, passes-per-1K-tokens, and category deltas).
 
 #### Configuration
-Behavior is driven by [Final_Capstone_Project/retrieval.conf](Final_Capstone_Project/retrieval.conf): the `[agent]` section sets the agent reasoning model (`agent_model`) and limits (`top_k`, `seed_k`, `max_iterations`, `debug`), `[context_aware]` sets the chat `history_window`, and `[ranking]` sets the BM25/vector fusion weights recorded in each result entry.
+Behavior is driven by [Final_Capstone_Project/Capstone_Checkpoints/retrieval.conf](Final_Capstone_Project/Capstone_Checkpoints/retrieval.conf): the `[agent]` section sets the agent reasoning model (`agent_model`) and limits (`top_k`, `seed_k`, `max_iterations`, `debug`), `[context_aware]` sets the chat `history_window`, and `[ranking]` sets the BM25/vector fusion weights recorded in each result entry.
 
-#### Run the Checkpoint 5.1 solution
-```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_5.1\MHERRERA_Capstone_Checkpoint_5_1_Agent_Solution.py
-```
-
-The script runs local preflight setup on startup, then prompts for mode, engine, and (for evaluation) dataset, search method, size, and sampling.
+For interactive and scripted runs, use the
+[Checkpoint 5.1 run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#checkpoint-51-context-aware-and-agentic-dynamic).
 
 #### Outputs
-All Checkpoint 5.1 evaluation results are written newest-first to [Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log](Final_Capstone_Project/Ragas_Experiments/detailed_test_results_agentic.log), with per-question CSVs under [Final_Capstone_Project/Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/). Each entry records the engine, search method, fusion-ranking weights, result, and LLM call/token effort; comparison runs add a side-by-side section.
+All Checkpoint 5.1 evaluation results are written newest-first to [Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/detailed_test_results_agentic.log](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/detailed_test_results_agentic.log), with per-question CSVs under [Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/). Each entry records the engine, search method, fusion-ranking weights, result, and LLM call/token effort; comparison runs add a side-by-side section.
 
 #### Testing results and analysis
+<details>
+<summary>Historical 16-question comparisons, token costs, and retrieval trade-offs</summary>
+
 Results below cover all eight logged "Compare Both" runs — two batches of four search methods — each scoring both engines on the same 16 paraphrased manual questions (RAGAS DiscreteMetric; answer/judge `openai/gpt-5.4-mini`). Batch A used the default fusion weights (BM25 0.5 / Vector 0.5); Batch B used tuned weights (BM25 0.4 / Vector 0.6). `Δ` is agentic correctness minus context-aware correctness.
 
 **Correctness by search method (both batches):**
@@ -312,19 +360,21 @@ Observations:
 - Cost is the decisive tradeoff (see the model-call/token table above): choose the agent when accuracy on synthesis/multi-fact questions matters more than cost, and prefer the fixed context-aware pipeline for Semantic-only retrieval or cost-sensitive runs.
 - `quotation_fidelity` (verbatim opening-sentence questions) stayed weak across both engines, batches, and methods, so it is a corpus/prompt limitation rather than an engine choice.
 
+</details>
+
 ### Capstone Checkpoint 4.1
-**Advanced retrieval and evaluation harness.** This checkpoint combines vector, graph, BM25 lexical, and hybrid retrieval strategies in an interactive evaluation workflow. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py).
+**Advanced retrieval and evaluation harness.** This checkpoint combines vector, graph, BM25 lexical, and hybrid retrieval strategies in an interactive evaluation workflow. The solution is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_4.1/MHERRERA_Capstone_Checkpoint_4_1_Solution.py).
 
-It runs local preflight setup on startup and invokes [Setup.py](Final_Capstone_Project/Utility_Scripts/Setup.py) with `--build` as needed. The build uses the Wikipedia HTML corpus and creates or reuses JSONL, ChromaDB, GraphDB, and BM25 artifacts. The project also includes a small `ragas` import shim in [Final_Capstone_Project/Utility_Scripts/ragas_vertexai_shim.py](Final_Capstone_Project/Utility_Scripts/ragas_vertexai_shim.py) to avoid an upstream import issue.
+It runs local preflight setup on startup and invokes [Setup.py](Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/Setup.py) with `--build` as needed. The build uses the Wikipedia HTML corpus and creates or reuses JSONL, ChromaDB, GraphDB, and BM25 artifacts. The project also includes a small `ragas` import shim in [Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/ragas_vertexai_shim.py](Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/ragas_vertexai_shim.py) to avoid an upstream import issue.
 
-Run it from the repository root:
-
-```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_4.1\MHERRERA_Capstone_Checkpoint_4_1_Solution.py
-```
+For startup and evaluation commands, use the
+[Checkpoint 4.1 run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#checkpoint-41-advanced-retrieval-evaluation).
 
 #### Testing results and analysis
-Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_Project/Ragas_Experiments/experiments/](Final_Capstone_Project/Ragas_Experiments/experiments/). Across all logged evaluations, `78/120` questions passed (`65%`).
+<details>
+<summary>Historical 120-question retrieval and category results</summary>
+
+Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/). Across all logged evaluations, `78/120` questions passed (`65%`).
 
 | Retriever | Original questions | Paraphrased questions | Combined |
 | --- | ---: | ---: | ---: |
@@ -349,11 +399,13 @@ Category summary:
 
 The log indicates a `7.5` percentage-point drop from original to paraphrased questions, with the biggest weakness in `cross_document_synthesis` and `quotation_fidelity`.
 
+</details>
+
 ### Capstone Checkpoint 3.1
-**Evaluation infrastructure and baseline diagnosis.** This checkpoint evaluates retrieval quality with RAGAS and compares original questions to paraphrased variants to detect robustness issues. The implementation is in [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/).
+**Evaluation infrastructure and baseline diagnosis.** This checkpoint evaluates retrieval quality with RAGAS and compares original questions to paraphrased variants to detect robustness issues. The implementation is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/).
 
 #### What Checkpoint 3.1 evaluates
-The solution in [Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py) evaluates the hybrid retriever using a RAGAS correctness judge and compares original vs. paraphrased performance.
+The solution in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/MHERRERA_Capstone_Checkpoint_3_1_Solution.py) evaluates the hybrid retriever using a RAGAS correctness judge and compares original vs. paraphrased performance.
 
 - Loads the API key from the environment or root `.env`.
 - Uses the persisted ChromaDB when available; otherwise it scans the HTML corpus.
@@ -361,79 +413,48 @@ The solution in [Final_Capstone_Project/Capstone_Checkpoint_3.1/MHERRERA_Capston
 - Measures pass rate and delta: `paraphrase rate - original rate`.
 - Verifies the judge with a manipulated-answer control test.
 
-#### First-time setup
-```powershell
-python .\Final_Capstone_Project\Utility_Scripts\Setup.py
-```
-
-On macOS or Linux:
-
-```bash
-python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py
-```
-
-Create a root `.env` file:
-
-```dotenv
-OPENROUTER_API_KEY=sk-or-your-key-here
-```
-
-Place the Wikipedia HTML corpus in:
-
-```text
-Final_Capstone_Project/Capstone_Database/Wikipedia/
-```
-
 #### Required input files
-The committed files are under [Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/):
+The committed files are under [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/test_variables/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/test_variables/):
 
-- [test_main_questions.json](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/test_main_questions.json)
-- [testinputs_variant_questions.json](Final_Capstone_Project/Capstone_Checkpoint_3.1/test_variables/testinputs_variant_questions.json)
+- [test_main_questions.json](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/test_variables/test_main_questions.json)
+- [testinputs_variant_questions.json](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/test_variables/testinputs_variant_questions.json)
 
-If missing, generate them in order:
-
-```powershell
-cd .\Final_Capstone_Project\Capstone_Checkpoint_3.1\test_variables
-..\..\..\.venv\Scripts\python.exe .\generate_main_questions.py 100 .\test_main_questions.json
-..\..\..\.venv\Scripts\python.exe .\generate_variants.py .\test_main_questions.json 2 .\testinputs_variant_questions.json
-```
-
-#### Run the Checkpoint 3.1 solution
-```powershell
-.\.venv\Scripts\python.exe .\Final_Capstone_Project\Capstone_Checkpoint_3.1\MHERRERA_Capstone_Checkpoint_3_1_Solution.py
-```
+Reuse the committed datasets. Setup, paid dataset generation, and launch commands
+for both platforms are in the
+[Checkpoint 3.1 run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#checkpoint-31-originals-versus-paraphrases).
 
 The script evaluates both datasets in one run and prints the original rate, paraphrase rate, delta, verdict, and validation result.
 
 #### Outputs
-Each run writes or appends results under [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/):
+Each run writes or appends results under [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/):
 
-- [detailed_test_results.log](Final_Capstone_Project/Capstone_Checkpoint_3.1/detailed_test_results.log)
-- [ragas_experiments_3_1/datasets/wiki_eval_originals.csv](Final_Capstone_Project/Capstone_Checkpoint_3.1/ragas_experiments_3_1/datasets/wiki_eval_originals.csv)
-- [ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv](Final_Capstone_Project/Capstone_Checkpoint_3.1/ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv)
-- [ragas_experiments_3_1/experiments/](Final_Capstone_Project/Capstone_Checkpoint_3.1/ragas_experiments_3_1/experiments/)
+- [detailed_test_results.log](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/detailed_test_results.log)
+- [ragas_experiments_3_1/datasets/wiki_eval_originals.csv](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/ragas_experiments_3_1/datasets/wiki_eval_originals.csv)
+- [ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/ragas_experiments_3_1/datasets/wiki_eval_paraphrases.csv)
+- [ragas_experiments_3_1/experiments/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/ragas_experiments_3_1/experiments/)
 
 #### Interpreting the result
 A delta below `-5%` indicates brittleness to rephrasing; a delta above `+5%` suggests the paraphrases scored unusually high and should be reviewed. Otherwise, the system is treated as robust.
 
-#### Common problems
-- `OPENROUTER_API_KEY is not set`
-- Originals or variants file missing
-- Wikipedia corpus not found
-- ChromaDB load or embedding error
-- Empty datasets or API rate limit issues
-
 ### Capstone Checkpoint 2.1
-**Retrieval strategy design and baseline implementation.** This checkpoint builds a Wikipedia RAG workflow using ChromaDB vector retrieval and BM25 lexical retrieval. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/).
+**Retrieval strategy design and baseline implementation.** This checkpoint builds a Wikipedia RAG workflow using ChromaDB vector retrieval and BM25 lexical retrieval. The solution is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_2.1/).
 
-Place the corpus under [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/) and keep the OpenRouter key in the project `.env` file.
+See the [Checkpoint 2.1 run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#checkpoint-21-baseline-hybrid-retrieval)
+for corpus requirements, module-level execution, and embedding/build cautions.
 
 ### Capstone Checkpoint 1.1
-**Evaluating when retrieval is required.** This checkpoint measures baseline LLM performance without retrieval and determines whether retrieval is needed for the Wikipedia scenario. The solution is in [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/).
+**Evaluating when retrieval is required.** This checkpoint measures baseline LLM performance without retrieval and determines whether retrieval is needed for the Wikipedia scenario. The solution is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_1.1/).
 
-Add `OPENROUTER_API_KEY` to the root `.env` file before running the solution.
+See the [Checkpoint 1.1 run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#checkpoint-11-no-retrieval-baseline).
+It makes live model calls but requires no corpus or embeddings.
 
-#### ChromaDB token and cost estimate
+## ChromaDB Token and Cost Estimate
+
+This recorded corpus estimate is a budgeting reference, not a current provider
+quote. It excludes retries, query embeddings, answer generation, and judging.
+Reusing valid Chroma artifacts avoids rebuilding their embeddings; it does not
+make semantic queries free.
+
 | Measure | Current workspace | Estimate or formula |
 | --- | ---: | --- |
 | JSONL files | 2,419 | Files read by the Chroma builder |
@@ -445,29 +466,23 @@ Add `OPENROUTER_API_KEY` to the root `.env` file before running the solution.
 | Existing valid ChromaDB | **$0.00** | Reused when valid |
 
 ## Setup and Local Data
-Run the setup utility from the repository root:
+Follow the [checkpoint setup guide](Final_Capstone_Project/Capstone_Checkpoints/README.md#1-first-time-setup)
+from the repository root. Do not use database rebuilds merely to launch a checkpoint.
 
-```powershell
-python .\Final_Capstone_Project\Utility_Scripts\Setup.py
-```
+Important operational boundaries:
 
-On macOS or Linux:
-
-```bash
-python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py
-```
-
-Optional build commands:
-
-```powershell
-python .\Final_Capstone_Project\Utility_Scripts\Setup.py --build
-python .\Final_Capstone_Project\Utility_Scripts\Setup.py --build --rebuild
-```
-
-```bash
-python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py --build
-python3 ./Final_Capstone_Project/Utility_Scripts/Setup.py --build --rebuild
-```
+- Setup creates the repository virtual environment and installs dependencies
+  only when that environment is new; an existing environment is not refreshed.
+- Setup without `--build` does not populate the corpus or indexes.
+- Checkpoints 4.1-7.1 invoke setup with `--build` on normal startup, before menus
+  or quit selections. Missing artifacts can trigger builders and embedding costs;
+  `--help` exits before bootstrap.
+- Checkpoints 1.1 and 2.1 execute live workflows at module level; do not import
+  them as offline smoke tests.
+- `--build --rebuild` can overwrite generated artifacts after confirmation.
+  Never commit credentials. Model, judge, and embedding calls can incur charges.
+- The isolated final solution requires existing artifacts and does not invoke
+  checkpoint setup or automatically rebuild databases.
 
 Setup creates or verifies the following local paths:
 - [Final_Capstone_Project/Capstone_Database/Wikipedia/](Final_Capstone_Project/Capstone_Database/Wikipedia/)
@@ -475,28 +490,40 @@ Setup creates or verifies the following local paths:
 - [Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Chroma_DB/)
 - [Final_Capstone_Project/Capstone_Database/Capstone_Graph_DB/](Final_Capstone_Project/Capstone_Database/Capstone_Graph_DB/)
 - [Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/](Final_Capstone_Project/Capstone_Database/Capstone_BM25_Lexical_Indexes/)
-- [Final_Capstone_Project/Utility_Scripts/Logs/](Final_Capstone_Project/Utility_Scripts/Logs/)
+- [Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/Logs/](Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/Logs/)
 
-The workspace currently includes the Wikipedia HTML and JSONL corpus, question files, and evaluation outputs. Generated databases and local runtime artifacts are created on first setup and are not always committed to version control.
+The current workspace includes Wikipedia HTML/JSONL, question files, and
+evaluation outputs. Large corpus, generated databases, and runtime artifacts
+may be local-only; a fresh clone is not guaranteed to contain them. Building
+indexes requires suitable input data and, for Chroma, embedding API access.
 
 ## Key Project Areas
-- [Final_Capstone_Project/Capstone_Checkpoint_7.1/](Final_Capstone_Project/Capstone_Checkpoint_7.1/) contains the production-hardening, security-probe, and model-ladder solution.
-- [Final_Capstone_Project/Capstone_Checkpoint_6.1/](Final_Capstone_Project/Capstone_Checkpoint_6.1/) contains the security/performance RAGAS solution and failure-question evaluation.
-- [Final_Capstone_Project/Capstone_Checkpoint_5.1/](Final_Capstone_Project/Capstone_Checkpoint_5.1/) contains the dual-engine (Context-Aware and Agentic Dynamic) chat and evaluation solution.
-- [Final_Capstone_Project/Capstone_Checkpoint_4.1/](Final_Capstone_Project/Capstone_Checkpoint_4.1/) contains the advanced retrieval starter and final solution files.
-- [Final_Capstone_Project/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoint_3.1/) contains the evaluation harness, validation utilities, datasets, and experiment results.
-- [Final_Capstone_Project/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoint_2.1/) contains the retrieval strategy and baseline implementation files.
-- [Final_Capstone_Project/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoint_1.1/) contains the checkpoint 1.1 solution and supporting artifacts.
+- [Capstone_Final_Solution](Final_Capstone_Project/Capstone_Final_Solution/) contains the isolated final application, local configuration, evaluation utilities, and tests.
+- [Capstone_Presentation](Final_Capstone_Project/Capstone_Presentation/) contains the design-review presentation and final-solution diagrams.
+- [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_7.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_7.1/) contains the production-hardening, security-probe, and model-ladder solution.
+- [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_6.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_6.1/) contains the security/performance RAGAS solution and failure-question evaluation.
+- [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_5.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_5.1/) contains the dual-engine (Context-Aware and Agentic Dynamic) chat and evaluation solution.
+- [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_4.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_4.1/) contains the advanced retrieval starter and final solution files.
+- [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_3.1/) contains the evaluation harness, validation utilities, datasets, and experiment results.
+- [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_2.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_2.1/) contains the retrieval strategy and baseline implementation files.
+- [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_1.1/](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_1.1/) contains the checkpoint 1.1 solution and supporting artifacts.
 - [Final_Capstone_Project/Capstone_Database/](Final_Capstone_Project/Capstone_Database/) stores the local corpus and database artifacts used for retrieval.
-- [Final_Capstone_Project/Retrieval_Methods/](Final_Capstone_Project/Retrieval_Methods/) contains BM25, vector, hybrid, context-aware, and agentic retrieval logic.
-- [Final_Capstone_Project/Ranking_Techniques/](Final_Capstone_Project/Ranking_Techniques/) contains ranking and fusion logic.
-- [Final_Capstone_Project/Utility_Scripts/](Final_Capstone_Project/Utility_Scripts/) contains shared setup, evaluation, dataset-loading, menu, token-usage, and report-writing helpers.
-- [Final_Capstone_Project/Ragas_Experiments/](Final_Capstone_Project/Ragas_Experiments/) stores evaluation logic and experiment outputs.
+- [Final_Capstone_Project/Capstone_Checkpoints/Retrieval_Methods/](Final_Capstone_Project/Capstone_Checkpoints/Retrieval_Methods/) contains BM25, vector, hybrid, context-aware, and agentic retrieval logic.
+- [Final_Capstone_Project/Capstone_Checkpoints/Ranking_Techniques/](Final_Capstone_Project/Capstone_Checkpoints/Ranking_Techniques/) contains ranking and fusion logic.
+- [Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/](Final_Capstone_Project/Capstone_Checkpoints/Utility_Scripts/) contains shared setup, evaluation, dataset-loading, menu, token-usage, and report-writing helpers.
+- [Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/) stores evaluation logic and experiment outputs.
+- [Test_Variables](Final_Capstone_Project/Capstone_Checkpoints/Test_Variables/) and [JSON_Schemas](Final_Capstone_Project/Capstone_Checkpoints/JSON_Schemas/) hold shared evaluation inputs and validation schemas.
+- [Architecture_Diagrams](Architecture_Diagrams/) and [Backup_Questions](Backup_Questions/) contain optional supporting materials, not checkpoint runtime dependencies.
 - `lab_*` directories contain the course lab scripts, starter files, and requirements for guided work.
 
 ## Notes
 - The project is designed for a local Python environment and project-specific data directories.
 - Large corpus and database artifacts are often stored locally rather than committed to version control.
-- This README reflects the current workspace structure and the major setup and evaluation workflows.
-
---------------------------
+- Checkpoint offline validation was performed on Windows with Python 3.12.10.
+  The checkpoint guide's macOS examples have not been executed on a Mac, and
+  relocation tests still contain Windows-specific path patterns.
+- Historical LLM-judged scores and cost estimates are limited by small datasets,
+  model/provider variability, and excluded judge/embedding costs. They do not
+  establish general reliability or a prompt-injection security guarantee.
+- Use the linked guides for current execution instructions; preserve experiment
+  logs when comparing future changes with the historical results above.
