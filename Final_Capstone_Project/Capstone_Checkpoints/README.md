@@ -46,6 +46,12 @@ local directories/placeholders, and the repository `.venv`. It installs
 virtual environment. **An existing environment is reused without installing
 or updating dependencies.** If it is incomplete, install the declared dependencies:
 
+The root requirements list only direct dependencies for checkpoints, their
+setup/evaluation utilities, and the isolated final solution. Pip resolves
+transitive dependencies automatically. Course-lab and document/presentation
+tooling must use their own requirements; removing an entry does not uninstall
+packages already present in an existing environment.
+
 **Windows (PowerShell)**
 
 ```powershell
