@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-13 18:18:45 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Generates up to two LLM paraphrases per Main Question using the
 #              configured OpenRouter model, preserves question/grading/source records,

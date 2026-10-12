@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-12 12:23:08 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: This script validates manually authored question, grading_notes,
 #              and sources records against Test_Main_Questions.schema.json, then

@@ -6,15 +6,13 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-22 19:31:56 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
-# Description: Conversation history-aware retriever for the Wikipedia RAG engine.
-#              Wraps the shared HybridRetriever with rolling chat memory: the chat
-#              loop folds recent turns into BOTH the retrieval query (so follow-ups
-#              resolve) and the grounded answer prompt. It performs NO autonomous
-#              planning (that is the Agentic Dynamic Retriever's job). Exposes query()
-#              (stateless, drop-in for the RAGAS harness) and chat() (interactive,
-#              with conversation history), and tracks cumulative evaluation token
-#              usage (reset_eval_usage / get_eval_usage) for the results log.
+# Description: Shared checkpoint single-pass, history-aware Wikipedia retriever.
+#              Folds recent conversation into retrieval and answer context without
+#              autonomous planning. Supports stateless query(), interactive chat(),
+#              usage accounting, and optional native sanitization/trust boundaries.
+#              Baseline remains the default; generated answers never control quitting.
 #
 #################################################################################
 

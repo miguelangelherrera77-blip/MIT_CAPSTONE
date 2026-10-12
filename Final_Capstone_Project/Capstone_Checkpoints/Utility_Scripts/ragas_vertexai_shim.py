@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-14 11:00:00 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Compatibility shim that registers a stub for the
 #              langchain_community.chat_models.vertexai module ragas imports

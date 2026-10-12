@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-22 19:31:56 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Interactive Checkpoint 5.1 solution for the Wikipedia RAG engine. Lets
 #              the user pick a retrieval engine — Context-Aware (history-aware, no
@@ -54,10 +55,10 @@ driven interactively in CHAT mode (conversation history + per-turn token usage).
 
 # %% [markdown]
 # ## Setup
-# 1. Python 3.11 or 3.12.
-# 2. pip install -r requirements.txt (ragas, langgraph, langchain-openai, langchain-chroma, rank-bm25, python-dotenv, openai).
-# 3. Use the OpenRouter API key provided for this program.
-# 4. Create a `.env` file with:  OPENROUTER_API_KEY=sk-or-v1-...
+# 1. Dependencies declare Python 3.10+; offline validation used Python 3.12.10.
+# 2. Install venv_requirements.txt with the project environment; see the applicable README.
+# 3. Supply your OpenRouter API key; model, judge, and embedding calls may incur charges.
+# 4. Set OPENROUTER_API_KEY in the environment or the documented .env location; never commit it.
 
 # %%
 from __future__ import annotations

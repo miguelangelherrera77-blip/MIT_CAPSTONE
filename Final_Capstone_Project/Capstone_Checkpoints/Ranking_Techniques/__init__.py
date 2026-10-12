@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-12 11:54:44 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: This module initializes the package containing configurable ranking
 #              techniques used to combine retrieval candidates in the capstone.

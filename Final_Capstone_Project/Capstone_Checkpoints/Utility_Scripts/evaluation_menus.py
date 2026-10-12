@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-22 19:31:56 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Shared interactive console menus for the capstone RAGAS harness.
 #              Provides the mode, retrieval-engine (Context-Aware / Agentic Dynamic /

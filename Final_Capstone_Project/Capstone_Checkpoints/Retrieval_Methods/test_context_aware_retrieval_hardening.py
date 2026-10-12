@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-10-12 06:48:53 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Unit tests for input and retrieved-context hardening in the
 #              Context-Aware retriever, including preservation of trusted evidence.

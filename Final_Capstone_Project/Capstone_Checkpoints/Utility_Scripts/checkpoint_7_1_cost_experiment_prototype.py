@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-30 00:00:00 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Prototype for the Checkpoint 7.1 model-ladder and mixed-model cost
 #              experiment. Defines the experiment contract, per-role token/cost

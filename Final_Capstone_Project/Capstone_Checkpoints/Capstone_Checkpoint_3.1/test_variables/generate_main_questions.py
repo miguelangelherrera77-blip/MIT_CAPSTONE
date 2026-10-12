@@ -16,6 +16,7 @@ Default: 100 questions -> test_main_questions.json (next to this script).
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-10-12 06:48:53 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Generates grounded main test questions and grading notes from sampled
 #              Wikipedia articles for the Checkpoint 3.1 evaluation set.

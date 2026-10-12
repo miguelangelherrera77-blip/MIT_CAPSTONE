@@ -6,16 +6,15 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-22 19:31:56 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
-# Description: Dynamic ReAct tool-using agent for the Wikipedia RAG engine. A
-#              LangGraph plan node selects one action per step (retrieve,
-#              graph_expand, clarify, or answer) with no upfront plan, reusing the
-#              shared HybridRetriever. The graph_expand tool is enabled ONLY for the
-#              graph-enabled search method; lexical/semantic/hybrid run graph-free.
-#              The plan/answer reasoning uses the configurable [agent] agent_model
-#              (falling back to the [llm] model). Exposes query() (batch, drop-in for
-#              the RAGAS harness) and chat() (interactive, with conversation history),
-#              and tracks per-turn and cumulative evaluation token usage.
+# Description: Shared checkpoint LangGraph ReAct agent with a plan-first workflow.
+#              Selects retrieve, graph_expand (graph search only), clarify, or answer;
+#              tracks planner/answer usage and evaluation latency/workflow steps.
+#              Native harden=True sanitizes questions, history, clarification turns,
+#              search queries, and evidence, and adds tagged trust-boundary prompts.
+#              Hardened clarifications consume the action budget; harden=False is
+#              the legacy default. Sanitization is defense-in-depth, not a guarantee.
 #
 #################################################################################
 

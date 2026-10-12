@@ -6,15 +6,16 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-13 18:18:45 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
-# Description: Reusable RAGAS experiment runner for Checkpoint 4.1. Executes each
-#              selected question through the retriever and answer generator, scores
-#              it with DiscreteMetric, reports ORIGINAL/PARAPHRASED PASS or FAIL,
-#              saves experiment CSV artifacts, and writes summary log entries.
+# Description: Shared checkpoint RAGAS experiment runner for the Wikipedia retrievers.
+#              Generates answers, scores DiscreteMetric correctness, saves CSVs,
+#              and writes original/paraphrase summary results. Answer and judge calls
+#              are live model operations; this module is not an offline test runner.
 #
 #################################################################################
 
-"""Reusable RAGAS experiment orchestration for Checkpoint 4.1."""
+"""Reusable RAGAS experiment orchestration for Wikipedia retrieval."""
 from __future__ import annotations
 
 import re

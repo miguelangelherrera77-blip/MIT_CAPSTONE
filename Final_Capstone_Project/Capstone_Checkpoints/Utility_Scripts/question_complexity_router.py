@@ -14,6 +14,7 @@ cost/complexity heuristic, not a correctness or safety judgment.
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-10-12 06:48:53 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Classifies Checkpoint 8.1 chat questions locally and selects the
 #              Context-Aware or Agentic Dynamic retrieval path without an LLM call.

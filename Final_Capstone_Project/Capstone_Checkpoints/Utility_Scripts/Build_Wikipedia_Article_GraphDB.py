@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-12 16:12:28 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: This script scans Wikipedia HTML files and JSONL chunks, creates
 #              Article and Chunk nodes with contains, next_chunk, previous_chunk,

@@ -6,11 +6,13 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-13 20:00:00 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
-# Description: Creates the local runtime scaffolding expected by the capstone
-#              project on a fresh clone, including required data directories,
-#              environment placeholders, and optional database builders for the
-#              Chroma, graph, and BM25 indexes.
+# Description: Creates checkpoint scaffolding, the root .env template, and .venv.
+#              Installs declared dependencies only when creating the environment.
+#              Optional --build/--rebuild runs corpus/index builders against the
+#              external Capstone_Database; Chroma embedding calls may incur charges.
+#              Existing environments and valid artifacts are reused.
 #
 #################################################################################
 

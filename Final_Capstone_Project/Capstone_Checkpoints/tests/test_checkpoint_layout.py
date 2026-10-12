@@ -1,3 +1,4 @@
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 """Offline regressions for checkpoint relocation; no model calls or DB builders."""
 from __future__ import annotations
 

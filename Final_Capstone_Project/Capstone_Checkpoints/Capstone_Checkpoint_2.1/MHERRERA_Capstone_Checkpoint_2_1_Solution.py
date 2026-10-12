@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-12 11:54:44 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: This script loads the Wikipedia corpus, builds or reuses Chroma,
 #              combines BM25 and vector retrieval, answers representative queries,

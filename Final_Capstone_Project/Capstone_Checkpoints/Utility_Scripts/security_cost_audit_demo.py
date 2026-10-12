@@ -38,6 +38,7 @@ plain script AND openable as cells in VS Code / PyCharm / Jupytext.
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-10-12 06:48:53 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Demonstrates Checkpoint 6.1 agent security and cost auditing with
 #              prompt-injection probes and per-role token accounting.

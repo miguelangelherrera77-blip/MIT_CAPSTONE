@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-13 18:50:00 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Builds and persists the bm25s lexical index for Wikipedia JSONL
 #              chunks, preserving stable chunk IDs and text metadata for retrieval.

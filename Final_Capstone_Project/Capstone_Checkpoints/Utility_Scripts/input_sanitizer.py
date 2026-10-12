@@ -6,20 +6,14 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-30 00:00:00 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
-# Description: Corpus-scoped input/content sanitizer for the Wikipedia RAG engine
-#              (Checkpoint 7.1). Provides pure, offline, deterministic middleware
-#              that (1) escapes XML metacharacters so neither the user turn nor a
-#              retrieved chunk can forge the prompt's <documents>/<user_question>
-#              trust boundary, and (2) neutralizes embedded-instruction / prompt-
-#              injection patterns. The regexes are scoped to the Checkpoint 7.1
-#              corpus target: the primary threat surfaced by the Checkpoint 6.1
-#              audit is CORPUS/RETRIEVAL POISONING — a fabricated Wikipedia-style
-#              document whose text tries to be read as instructions or as
-#              self-certifying "authoritative" evidence — so the sanitizer is meant
-#              to run over BOTH the user turn and every retrieved chunk. An optional,
-#              fail-open LLM persona filter can be injected by the caller; the module
-#              itself makes no network calls and needs no API key.
+# Description: Wikipedia RAG input/content sanitization helpers. Escapes XML and
+#              neutralizes recognized instruction, persona, role-spoofing, and
+#              fake-authority patterns in user text and retrieved evidence.
+#              Regex sanitization is offline defense-in-depth, not a security guarantee.
+#              An optional caller-supplied persona filter may invoke a model and is
+#              fail-open on errors; the module itself creates no network client.
 #
 #################################################################################
 

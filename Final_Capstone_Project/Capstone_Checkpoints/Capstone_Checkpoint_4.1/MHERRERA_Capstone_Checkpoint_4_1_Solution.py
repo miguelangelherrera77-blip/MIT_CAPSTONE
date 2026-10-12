@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-13 18:18:45 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: Interactive Checkpoint 4.1 evaluation harness for the Wikipedia RAG
 #              engine. Selects manual or LLM-generated original/paraphrase datasets,
@@ -37,10 +38,10 @@ Wikipedia corpus. It supports evaluating:
 
 # %% [markdown]
 # ## Setup
-# 1. Python 3.11 or 3.12.
+# 1. Dependencies declare Python 3.10+; offline validation used Python 3.12.10.
 # 2. pip install -r requirements.txt (ragas, langchain-openai, langchain-chroma, rank-bm25, python-dotenv, openai).
-# 3. Use the OpenRouter API key provided for this program.
-# 4. Create a `.env` file with:  OPENROUTER_API_KEY=sk-or-v1-...
+# 3. Supply your OpenRouter API key; model, judge, and embedding calls may incur charges.
+# 4. Set OPENROUTER_API_KEY in the environment or the documented .env location; never commit it.
 
 # %%
 from __future__ import annotations

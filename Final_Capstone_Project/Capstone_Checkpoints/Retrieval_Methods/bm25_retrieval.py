@@ -6,6 +6,7 @@
 # Student: Miguel Herrera
 # Section: B
 # Date and Time: 2026-09-13 18:50:00 -07:00
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 #
 # Description: This module loads Wikipedia JSONL chunks, loads or builds the
 #              persisted bm25s lexical index, preserves stable chunk metadata,

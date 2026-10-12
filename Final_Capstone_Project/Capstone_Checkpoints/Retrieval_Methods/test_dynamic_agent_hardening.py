@@ -1,3 +1,4 @@
+# Header reviewed: 2026-10-12 11:34:17 -07:00
 """Native checkpoint Agentic hardening regressions without API or database calls."""
 from __future__ import annotations
 
