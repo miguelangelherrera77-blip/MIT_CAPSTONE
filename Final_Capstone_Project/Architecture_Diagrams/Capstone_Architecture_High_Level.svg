@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title description">
+  <title id="title">Capstone High-Level Architecture - Checkpoint 8.1 Design Review</title>
+  <desc id="description">A presentation-ready Checkpoint 8.1 architecture diagram showing offline corpus preparation, a local rule-based chat router, Context-Aware and Agentic Dynamic engines, retrieval indexes, answer generation, and evaluation with clearly qualified Checkpoint 7.1 results.</desc>
+  <defs>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102B46"/>
+      <stop offset="1" stop-color="#174A66"/>
+    </linearGradient>
+    <linearGradient id="agentFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F1EDFF"/>
+      <stop offset="1" stop-color="#F8F7FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#19324A" flood-opacity=".09"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#668097"/>
+    </marker>
+    <marker id="arrowTeal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#168A83"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7457C8"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Aptos", "Segoe UI", Arial, sans-serif; }
+      .kicker { font-size: 14px; font-weight: 700; letter-spacing: 2px; }
+      .section { font-size: 14px; font-weight: 800; letter-spacing: 1.4px; fill: #62778A; }
+      .card-title { font-size: 19px; font-weight: 750; fill: #19324A; }
+      .body { font-size: 15px; fill: #50677A; }
+      .small { font-size: 13px; fill: #62778A; }
+      .micro { font-size: 11.5px; fill: #667C8F; }
+      .white { fill: #FFFFFF; }
+      .muted-white { fill: #C7D7E3; }
+      .strong { font-weight: 750; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#F4F7FA"/>
+  <rect width="1920" height="140" fill="url(#header)"/>
+  <rect x="0" y="136" width="1920" height="4" fill="#38B4A5"/>
+
+  <text x="62" y="58" class="kicker" fill="#87DCD0">MIT CAPSTONE  /  WIKIPEDIA RAG</text>
+  <text x="62" y="101" font-size="34" font-weight="760" class="white">Capstone Architecture — High Level</text>
+  <text x="62" y="126" font-size="15" class="muted-white">Checkpoint 8.1 design review  |  Architecture source of truth: Checkpoint 7.1 master solution</text>
+  <rect x="1531" y="42" width="328" height="47" rx="23" fill="#FFFFFF" fill-opacity=".10" stroke="#8CCFC8" stroke-opacity=".65"/>
+  <circle cx="1560" cy="65" r="6" fill="#61D5C2"/>
+  <text x="1577" y="70" font-size="13" font-weight="700" letter-spacing=".8" class="white">GROUNDED ANSWERS  •  LOCAL CORPUS</text>
+
+  <text x="60" y="172" class="section">01  /  OFFLINE CORPUS PREPARATION</text>
+  <text x="1858" y="172" text-anchor="end" class="small">Build indexes once; reuse at query time</text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="192" width="280" height="132" rx="16" fill="#FFFFFF" stroke="#D8E2EA"/>
+    <rect x="60" y="192" width="8" height="132" rx="4" fill="#4683C5"/>
+    <rect x="365" y="192" width="335" height="132" rx="16" fill="#FFFFFF" stroke="#D8E2EA"/>
+    <rect x="365" y="192" width="8" height="132" rx="4" fill="#168A83"/>
+    <rect x="725" y="192" width="1135" height="132" rx="16" fill="#FFFFFF" stroke="#D8E2EA"/>
+  </g>
+  <text x="88" y="226" class="card-title">Wikipedia corpus</text>
+  <text x="88" y="256" class="body">About 2,400 HTML articles</text>
+  <text x="88" y="286" class="small">Source material for the RAG knowledge base</text>
+
+  <text x="394" y="226" class="card-title">Chunk &amp; normalize</text>
+  <text x="394" y="256" class="body">HTML → ordered article chunks</text>
+  <text x="394" y="286" class="small">Prepared text + stable IDs → JSONL</text>
+
+  <text x="752" y="220" class="kicker" fill="#62778A">PERSISTED RETRIEVAL INDEXES</text>
+  <rect x="750" y="236" width="338" height="70" rx="11" fill="#EFF6FF" stroke="#D5E5F5"/>
+  <rect x="1102" y="236" width="338" height="70" rx="11" fill="#F4F0FF" stroke="#E1D9FA"/>
+  <rect x="1454" y="236" width="380" height="70" rx="11" fill="#FFF6E8" stroke="#F3E1BF"/>
+  <text x="771" y="263" font-size="16" font-weight="750" fill="#245A91">BM25 lexical index</text>
+  <text x="771" y="286" class="small">Exact words, names, dates</text>
+  <text x="1123" y="263" font-size="16" font-weight="750" fill="#674AB3">Chroma vector store</text>
+  <text x="1123" y="286" class="small">Semantic embeddings + similarity</text>
+  <text x="1475" y="263" font-size="16" font-weight="750" fill="#9A641A">GraphML knowledge graph</text>
+  <text x="1475" y="286" class="small">Article/chunk sequence + links</text>
+
+  <path d="M 340 258 H 357" fill="none" stroke="#668097" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 700 258 H 718" fill="none" stroke="#668097" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 1290 324 V 405" fill="none" stroke="#8BA0B1" stroke-width="2" stroke-dasharray="6 7" marker-end="url(#arrow)"/>
+
+  <text x="60" y="376" class="section">02  /  REQUEST-TIME RAG PIPELINE</text>
+  <text x="1858" y="376" text-anchor="end" class="small">Optional local chat routing; manual choice and explicit evaluation remain</text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="402" width="250" height="370" rx="17" fill="#FFFFFF" stroke="#D8E2EA"/>
+    <rect x="330" y="402" width="285" height="370" rx="17" fill="#FFFFFF" stroke="#D8E2EA"/>
+    <rect x="635" y="402" width="480" height="370" rx="17" fill="#FFFFFF" stroke="#D8E2EA"/>
+    <rect x="1135" y="402" width="390" height="370" rx="17" fill="#FFFFFF" stroke="#D8E2EA"/>
+    <rect x="1545" y="402" width="315" height="370" rx="17" fill="#FFFFFF" stroke="#D8E2EA"/>
+  </g>
+
+  <circle cx="91" cy="439" r="16" fill="#E9F2FB"/>
+  <path d="M84 439h14M91 432v14" stroke="#3D78B2" stroke-width="2" stroke-linecap="round"/>
+  <text x="118" y="445" class="card-title">Request sources</text>
+  <text x="84" y="489" class="body strong">Interactive chat</text>
+  <text x="84" y="514" class="small">Question + optional history</text>
+  <line x1="84" y1="537" x2="286" y2="537" stroke="#E5EBF0"/>
+  <text x="84" y="565" class="body strong">Evaluation runner</text>
+  <text x="84" y="591" class="small">Originals • paraphrases</text>
+  <text x="84" y="614" class="small">Failure / security probes</text>
+  <rect x="82" y="651" width="206" height="76" rx="12" fill="#F4F7FA"/>
+  <text x="98" y="678" class="small strong" fill="#35536B">Run modes</text>
+  <text x="98" y="702" class="small">Chat • RAGAS • cost • hardening</text>
+
+  <circle cx="361" cy="439" r="16" fill="#E7F6F3"/>
+  <path d="M354 439l5 5 10-11" fill="none" stroke="#168A83" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="388" y="445" class="card-title">Trust boundary</text>
+  <rect x="354" y="472" width="238" height="31" rx="15" fill="#E9F6F3"/>
+  <text x="473" y="493" text-anchor="middle" font-size="13" font-weight="750" fill="#16776F">OPTIONAL HARDENED MODE</text>
+  <text x="355" y="535" class="body">Sanitize user input</text>
+  <text x="355" y="559" class="body">Sanitize retrieved chunks</text>
+  <text x="355" y="583" class="body">Tag user data vs. evidence</text>
+  <text x="355" y="607" class="body">Treat retrieved text as data</text>
+  <line x1="355" y1="626" x2="590" y2="626" stroke="#E5EBF0"/>
+  <text x="355" y="651" class="small strong">Baseline ↔ hardened comparison</text>
+  <text x="355" y="674" class="small">Defense in depth, not a guarantee.</text>
+  <text x="355" y="697" class="small">History/clarification coverage differs</text>
+  <text x="355" y="717" class="small">by engine; residual risk remains.</text>
+
+  <circle cx="666" cy="439" r="16" fill="#F0ECFF"/>
+  <path d="M660 439h12M666 433v12" stroke="#7457C8" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="693" y="445" class="card-title">Local chat routing</text>
+  <rect x="658" y="469" width="434" height="48" rx="12" fill="#EAF7F4" stroke="#D3EBE6"/>
+  <text x="875" y="490" text-anchor="middle" font-size="14" font-weight="760" fill="#16776F">Deterministic rules • no classifier LLM call</text>
+  <text x="875" y="508" text-anchor="middle" class="micro">Single-intent → Context-Aware  •  complex signals → Agentic Dynamic</text>
+
+  <rect x="658" y="526" width="434" height="116" rx="13" fill="url(#agentFill)" stroke="#DCD3F5"/>
+  <rect x="658" y="526" width="6" height="116" rx="3" fill="#7457C8"/>
+  <text x="680" y="551" font-size="17" font-weight="760" fill="#51379C">Agentic Dynamic  /  LangGraph ReAct</text>
+  <text x="680" y="573" class="small">Planner chooses an action and re-plans after evidence</text>
+  <rect x="680" y="586" width="88" height="27" rx="13" fill="#FFFFFF" stroke="#D9D0F1"/>
+  <rect x="779" y="586" width="105" height="27" rx="13" fill="#FFFFFF" stroke="#D9D0F1"/>
+  <rect x="895" y="586" width="91" height="27" rx="13" fill="#FFFFFF" stroke="#D9D0F1"/>
+  <rect x="997" y="586" width="73" height="27" rx="13" fill="#FFFFFF" stroke="#D9D0F1"/>
+  <text x="724" y="605" text-anchor="middle" class="micro strong" fill="#51379C">retrieve</text>
+  <text x="831" y="605" text-anchor="middle" class="micro strong" fill="#51379C">graph expand</text>
+  <text x="940" y="605" text-anchor="middle" class="micro strong" fill="#51379C">clarify</text>
+  <text x="1033" y="605" text-anchor="middle" class="micro strong" fill="#51379C">answer</text>
+  <text x="680" y="631" class="micro">Configured cap: 5 retrieval steps; graph expansion is optional.</text>
+
+  <rect x="658" y="655" width="434" height="91" rx="13" fill="#F2F8FC" stroke="#D7E6F0"/>
+  <rect x="658" y="655" width="6" height="91" rx="3" fill="#4183A8"/>
+  <text x="680" y="684" font-size="17" font-weight="760" fill="#285D7B">Context-Aware</text>
+  <text x="680" y="709" class="small">History-aware, single retrieval-and-answer pass</text>
+  <text x="680" y="731" class="micro">No autonomous planner or tool selection.</text>
+
+  <circle cx="1166" cy="439" r="16" fill="#FFF4E3"/>
+  <path d="M1159 434h14M1159 439h14M1159 444h14" stroke="#C07A1F" stroke-width="2" stroke-linecap="round"/>
+  <text x="1193" y="445" class="card-title">Retrieval layer</text>
+  <text x="1162" y="486" class="small strong">Selected search strategy</text>
+  <rect x="1160" y="501" width="340" height="42" rx="10" fill="#EFF6FF"/>
+  <text x="1178" y="527" font-size="15" font-weight="720" fill="#245A91">Lexical</text>
+  <text x="1479" y="527" text-anchor="end" class="small">BM25</text>
+  <rect x="1160" y="551" width="340" height="42" rx="10" fill="#F4F0FF"/>
+  <text x="1178" y="577" font-size="15" font-weight="720" fill="#674AB3">Semantic</text>
+  <text x="1479" y="577" text-anchor="end" class="small">Chroma vectors</text>
+  <rect x="1160" y="601" width="340" height="54" rx="10" fill="#EAF7F4"/>
+  <text x="1178" y="624" font-size="15" font-weight="720" fill="#16776F">Hybrid weighted fusion</text>
+  <text x="1178" y="644" class="micro">10 BM25 + 10 vector candidates → top 4</text>
+  <rect x="1160" y="663" width="340" height="42" rx="10" fill="#FFF6E8"/>
+  <text x="1178" y="689" font-size="15" font-weight="720" fill="#9A641A">Graph expansion</text>
+  <text x="1479" y="689" text-anchor="end" class="micro">linked context</text>
+  <text x="1162" y="735" class="micro">Current fusion weights: 0.4 BM25 / 0.6 vector</text>
+
+  <circle cx="1576" cy="439" r="16" fill="#EAF7F4"/>
+  <path d="M1570 438c0-5 12-5 12 0s-12 5-12 0zm0 0v7c0 5 12 5 12 0v-7" fill="none" stroke="#168A83" stroke-width="1.8"/>
+  <text x="1603" y="445" class="card-title">LLMs &amp; response</text>
+  <rect x="1568" y="472" width="269" height="31" rx="15" fill="#EDF4F8"/>
+  <text x="1702" y="493" text-anchor="middle" font-size="13" font-weight="750" fill="#35536B">OPENROUTER MODEL ENDPOINT</text>
+  <rect x="1568" y="519" width="269" height="83" rx="12" fill="#F5F1FF" stroke="#E3DAFA"/>
+  <text x="1587" y="546" font-size="15" font-weight="750" fill="#51379C">Planner model</text>
+  <text x="1587" y="570" class="small">Agentic engine only</text>
+  <text x="1587" y="589" class="micro">Selects next action / search queries</text>
+  <rect x="1568" y="612" width="269" height="92" rx="12" fill="#EDF8F6" stroke="#D3EBE6"/>
+  <text x="1587" y="639" font-size="15" font-weight="750" fill="#16776F">Answer model</text>
+  <text x="1587" y="663" class="small">Both engines; grounded in excerpts</text>
+  <text x="1587" y="685" class="micro">Default configured model: gpt-5.4-mini</text>
+  <rect x="1568" y="714" width="269" height="38" rx="10" fill="#19324A"/>
+  <text x="1702" y="739" text-anchor="middle" font-size="14" font-weight="700" class="white">Answer • quote • abstain if unsupported</text>
+
+  <path d="M 310 587 H 324 V 574 H 330" fill="none" stroke="#668097" stroke-width="2.4" marker-end="url(#arrow)"/>
+  <path d="M 615 587 H 627 V 586 H 635" fill="none" stroke="#668097" stroke-width="2.4" marker-end="url(#arrow)"/>
+  <path d="M 1115 577 H 1135" fill="none" stroke="#7457C8" stroke-width="2.8" marker-end="url(#arrowPurple)"/>
+  <path d="M 1525 647 H 1545" fill="none" stroke="#168A83" stroke-width="2.8" marker-end="url(#arrowTeal)"/>
+  <path d="M 1137 725 C 1100 758, 1030 758, 1000 746" fill="none" stroke="#7457C8" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#arrowPurple)"/>
+  <rect x="810" y="748" width="278" height="24" rx="12" fill="#F0ECFF"/>
+  <text x="949" y="765" text-anchor="middle" class="micro strong" fill="#6348AB">Evidence returns to planner for next decision</text>
+
+  <text x="60" y="808" class="section">03  /  EVALUATION, OBSERVED TRADE-OFF &amp; REVIEW</text>
+  <g filter="url(#shadow)">
+    <rect x="60" y="827" width="1080" height="183" rx="17" fill="#FFFFFF" stroke="#D8E2EA"/>
+    <rect x="1160" y="827" width="700" height="183" rx="17" fill="#FFFFFF" stroke="#D8E2EA"/>
+  </g>
+  <text x="86" y="860" class="card-title">Evaluation harness</text>
+  <text x="1112" y="859" text-anchor="end" class="small">Shared harness; selectable single engine or side-by-side</text>
+
+  <rect x="84" y="879" width="220" height="69" rx="11" fill="#F2F6FA" stroke="#E2E9EF"/>
+  <rect x="327" y="879" width="220" height="69" rx="11" fill="#F2F6FA" stroke="#E2E9EF"/>
+  <rect x="570" y="879" width="220" height="69" rx="11" fill="#FFF6E8" stroke="#F0E1C7"/>
+  <rect x="813" y="879" width="300" height="69" rx="11" fill="#EAF7F4" stroke="#D3EBE6"/>
+  <text x="194" y="905" text-anchor="middle" font-size="15" font-weight="740" fill="#35536B">Test sets</text>
+  <text x="194" y="929" text-anchor="middle" class="small">Main • paraphrase • failure</text>
+  <text x="437" y="905" text-anchor="middle" font-size="15" font-weight="740" fill="#35536B">Engine runs</text>
+  <text x="437" y="929" text-anchor="middle" class="small">Context • Agent • compare</text>
+  <text x="680" y="905" text-anchor="middle" font-size="15" font-weight="740" fill="#9A641A">RAGAS judge</text>
+  <text x="680" y="929" text-anchor="middle" class="small">DiscreteMetric vs. notes</text>
+  <text x="963" y="905" text-anchor="middle" font-size="15" font-weight="740" fill="#16776F">Auditable outputs</text>
+  <text x="963" y="929" text-anchor="middle" class="small">PASS/FAIL • CSV • run logs</text>
+  <path d="M 304 913 H 320" fill="none" stroke="#668097" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 547 913 H 563" fill="none" stroke="#668097" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 790 913 H 806" fill="none" stroke="#668097" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="86" y="967" class="micro"><tspan font-weight="750" fill="#35536B">Coverage:</tspan> factual • multi-fact/cross-document • paraphrase • exact quote • abstention • injection probes</text>
+  <text x="86" y="985" class="micro"><tspan font-weight="750" fill="#35536B">Additional experiments:</tspan> baseline vs. hardened probes • model ladder • tokens, latency, workflow steps</text>
+  <text x="86" y="1001" class="micro">RAGAS uses a binary LLM correctness judge; retrieval quality and citation fidelity are not isolated metrics.</text>
+
+  <text x="1186" y="860" class="card-title">Measured quality / cost signal</text>
+  <rect x="1185" y="877" width="307" height="54" rx="11" fill="#EDF8F6"/>
+  <rect x="1506" y="877" width="328" height="54" rx="11" fill="#F4F0FF"/>
+  <text x="1203" y="899" class="micro strong" fill="#16776F">AGENTIC  •  gpt-5.4-mini</text>
+  <text x="1203" y="920" font-size="17" font-weight="760" fill="#16776F">5/5 pass  •  40.4K tokens  •  29.6s</text>
+  <text x="1524" y="899" class="micro strong" fill="#674AB3">CONTEXT-AWARE  •  gpt-5.4-mini</text>
+  <text x="1524" y="920" font-size="17" font-weight="760" fill="#674AB3">4/5 pass  •  9.1K tokens  •  9.7s</text>
+  <text x="1187" y="952" class="micro">7.1 experiment: 5 failure probes, graph search. Agentic: +1 pass, ~4.4× tokens, ~3.1× latency.</text>
+  <text x="1187" y="970" class="micro">Indicative only; estimated model-cost totals exclude judge and embedding usage.</text>
+  <text x="1187" y="990" class="micro strong" fill="#9A641A">Trade-off: stronger multi-step evidence gathering costs more.</text>
+
+  <line x1="60" y1="1030" x2="1860" y2="1030" stroke="#D5DFE7"/>
+  <text x="60" y="1052" class="micro">Source: Checkpoint 7.1 retrieval/agent architecture + Checkpoint 8.1 local chat router + evaluation assets and logged experiment.</text>
+  <text x="60" y="1070" class="micro">Review qualification: supplied Checkpoint 8.1 solution is byte-identical to the 7.1 master; the metrics shown are 7.1 results, not an independent 8.1 benchmark.</text>
+</svg>

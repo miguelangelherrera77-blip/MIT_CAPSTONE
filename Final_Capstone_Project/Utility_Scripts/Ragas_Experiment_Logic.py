@@ -17,6 +17,7 @@
 """Reusable RAGAS experiment orchestration for Checkpoint 4.1."""
 from __future__ import annotations
 
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable
@@ -56,7 +57,8 @@ def build_experiment(
     progress["last_original"] = None
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     tag = "main" if "ORIGINAL" in label.upper() else "paraphrased" if "PARAPHRASE" in label.upper() else label.lower()
-    prefix = f"{timestamp}_{tag}" if tag else timestamp
+    safe_tag = re.sub(r"[^a-z0-9_-]+", "_", tag).strip("_")
+    prefix = f"{timestamp}_{safe_tag}" if safe_tag else timestamp
 
     @experiment(name_prefix=prefix)
     async def run_experiment(row):

@@ -7,6 +7,21 @@ Writes the results to test_main_questions.json with the source filename.
 Run:  python generate_main_questions.py [n_questions] [out.json]
 Default: 100 questions -> test_main_questions.json (next to this script).
 """
+
+# #################################################################################
+#
+# Massachusetts Institute of Technology - xPRO
+# RAG and Context Engineering: Designing and Building Production-Grade AI Systems
+#
+# Student: Miguel Herrera
+# Section: B
+# Date and Time: 2026-10-12 06:48:53 -07:00
+#
+# Description: Generates grounded main test questions and grading notes from sampled
+#              Wikipedia articles for the Checkpoint 3.1 evaluation set.
+#
+# #################################################################################
+
 from __future__ import annotations
 
 import warnings

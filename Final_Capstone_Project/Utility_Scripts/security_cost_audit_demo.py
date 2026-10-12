@@ -30,6 +30,20 @@ plain script AND openable as cells in VS Code / PyCharm / Jupytext.
 # 4. Evaluate the security and cost trade-offs of model selection (a weak→strong ladder;
 #    a mixed planner/answer model split).
 
+# #################################################################################
+#
+# Massachusetts Institute of Technology - xPRO
+# RAG and Context Engineering: Designing and Building Production-Grade AI Systems
+#
+# Student: Miguel Herrera
+# Section: B
+# Date and Time: 2026-10-12 06:48:53 -07:00
+#
+# Description: Demonstrates Checkpoint 6.1 agent security and cost auditing with
+#              prompt-injection probes and per-role token accounting.
+#
+# #################################################################################
+
 # %% [markdown]
 # ## Step 1 — Keep your capstone scenario
 #

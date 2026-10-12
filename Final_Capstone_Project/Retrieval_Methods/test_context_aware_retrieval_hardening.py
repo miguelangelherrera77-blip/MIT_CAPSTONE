@@ -1,3 +1,17 @@
+# #################################################################################
+#
+# Massachusetts Institute of Technology - xPRO
+# RAG and Context Engineering: Designing and Building Production-Grade AI Systems
+#
+# Student: Miguel Herrera
+# Section: B
+# Date and Time: 2026-10-12 06:48:53 -07:00
+#
+# Description: Unit tests for input and retrieved-context hardening in the
+#              Context-Aware retriever, including preservation of trusted evidence.
+#
+# #################################################################################
+
 from __future__ import annotations
 
 import unittest

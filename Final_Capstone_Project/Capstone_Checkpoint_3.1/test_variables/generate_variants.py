@@ -21,6 +21,21 @@ Setup:
 IMPORTANT: Automatic paraphrases can drift. After generating, review the output and
 delete any variant whose meaning changed, introduced ambiguity, or duplicates another.
 """
+
+# #################################################################################
+#
+# Massachusetts Institute of Technology - xPRO
+# RAG and Context Engineering: Designing and Building Production-Grade AI Systems
+#
+# Student: Miguel Herrera
+# Section: B
+# Date and Time: 2026-10-12 06:48:53 -07:00
+#
+# Description: Generates paraphrase variants of the Checkpoint 3.1 main questions
+#              while retaining each original question's grading notes and sources.
+#
+# #################################################################################
+
 from __future__ import annotations
 
 import os
