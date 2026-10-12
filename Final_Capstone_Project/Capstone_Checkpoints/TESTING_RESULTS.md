@@ -30,7 +30,7 @@ availability describe the recorded snapshot, not necessarily future runs.
 - [Checkpoint 1.1: no-retrieval baseline](#capstone-checkpoint-11)
 - [ChromaDB token and cost estimate](#chromadb-token-and-cost-estimate)
 
-Detailed historical tables remain in expandable sections.
+Detailed historical tables are expanded by default and can be collapsed.
 
 ### Capstone Checkpoint 7.1
 **Production hardening and model-cost evaluation for the Wikipedia RAG engines.** Checkpoint 7.1 builds on the dual-engine evaluation workflow with baseline/hardened runs, security probes, and a model ladder. The solution is in [Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py](Capstone_Checkpoint_7.1/MHERRERA_Capstone_Checkpoint_7_1_Agent_Solution_Prod.py).
@@ -70,7 +70,7 @@ For baseline/hardened chat, paired evaluations, and diagnostic commands, use the
 - The model-cost estimate excludes RAGAS judge tokens and embedding costs; semantic and graph-enabled runs may therefore incur costs not shown in the estimate.
 
 #### Recorded findings
-<details>
+<details open>
 <summary>Historical hardening scores and model-cost results</summary>
 
 These results predate the native shared Agentic hardening fix and have not been
@@ -142,7 +142,7 @@ This opt-in workflow runs the failure-question suite across free/low-cost and co
 - The separate [security_cost_audit_demo.py](Utility_Scripts/security_cost_audit_demo.py) is a synthetic teaching demo; its output is not part of the Checkpoint 6.1 Wikipedia report.
 
 #### Testing Results and Analysis
-<details>
+<details open>
 <summary>Historical five-question diagnostic results and category breakdowns</summary>
 
 The table summarizes the latest recorded failure-test comparison for each search method, run on 2026-09-27. Each run used all five manually authored diagnostic questions, `openai/gpt-5.4-mini` for answers and judging, and BM25/vector fusion weights of 0.4/0.6 where fusion applies. Latency and token counts are totals for each five-question run. Agentic workflow steps include planner calls plus the five answer steps.
@@ -235,7 +235,7 @@ For interactive and scripted runs, use the
 All Checkpoint 5.1 evaluation results are written newest-first to [Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/detailed_test_results_agentic.log](Ragas_Experiments/detailed_test_results_agentic.log), with per-question CSVs under [Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/](Ragas_Experiments/experiments/). Each entry records the engine, search method, fusion-ranking weights, result, and LLM call/token effort; comparison runs add a side-by-side section.
 
 #### Testing results and analysis
-<details>
+<details open>
 <summary>Historical 16-question comparisons, token costs, and retrieval trade-offs</summary>
 
 Results below cover all eight logged "Compare Both" runs — two batches of four search methods — each scoring both engines on the same 16 paraphrased manual questions (RAGAS DiscreteMetric; answer/judge `openai/gpt-5.4-mini`). Batch A used the default fusion weights (BM25 0.5 / Vector 0.5); Batch B used tuned weights (BM25 0.4 / Vector 0.6). `Δ` is agentic correctness minus context-aware correctness.
@@ -313,7 +313,7 @@ For startup and evaluation commands, use the
 [Checkpoint 4.1 run guide](README.md#checkpoint-41-advanced-retrieval-evaluation).
 
 #### Testing results and analysis
-<details>
+<details open>
 <summary>Historical 120-question retrieval and category results</summary>
 
 Checkpoint 4.1 records one result row per evaluated question in [Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/experiments/](Ragas_Experiments/experiments/). Across all logged evaluations, `78/120` questions passed (`65%`).
