@@ -88,8 +88,3 @@ preserves the detailed tables, dates, methodology, output references, model
 configurations, embedding budget, and limitations. Historical hardening scores
 predate the native shared Agentic fix and have not been rerun against it.
 Reported model costs exclude judge and embedding usage where specified.
-
-Latest checkpoint validation passed **21 offline tests**, and all **19 shared
-Agentic constructor callers** were compatible. No live model/embedding calls or
-database rebuilds were performed. The checkpoint guide documents commands and
-platform caveats, including Windows-specific relocation-test patterns.
