@@ -4,6 +4,9 @@ This guide documents checkpoints 1.1 through 7.1 and their current implementatio
 It replaces the setup/run guidance in the [repository README](../../README.md)
 for checkpoint execution; it does not replace historical experiment reports.
 
+See [Testing Results](TESTING_RESULTS.md) for the preserved historical scores,
+methodology, model-cost comparisons, embedding budget, and limitations.
+
 ## Layout and prerequisites
 
 - Python 3.10 or newer is declared by the project dependencies. Offline
