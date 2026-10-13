@@ -19,6 +19,7 @@ trust boundaries are defense-in-depth, not security or factual-correctness guara
 | Goal | Resource |
 | --- | --- |
 | Set up and run checkpoints 1.1-7.1 | [Checkpoint setup and run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md) |
+| Review Checkpoint 8.1 implementation and CLI | [Checkpoint 8.1 launcher](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_8.1/MHERRERA_Capstone_Checkpoint_8_1_Final_Solution_Prod.py) |
 | Review experiments and engineering trade-offs | [Historical testing results](Final_Capstone_Project/Capstone_Checkpoints/TESTING_RESULTS.md) |
 | Browse implementations and shared utilities | [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) |
 | Review raw reports and evaluation CSVs | [Ragas_Experiments](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/) |
@@ -31,7 +32,7 @@ are preserved separately and are not certification of the current implementation
 
 | Area | Purpose | Availability |
 | --- | --- | --- |
-| [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) | Checkpoints, retrieval/ranking modules, setup/evaluation utilities, schemas, and question datasets | Tracked source and selected reports |
+| [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) | Checkpoints 1.1-8.1, retrieval/ranking modules, setup/evaluation utilities, schemas, and question datasets | Tracked source and selected reports |
 | Capstone_Database | Wikipedia HTML/JSONL and persisted BM25, Chroma, and graph artifacts | Local-only corpus/indexes |
 | Capstone_Final_Solution | Isolated final application, local configuration, guide, and tests | Local-only |
 | Capstone_Presentation | Design-review presentation and final-solution diagrams | Local-only |
@@ -50,10 +51,11 @@ them. In an existing development workspace:
 
 ## Requirements and Operational Warnings
 
-- Use a local Python environment with `venv` and `pip`. Dependencies declare
-  Python 3.10+; actual compatibility depends on selected package versions.
-  Offline validation used **Python 3.12.10 on Windows**. Other versions and
-  macOS/Linux execution are not certified.
+- Use a local Python environment with `venv` and `pip`. The dependency file
+  lists package requirements but does not declare a project-wide minimum Python
+  version; compatibility depends on the selected package versions. Offline
+  validation used **Python 3.12.10 on Windows**. Other versions and macOS/Linux
+  execution are not certified.
 - [venv_requirements.txt](venv_requirements.txt) lists direct dependencies for
   checkpoints, the final solution, and setup/evaluation utilities. Pip resolves
   transitive dependencies automatically.
@@ -66,9 +68,11 @@ them. In an existing development workspace:
   judging, and embeddings can incur charges; allow adequate local storage.
 - HTML is required for chunking and graph creation; JSONL suffices for BM25
   and Chroma creation. A fresh clone needs suitable corpus/index artifacts.
-- Checkpoints 4.1-7.1 invoke setup/build checks before normal menus and quit
+- Checkpoints 4.1-8.1 invoke setup/build checks before normal menus and quit
   selections. Missing artifacts can trigger builders and embedding costs;
-  `--help` exits before bootstrap.
+  `--help` exits before bootstrap. The separate Checkpoint 8.1 launcher options
+  are available with `--help`; the checkpoint setup/run guide currently covers
+  checkpoints 1.1-7.1.
 - Checkpoints 1.1 and 2.1 execute live workflows at module level; do not import
   them as offline smoke tests.
 - Do not rebuild databases merely to launch a checkpoint. Explicit rebuilds
