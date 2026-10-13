@@ -19,7 +19,6 @@ trust boundaries are defense-in-depth, not security or factual-correctness guara
 | Goal | Resource |
 | --- | --- |
 | Set up and run checkpoints 1.1-7.1 | [Checkpoint setup and run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md) |
-| Review Checkpoint 8.1 implementation and CLI | [Checkpoint 8.1 launcher](Final_Capstone_Project/Capstone_Checkpoints/Capstone_Checkpoint_8.1/MHERRERA_Capstone_Checkpoint_8_1_Final_Solution_Prod.py) |
 | Review experiments and engineering trade-offs | [Historical testing results](Final_Capstone_Project/Capstone_Checkpoints/TESTING_RESULTS.md) |
 | Browse implementations and shared utilities | [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) |
 | Review raw reports and evaluation CSVs | [Ragas_Experiments](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/) |
@@ -30,24 +29,11 @@ are preserved separately and are not certification of the current implementation
 
 ## Project Organization
 
-| Area | Purpose | Availability |
-| --- | --- | --- |
-| [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) | Checkpoints 1.1-8.1, retrieval/ranking modules, setup/evaluation utilities, schemas, and question datasets | Tracked source and selected reports |
-| Capstone_Database | Wikipedia HTML/JSONL and persisted BM25, Chroma, and graph artifacts | Local-only corpus/indexes |
-| Capstone_Final_Solution | Isolated final application, local configuration, guide, and tests | Local-only |
-| Capstone_Presentation | Design-review presentation and final-solution diagrams | Local-only |
-
-**Local-only resources are excluded from Git.** A fresh clone does not supply
-them. In an existing development workspace:
-
-- The database remains at `Final_Capstone_Project\Capstone_Database`; its corpus
-  and indexes were not moved or copied during checkpoint organization.
-- The final application's guide is at
-  `Final_Capstone_Project\Capstone_Final_Solution\README.md`.
-- The final application defaults to automatic, hardened, graph-enabled chat:
-  simple questions use Context-Aware/GPT-4o-mini; recognized complex questions
-  use Agentic Dynamic/GPT-5.4-mini. It uses independent code/configuration and
-  requires existing external database artifacts without automatic rebuilding.
+| Area | Purpose |
+| --- | --- |
+| [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) | Checkpoints 1.1-7.1, retrieval/ranking modules, setup/evaluation utilities, schemas, question datasets, and documentation |
+| [Ragas_Experiments](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/) | Tracked evaluation reports, experiment logs, and CSV results |
+| [venv_requirements.txt](venv_requirements.txt) | Direct Python dependencies for the documented project workflows |
 
 ## Requirements and Operational Warnings
 
@@ -68,11 +54,9 @@ them. In an existing development workspace:
   judging, and embeddings can incur charges; allow adequate local storage.
 - HTML is required for chunking and graph creation; JSONL suffices for BM25
   and Chroma creation. A fresh clone needs suitable corpus/index artifacts.
-- Checkpoints 4.1-8.1 invoke setup/build checks before normal menus and quit
+- Checkpoints 4.1-7.1 invoke setup/build checks before normal menus and quit
   selections. Missing artifacts can trigger builders and embedding costs;
-  `--help` exits before bootstrap. The separate Checkpoint 8.1 launcher options
-  are available with `--help`; the checkpoint setup/run guide currently covers
-  checkpoints 1.1-7.1.
+  `--help` exits before bootstrap.
 - Checkpoints 1.1 and 2.1 execute live workflows at module level; do not import
   them as offline smoke tests.
 - Do not rebuild databases merely to launch a checkpoint. Explicit rebuilds

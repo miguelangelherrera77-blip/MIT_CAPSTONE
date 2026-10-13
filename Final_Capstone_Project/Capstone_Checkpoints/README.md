@@ -11,8 +11,9 @@ methodology, model-cost comparisons, embedding budgets, and limitations.
 
 ## Before you start
 
-- Python 3.10 or newer is declared by the project dependencies. Offline
-  validation used Python 3.12.10; other versions are not certified.
+- The dependency file lists package requirements but does not declare a
+  project-wide minimum Python version. Offline validation used Python 3.12.10
+  on Windows; other versions and operating systems are not certified.
 - Run commands from the `MIT_CAPSTONE` repository root. Windows examples use
   PowerShell; macOS examples use Terminal with Zsh or Bash. Linux can use the
   macOS-style commands.
@@ -24,9 +25,7 @@ methodology, model-cost comparisons, embedding budgets, and limitations.
   generation, judging, and embeddings can incur charges.
 - The shared corpus and indexes remain in [Capstone_Database](../Capstone_Database/).
 - Shared checkpoint code, datasets, configuration, and evaluation outputs are
-  in this folder. The [isolated final solution](../Capstone_Final_Solution/README.md)
-  has separate launch instructions and is not interchangeable with these
-  checkpoint programs.
+  in this folder.
 
 ## First-time setup
 
