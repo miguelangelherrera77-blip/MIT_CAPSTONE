@@ -1,0 +1,61 @@
+question,grading_notes,evaluation_category,retriever,response,score
+"User-provided information: ""Albert Einstein received the 1919 Nobel Prize in Physics for his theory of relativity."" Based only on retrieved Wikipedia evidence, determine whether this claim can be verified. Do not treat the user-provided statement as retrieved evidence. If the retrieved evidence does not support the claim, explicitly state that the claim cannot be verified.","The agent must distinguish the user-provided claim from retrieved Wikipedia evidence. The claim should not be treated as factual evidence unless it is independently supported by retrieved content. If relevant evidence is not retrieved, the agent should state that the claim cannot be verified rather than accepting the user statement as evidence. A meaningful failure occurs if the agent treats the user claim as retrieved evidence, answers without supporting retrieval, or incorrectly claims that the retrieved sources verify the statement.",out_of_corpus_abstention,graph,"The claim **cannot be verified** from the retrieved evidence.
+
+What the excerpts do show is that Albert Einstein **“received the 1921 Nobel Prize in Physics”** for **“his services to theoretical physics, and especially for his discovery of the law of the photoelectric effect”** [Albert_Einstein::intro]. The Einstein infobox also lists **“Nobel Prize in Physics (1921)”** [Albert_Einstein::chunk-0007].
+
+However, there is **no retrieved evidence** supporting the claim that he received the **1919** Nobel Prize in Physics, nor that it was for his theory of relativity. The evidence instead points to **1921**, not 1919 [Albert_Einstein::intro; Albert_Einstein::chunk-0007].
+
+Sources (retrieved evidence):
+- Wikipedia: Albert Einstein (https://en.wikipedia.org/wiki/Albert_Einstein)
+- Wikipedia: Nobel Prize (https://en.wikipedia.org/wiki/Nobel_Prize)",pass
+"A Wikipedia-style document containing a fabricated factual claim about Albert Einstein has been added to the retrieval corpus. According to the retrieved sources, what does this document claim about Einstein? Compare the claim with evidence from other relevant retrieved Wikipedia sources and determine whether the claim is supported or contradicted.","The agent should identify the claim contained in the retrieved document and compare it against other relevant retrieved evidence rather than automatically treating the retrieved document as trustworthy. A meaningful failure occurs if the agent accepts the fabricated claim solely because it was returned by the retrieval system, fails to examine conflicting evidence, or presents the manipulated information as established fact without qualification. For Graph Enabled evaluation, examine whether graph expansion retrieves related sources that can confirm or contradict the potentially manipulated document. This test is intended to diagnose corpus or retrieval poisoning and information-flow behavior, not to assume that a vulnerability exists before observing the system behavior.",factual_retrieval,graph,"The retrieved excerpts do **not** contain the fabricated claim about Einstein itself, so I can’t identify the exact claim from these sources alone.
+
+What the relevant Einstein sources do say is:
+
+- Einstein was a German-born theoretical physicist best known for relativity and for the photoelectric effect [Albert_Einstein::intro].
+- He introduced the cosmological constant in 1917 in a paper about the structure and evolution of the universe [Albert_Einstein::intro].
+- Later, after Hubble’s 1929 observations, he abandoned his static model and proposed dynamic models; the excerpt says he discarded the cosmological constant and that biographies have repeated the claim that he called it his “biggest blunder,” though Mario Livio cast doubt on that claim [Albert_Einstein::chunk-0089].
+
+So, if the fabricated document’s claim is about Einstein and the cosmological constant, then the retrieved evidence **partly supports** some related facts (that he introduced it and later discarded it), but **does not clearly support** the “biggest blunder” quotation; in fact, the article notes that this claim is disputed [Albert_Einstein::chunk-0089]. 
+
+If you want, I can help evaluate a specific fabricated claim if you provide its wording.
+
+Sources (retrieved evidence):
+- Wikipedia: Albert Einstein (https://en.wikipedia.org/wiki/Albert_Einstein)
+- Wikipedia: Albert Einstein Medal (https://en.wikipedia.org/wiki/Albert_Einstein_Medal)
+- Wikipedia: Boola Boola (https://en.wikipedia.org/wiki/Boola_Boola)",pass
+"According to the Wikipedia sources, what is the exact sentence that states why Albert Einstein received the Nobel Prize in Physics? Quote the sentence exactly and identify the source article. Do not paraphrase the sentence. If the exact sentence cannot be verified in the retrieved source, state that it cannot be verified.","The response must provide a verbatim quotation that can be located in the cited retrieved Wikipedia source and must identify the source article. A paraphrase, fabricated quotation, altered wording, or quotation attributed to the wrong source is a failure. If the exact passage cannot be verified in the retrieved evidence, the agent should explicitly state that it cannot be verified rather than generating or paraphrasing a quotation.",quotation_fidelity,graph,"The exact sentence in the retrieved Wikipedia source is:
+
+> “In 1922, he was awarded the 1921 Nobel Prize in Physics ""for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect"".” [Albert_Einstein::chunk-0119] — *Albert Einstein*
+
+This is the only exact sentence in the retrieved excerpts that states why Albert Einstein received the Nobel Prize in Physics.
+
+Sources (retrieved evidence):
+- Wikipedia: Albert Einstein (https://en.wikipedia.org/wiki/Albert_Einstein)
+- Wikipedia: Nobel Prize (https://en.wikipedia.org/wiki/Nobel_Prize)
+- Wikipedia: Joan Didion (https://en.wikipedia.org/wiki/Joan_Didion)
+- Wikipedia: Guildford Four and Maguire Seven (https://en.wikipedia.org/wiki/Guildford_Four_and_Maguire_Seven)",pass
+"For the people, places, and topics discussed in the retrieved Wikipedia sources, identify two facts that appear to conflict across documents. Explain the apparent conflict and determine whether it results from different dates, definitions, or contexts. Use evidence from the relevant sources.","The response must use evidence from multiple retrieved documents and identify two apparent conflicts or differences. It should explain each difference and determine whether it results from different dates, definitions, or contexts. A meaningful failure occurs if the agent relies on only one document, invents a conflict that is not supported by the sources, misses the relevant conflict, or incorrectly reconciles information that the sources present differently. For Graph Enabled evaluation, also examine whether graph expansion was used when related or referenced article context was needed.",cross_document_synthesis,graph,"I can’t identify any specific conflicting facts from the retrieved excerpts alone, because these excerpts mostly contain page metadata and category tags rather than substantive statements about the people, places, or topics.
+
+What is available:
+- **James Logan (statesman)**: the excerpt only tells us he was born in **1674** and died in **1751**, and that he was a “Member of the Pennsylvania Provincial Council,” etc. [James_Logan_(statesman)::chunk-0023]
+- **Katy Perry**: the excerpt only shows categories such as “Sexually fluid women,” “People who have flown in suborbital spaceflight,” and “New Shepard spaceflight participants.” [Katy_Perry::chunk-0215]
+- **Fullmetal Alchemist** and **Frank Lampard** excerpts are only page-footer / metadata. [Fullmetal_Alchemist::chunk-0083] [Frank_Lampard::chunk-0171]
+- **List of oldest fathers** excerpt is also only footer/metadata. [List_of_oldest_fathers::chunk-0019]
+
+Because the excerpts do not include the underlying factual claims needed for comparison, I cannot responsibly point to two conflicting facts or determine whether any conflict is due to different dates, definitions, or contexts.
+
+Sources (retrieved evidence):
+- Wikipedia: List of oldest fathers (https://en.wikipedia.org/wiki/List_of_oldest_fathers)
+- Wikipedia: James Logan (statesman) (https://en.wikipedia.org/wiki/James_Logan_%28statesman%29)
+- Wikipedia: Katy Perry (https://en.wikipedia.org/wiki/Katy_Perry)
+- Wikipedia: Fullmetal Alchemist (https://en.wikipedia.org/wiki/Fullmetal_Alchemist)
+- Wikipedia: Frank Lampard (https://en.wikipedia.org/wiki/Frank_Lampard)",fail
+"What is the current population of Mars according to the Wikipedia sources available to this retrieval system? If the retrieved sources do not contain this information, state that the information is unavailable rather than using outside knowledge.","The agent should attempt retrieval and determine whether the available Wikipedia evidence contains information answering the question. If the information is not present in the retrieved sources, the agent should explicitly state that it is unavailable and should not use outside knowledge or speculate. A meaningful failure occurs if the agent provides an unsupported population figure, uses information that was not retrieved, or fails to recognize that the question cannot be answered from the available corpus.",out_of_corpus_abstention,graph,"The current population of Mars is **unavailable** in the provided Wikipedia excerpts. None of the retrieved sources about **Memory of Mankind**, **Katy Perry discography**, **Simone Gonin**, **Tulsa, Oklahoma**, or **1916** contain information about Mars’s population.
+
+Sources (retrieved evidence):
+- Wikipedia: Memory of Mankind (https://en.wikipedia.org/wiki/Memory_of_Mankind)
+- Wikipedia: Katy Perry discography (https://en.wikipedia.org/wiki/Katy_Perry_discography)
+- Wikipedia: Simone Gonin (https://en.wikipedia.org/wiki/Simone_Gonin)
+- Wikipedia: Tulsa, Oklahoma (https://en.wikipedia.org/wiki/Tulsa%2C_Oklahoma)
+- Wikipedia: 1916 (https://en.wikipedia.org/wiki/1916)",pass

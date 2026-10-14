@@ -18,10 +18,10 @@ trust boundaries are defense-in-depth, not security or factual-correctness guara
 
 | Goal | Resource |
 | --- | --- |
-| Set up and run checkpoints 1.1-7.1 | [Checkpoint setup and run guide](Final_Capstone_Project/Capstone_Checkpoints/README.md) |
-| Review experiments and engineering trade-offs | [Historical testing results](Final_Capstone_Project/Capstone_Checkpoints/TESTING_RESULTS.md) |
-| Browse implementations and shared utilities | [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) |
-| Review raw reports and evaluation CSVs | [Ragas_Experiments](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/) |
+| Set up and run checkpoints 1.1-7.1 | [Checkpoint setup and run guide](Capstone_Checkpoints/Checkpoint_Readme.md) |
+| Review Final Solution results, checkpoint experiments, and engineering trade-offs | [Testing results](Capstone_Checkpoints/Checkpoint_Testing_Results.md) |
+| Browse implementations and shared utilities | [Capstone_Checkpoints](Capstone_Checkpoints/) and [Capstone_Utilities](Capstone_Utilities/) |
+| Review raw reports and evaluation CSVs | [Capstone_Ragas_Experiments](Capstone_Ragas_Experiments/) |
 
 The checkpoint guide contains Windows PowerShell and macOS Zsh/Bash commands,
 dataset instructions, troubleshooting, and offline checks. Historical results
@@ -31,8 +31,13 @@ are preserved separately and are not certification of the current implementation
 
 | Area | Purpose |
 | --- | --- |
-| [Capstone_Checkpoints](Final_Capstone_Project/Capstone_Checkpoints/) | Checkpoints 1.1-7.1, retrieval/ranking modules, setup/evaluation utilities, schemas, question datasets, and documentation |
-| [Ragas_Experiments](Final_Capstone_Project/Capstone_Checkpoints/Ragas_Experiments/) | Tracked evaluation reports, experiment logs, and CSV results |
+| [Capstone_Checkpoints](Capstone_Checkpoints/) | Checkpoints 1.1-7.1, checkpoint configuration, question datasets, and documentation |
+| [Capstone_Final_Solution](Capstone_Final_Solution/) | Automatic hardened, graph-enabled final Wikipedia RAG solution |
+| [Capstone_Utilities](Capstone_Utilities/) | Shared checkpoint retrieval/ranking modules, utility scripts, and JSON schemas |
+| [Capstone_Utilities/Retrieval_Methods](Capstone_Utilities/Retrieval_Methods/) | Retrieval modules shared by checkpoints 4.1-7.1 |
+| [Capstone_Utilities/Ranking_Techniques](Capstone_Utilities/Ranking_Techniques/) | Weighted ranking shared by checkpoint retrieval workflows |
+| [Capstone_Utilities/JSON_Schemas](Capstone_Utilities/JSON_Schemas/) | JSON schemas used by question-generation utilities |
+| [Capstone_Ragas_Experiments](Capstone_Ragas_Experiments/) | Local evaluation datasets, reports, experiment logs, and CSV results |
 | [venv_requirements.txt](venv_requirements.txt) | Direct Python dependencies for the documented project workflows |
 
 ## Requirements and Operational Warnings
@@ -71,7 +76,7 @@ Historical experiments show a cost/accuracy trade-off:
 - Pure semantic retrieval and exact quotation fidelity remain limitations.
 - Small, LLM-judged datasets do not establish general reliability.
 
-[Testing results](Final_Capstone_Project/Capstone_Checkpoints/TESTING_RESULTS.md)
+[Testing results](Capstone_Checkpoints/Checkpoint_Testing_Results.md)
 preserves the detailed tables, dates, methodology, output references, model
 configurations, embedding budget, and limitations. Historical hardening scores
 predate the native shared Agentic fix and have not been rerun against it.
