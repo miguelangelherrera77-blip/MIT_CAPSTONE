@@ -7,7 +7,7 @@ Miguel Herrera - Section B
 This document preserves the checkpoint history, testing analysis, result tables,
 and embedding-cost estimate previously contained in the repository README.
 Historical checkpoint values and narrative numerical findings are unchanged.
-The Final Solution results below are a separate record of its October 13, 2026
+The Final Solution results below are a separate record of its
 diagnostic runs. Raw logs, datasets, and evaluation CSVs remain in their original
 locations.
 
@@ -37,7 +37,7 @@ Detailed historical tables are expanded by default and can be collapsed.
 
 ### Final Solution 8.1: recorded diagnostic results
 
-These are recorded Final Solution runs from October 13, 2026, using
+These are recorded Final Solution runs using
 `Test_Questions_Manually_Failure.json` with graph-enabled retrieval and a
 five-question suite. The standard engine comparison used hardened engines and
 the RAGAS DiscreteMetric judge. These diagnostic probes are not the main or
