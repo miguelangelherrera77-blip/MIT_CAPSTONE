@@ -32,9 +32,9 @@ are preserved separately and are not certification of the current implementation
 
 ## Final Solution Setup and Run
 
-Run these commands from the repository root to install dependencies, set your
-API key, and launch the Final Solution. Supply the external data artifacts
-described below before launching.
+Follow these steps in order from the repository root.
+
+### 1. Install dependencies and set credentials
 
 Windows PowerShell:
 
@@ -42,7 +42,6 @@ Windows PowerShell:
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r .\Capstone_Final_Solution\requirements.txt
 $env:OPENROUTER_API_KEY = "your-api-key"
-.\.venv\Scripts\python.exe .\Capstone_Final_Solution\MHERRERA_Capstone_8_1_Automatic_Hardened_Hybrid_Graph.py
 ```
 
 macOS (Zsh/Bash):
@@ -51,7 +50,6 @@ macOS (Zsh/Bash):
 python3 -m venv .venv
 ./.venv/bin/python -m pip install -r ./Capstone_Final_Solution/requirements.txt
 export OPENROUTER_API_KEY="your-api-key"
-./.venv/bin/python ./Capstone_Final_Solution/MHERRERA_Capstone_8_1_Automatic_Hardened_Hybrid_Graph.py
 ```
 
 - **Credentials:** The commands set `OPENROUTER_API_KEY` for this terminal
@@ -65,6 +63,51 @@ export OPENROUTER_API_KEY="your-api-key"
   [requirements.txt](Capstone_Final_Solution/requirements.txt);
   [venv_requirements.txt](venv_requirements.txt) is the broader-project alternative.
   Python 3.12.10 on Windows was validated; other runtimes/platforms are not certified.
+
+### 2. Prepare artifacts
+
+The installation commands above **do not create indexes**. If you already have
+a compatible artifact bundle, configure its path and proceed to step 3.
+Otherwise, place Wikipedia HTML articles in
+`Capstone_Database/Wikipedia`, install the broader setup dependencies, and run
+[Setup.py](Capstone_Utilities/Utility_Scripts/Setup.py) before launching:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r .\venv_requirements.txt
+.\.venv\Scripts\python.exe .\Capstone_Utilities\Utility_Scripts\Setup.py --build
+```
+
+macOS (Zsh/Bash):
+
+```bash
+./.venv/bin/python -m pip install -r ./venv_requirements.txt
+./.venv/bin/python ./Capstone_Utilities/Utility_Scripts/Setup.py --build
+```
+
+Setup creates missing JSONL chunks, graph, BM25, and Chroma artifacts in the
+root `Capstone_Database` folder; it does not download articles.
+Chroma creation requires a real `OPENROUTER_API_KEY` and incurs embedding costs.
+The builder reads the embedding model from
+[Checkpoint_Retrieval.conf](Capstone_Checkpoints/Checkpoint_Retrieval.conf);
+it must match the Final Solution's embedding model. Valid existing artifacts
+are reused; do not use `--rebuild` merely to launch the application.
+
+### 3. Run the Final Solution
+
+After the compatible artifacts are available and the database path is configured,
+launch from the same terminal session:
+
+Windows PowerShell:
+
+```powershell
+.\.venv\Scripts\python.exe .\Capstone_Final_Solution\MHERRERA_Capstone_8_1_Automatic_Hardened_Hybrid_Graph.py
+```
+
+macOS (Zsh/Bash):
+
+```bash
+./.venv/bin/python ./Capstone_Final_Solution/MHERRERA_Capstone_8_1_Automatic_Hardened_Hybrid_Graph.py
+```
 
 ### Final Solution behavior and configuration
 

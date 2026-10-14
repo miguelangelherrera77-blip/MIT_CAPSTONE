@@ -260,8 +260,6 @@ def confirm_rebuild(job_name: str, target: str) -> bool:
         print("[input] Please answer y, n, or q.")
 
 
-def _chroma_dir_has_existing_content(db_dir: Path) -> bool:
-    """Return True if the directory holds anything beyond the placeholder scaffold file."""
 def _dir_has_existing_content(path: Path) -> bool:
     """Return True if the directory holds anything beyond the placeholder scaffold file."""
     if not path.is_dir():
