@@ -313,7 +313,7 @@ content in separate tagged sections.
   workflows use `detailed_test_results_agentic.log` and their dedicated reports.
 - Utility logs are in `Capstone_Utilities/Utility_Scripts/Logs`.
 
-## Startup behavior and offline checks
+## Startup behavior
 
 Checkpoints 4.1-7.1 invoke setup with `--build` on normal CLI startup, before
 menus or quit selections. Setup decides whether builders are needed, so even
@@ -324,17 +324,6 @@ Checkpoint 1.1 executes probes when its script is run or imported. Checkpoint
 2.1 loads the corpus/Chroma and executes its query workflow at module level. Do
 not import either script as an offline smoke test. Prefer named CLI options over
 numeric menu choices; numeric retrieval mappings differ between checkpoints.
-
-The [combined unit tests](../Unit_Tests/) cover relocated resource paths and shared
-hardening behavior. Offline retrieval integration tests mock model/vector
-calls; they do not certify live answer quality, model availability, provider
-connectivity, or security. The latest verified Windows runs passed all 7
-checkpoint-layout tests and all 21 final-solution tests. The separate shared
-hardening suite had 12 of 14 tests pass; its two remaining failures refer to a
-missing Checkpoint 8.1 launcher and a stale constructor-call count. No live
-model/embedding calls or database rebuilds were performed. macOS examples have
-not been executed on a Mac; path-specific tests need platform-neutral coverage
-before they can certify macOS behavior.
 
 ## Troubleshooting
 

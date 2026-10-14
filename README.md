@@ -25,7 +25,7 @@ trust boundaries are defense-in-depth, not security or factual-correctness guara
 | Review raw reports and evaluation CSVs | [Capstone_Ragas_Experiments](Capstone_Ragas_Experiments/) |
 
 The checkpoint guide contains Windows PowerShell and macOS Zsh/Bash commands,
-dataset instructions, troubleshooting, and offline checks. Historical results
+dataset instructions, troubleshooting, and startup warnings. Historical results
 are preserved separately and are not certification of the current implementation.
 
 ## Final Solution Setup and Run
