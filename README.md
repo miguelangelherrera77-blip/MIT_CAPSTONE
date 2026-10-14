@@ -18,9 +18,10 @@ trust boundaries are defense-in-depth, not security or factual-correctness guara
 
 | Goal | Resource |
 | --- | --- |
+| Set up and run the Final Solution | [Final Solution Setup and Run](#final-solution-setup-and-run) |
+| Browse implementations and shared utilities | [Capstone_Checkpoints](Capstone_Checkpoints/), [Capstone_Final_Solution](Capstone_Final_Solution/), and [Capstone_Utilities](Capstone_Utilities/) |
 | Set up and run checkpoints 1.1-7.1 | [Checkpoint setup and run guide](Capstone_Checkpoints/Checkpoint_Readme.md) |
 | Review Final Solution results, checkpoint experiments, and engineering trade-offs | [Testing results](Capstone_Checkpoints/Checkpoint_Testing_Results.md) |
-| Browse implementations and shared utilities | [Capstone_Checkpoints](Capstone_Checkpoints/) and [Capstone_Utilities](Capstone_Utilities/) |
 | Review raw reports and evaluation CSVs | [Capstone_Ragas_Experiments](Capstone_Ragas_Experiments/) |
 
 The checkpoint guide contains Windows PowerShell and macOS Zsh/Bash commands,
