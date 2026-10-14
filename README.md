@@ -32,15 +32,9 @@ are preserved separately and are not certification of the current implementation
 
 ## Final Solution Setup and Run
 
-The Final Solution is a Wikipedia retrieval-augmented generation (RAG)
-application: it combines BM25 lexical retrieval, Chroma vector search, and
-graph expansion to answer questions from retrieved articles. It offers a
-single-pass Context-Aware engine and an iterative Agentic Dynamic engine; the
-default configuration routes between them automatically.
-
-From the repository root, create an environment, install the Final Solution's
-pinned dependencies, configure credentials and data paths, and launch the
-application.
+Run these commands from the repository root to install dependencies, set your
+API key, and launch the Final Solution. Supply the external data artifacts
+described below before launching.
 
 Windows PowerShell:
 
@@ -60,47 +54,32 @@ export OPENROUTER_API_KEY="your-api-key"
 ./.venv/bin/python ./Capstone_Final_Solution/MHERRERA_Capstone_8_1_Automatic_Hardened_Hybrid_Graph.py
 ```
 
-The commands above set `OPENROUTER_API_KEY` for the current terminal session;
-alternatively, provide it through a local `.env` file. Never commit credentials.
-The application dependencies are pinned in
-[Capstone_Final_Solution/requirements.txt](Capstone_Final_Solution/requirements.txt);
-the shared [venv_requirements.txt](venv_requirements.txt) is an alternative
-dependency list for the broader project. Offline validation used Python
-3.12.10 on Windows; other versions and macOS/Linux execution have not been
-certified.
-
-Configure paths and runtime defaults in
-[Final_Solution_Retrieval.conf](Capstone_Final_Solution/Final_Solution_Retrieval.conf).
-The default database path is resolved relative to the solution folder and
-expects the sibling `Capstone_Database` folder at the repository root. Change
-that setting when relocating the solution. On macOS, set `[paths] database_dir`
-to `../Capstone_Database`. The required Wikipedia HTML/JSONL corpus, BM25 index,
-Chroma index, and graph artifacts are not included. Missing artifacts produce
-an explicit error; the Final Solution does not depend on the shared setup
-script or database builders and never builds or copies the artifacts. Hybrid
-ranking is implemented in the solution-local
-[Ranking_Techniques](Capstone_Final_Solution/Ranking_Techniques/) package;
-checkpoint launchers and configuration are not imported.
+- **Credentials:** The commands set `OPENROUTER_API_KEY` for this terminal
+  session; a local `.env` is an alternative. Never commit credentials.
+- **Data and paths:** Supply existing Wikipedia HTML/JSONL, BM25, Chroma, and
+  graph artifacts in `Capstone_Database` at the repository root. They are not
+  included or rebuilt automatically. Set `[paths] database_dir` in
+  [Final_Solution_Retrieval.conf](Capstone_Final_Solution/Final_Solution_Retrieval.conf);
+  paths resolve relative to the solution folder. On macOS, use `../Capstone_Database`.
+- **Dependencies:** The commands use the pinned
+  [requirements.txt](Capstone_Final_Solution/requirements.txt);
+  [venv_requirements.txt](venv_requirements.txt) is the broader-project alternative.
+  Python 3.12.10 on Windows was validated; other runtimes/platforms are not certified.
 
 ### Final Solution behavior and configuration
 
-The default configuration runs hardened chat with automatic engine routing and
-graph-enabled retrieval. Simple questions use Context-Aware with GPT-4o-mini;
-recognized complex questions use Agentic Dynamic with GPT-5.4-mini. Both use
-four graph seeds and a 14,000-character retrieved-context limit. Runtime paths,
-retrieval settings, ranking weights, and models are configured in
-[Final_Solution_Retrieval.conf](Capstone_Final_Solution/Final_Solution_Retrieval.conf).
-Existing Chroma embeddings must match the configured embedding model.
-
-The launcher also retains explicit-engine evaluation, engine comparison,
-cost-experiment, and hardening-test workflows. Evaluation questions come from
-[Capstone_Ragas_Experiments/Test_Variables](Capstone_Ragas_Experiments/Test_Variables/);
-the comparison, hardening, and cost summary is written to
-`final_solution_8_1_optimization_performance.log` in
-[Capstone_Ragas_Experiments](Capstone_Ragas_Experiments/). Other RAGAS logs and
-per-question CSVs are written there as well. The cost experiment compares only
-GPT-4o-mini and GPT-5.4-mini, configured by
-[final_solution_8_1_cost_experiment_prototype.py](Capstone_Final_Solution/Utility_Scripts/final_solution_8_1_cost_experiment_prototype.py).
+- **Defaults:** Hardened, graph-enabled chat; automatic routing selects
+  Context-Aware/GPT-4o-mini for simple questions and Agentic/GPT-5.4-mini for
+  recognized complex questions. Both use four graph seeds and a 14K-character context limit.
+- **Configuration:** Set paths, models, retrieval settings, and ranking weights in
+  [Final_Solution_Retrieval.conf](Capstone_Final_Solution/Final_Solution_Retrieval.conf).
+  Chroma embeddings must match the configured embedding model.
+- **Experiments:** Explicit-engine evaluation, comparison, hardening, and cost
+  tests use [question datasets](Capstone_Ragas_Experiments/Test_Variables/).
+  Logs and CSVs go to [Capstone_Ragas_Experiments](Capstone_Ragas_Experiments/),
+  including `final_solution_8_1_optimization_performance.log`.
+  The [cost experiment](Capstone_Final_Solution/Utility_Scripts/final_solution_8_1_cost_experiment_prototype.py)
+  compares only GPT-4o-mini and GPT-5.4-mini.
 
 ### Final Solution retrieval and evidence
 
