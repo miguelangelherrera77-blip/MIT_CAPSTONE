@@ -14,8 +14,6 @@ search, Chroma vector retrieval, and optional graph expansion.
 Both engines support baseline and hardened operation. Sanitization and tagged
 trust boundaries are defense-in-depth, not security or factual-correctness guarantees.
 
-![Final Solution Architecture](Architecture_Diagrams/Capstone_Final_Solution_Slide_3_Architecture.svg)
-
 ## Start Here
 
 | Goal | Resource |
