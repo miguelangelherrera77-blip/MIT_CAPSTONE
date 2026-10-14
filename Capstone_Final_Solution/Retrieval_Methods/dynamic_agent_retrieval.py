@@ -49,7 +49,7 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 # Search methods that enable the agent's graph_expand tool. For all other methods
 # (lexical / semantic / hybrid) the agent runs graph-free.
 GRAPH_ENABLED_METHODS = {"graph", "graph_enabled", "all"}
-CONFIG_PATH = Path(__file__).resolve().parents[1] / "retrieval.conf"
+CONFIG_PATH = Path(__file__).resolve().parents[1] / "Final_Solution_Retrieval.conf"
 _config = configparser.ConfigParser()
 _config.read(CONFIG_PATH)
 LLM_MODEL = _config.get("llm", "model", fallback="openai/gpt-5.4-mini")
@@ -61,7 +61,7 @@ MAX_TOKENS = _config.getint("llm", "max_tokens", fallback=1024)
 from solution_config import CONFIG, DATABASE_DIR
 CHROMA_DIR = str(DATABASE_DIR / "Capstone_Chroma_DB")
 
-# ── agent limits (configurable via the [agent] section of retrieval.conf) ────
+# ── agent limits (configurable via the [agent] section of Final_Solution_Retrieval.conf) ────
 # The reasoning model for the agent's plan/answer nodes. Falls back to the shared
 # [llm] model when [agent] agent_model is unset. This governs ONLY the agent's own
 # LLM; the retrieval stack (HybridRetriever) keeps using the [llm] model.

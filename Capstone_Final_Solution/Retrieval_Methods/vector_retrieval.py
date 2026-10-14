@@ -27,7 +27,7 @@ from langchain_chroma import Chroma
 
 
 EmbeddingFactory = Callable[[], object]
-CONFIG_PATH = Path(__file__).resolve().parents[1] / "retrieval.conf"
+CONFIG_PATH = Path(__file__).resolve().parents[1] / "Final_Solution_Retrieval.conf"
 _config = configparser.ConfigParser()
 _config.read(CONFIG_PATH)
 VECTOR_CANDIDATES = _config.getint("retrieval", "vector_candidates", fallback=10)

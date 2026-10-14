@@ -45,7 +45,7 @@ from Utility_Scripts.token_usage import (
 
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-CONFIG_PATH = Path(__file__).resolve().parents[1] / "retrieval.conf"
+CONFIG_PATH = Path(__file__).resolve().parents[1] / "Final_Solution_Retrieval.conf"
 _config = configparser.ConfigParser()
 _config.read(CONFIG_PATH)
 LLM_MODEL = _config.get("llm", "model", fallback="openai/gpt-5.4-mini")

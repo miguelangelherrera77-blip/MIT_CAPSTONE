@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 SOLUTION_DIR = Path(__file__).resolve().parent
-CONFIG_PATH = SOLUTION_DIR / "retrieval.conf"
+CONFIG_PATH = SOLUTION_DIR / "Final_Solution_Retrieval.conf"
 CONFIG = configparser.ConfigParser()
 if not CONFIG_PATH.is_file():
     raise FileNotFoundError(f"Solution configuration not found: {CONFIG_PATH}")

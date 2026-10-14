@@ -21,7 +21,7 @@ import configparser
 from pathlib import Path
 
 
-CONFIG_PATH = Path(__file__).resolve().parents[1] / "retrieval.conf"
+CONFIG_PATH = Path(__file__).resolve().parents[1] / "Final_Solution_Retrieval.conf"
 _config = configparser.ConfigParser()
 if not _config.read(CONFIG_PATH):
     raise FileNotFoundError(f"Final solution retrieval configuration not found: {CONFIG_PATH}")

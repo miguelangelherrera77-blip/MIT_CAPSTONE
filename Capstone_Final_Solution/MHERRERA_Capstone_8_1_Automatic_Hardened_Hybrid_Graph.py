@@ -120,7 +120,7 @@ from Utility_Scripts.question_complexity_router import classify_question
 # %%
 _config = configparser.ConfigParser()
 DEDICATED_CONFIG_PATH = Path(__file__).resolve().with_name(
-    "retrieval.conf"
+    "Final_Solution_Retrieval.conf"
 )
 if not DEDICATED_CONFIG_PATH.is_file():
     raise FileNotFoundError(f"Dedicated retrieval configuration not found: {DEDICATED_CONFIG_PATH}")

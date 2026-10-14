@@ -27,6 +27,119 @@ The checkpoint guide contains Windows PowerShell and macOS Zsh/Bash commands,
 dataset instructions, troubleshooting, and offline checks. Historical results
 are preserved separately and are not certification of the current implementation.
 
+## Final Solution Setup and Run
+
+The Final Solution is a Wikipedia retrieval-augmented generation (RAG)
+application: it combines BM25 lexical retrieval, Chroma vector search, and
+graph expansion to answer questions from retrieved articles. It offers a
+single-pass Context-Aware engine and an iterative Agentic Dynamic engine; the
+default configuration routes between them automatically.
+
+From the repository root, create an environment, install the Final Solution's
+pinned dependencies, configure credentials and data paths, and launch the
+application.
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r .\Capstone_Final_Solution\requirements.txt
+$env:OPENROUTER_API_KEY = "your-api-key"
+.\.venv\Scripts\python.exe .\Capstone_Final_Solution\MHERRERA_Capstone_8_1_Automatic_Hardened_Hybrid_Graph.py
+```
+
+macOS (Zsh/Bash):
+
+```bash
+python3 -m venv .venv
+./.venv/bin/python -m pip install -r ./Capstone_Final_Solution/requirements.txt
+export OPENROUTER_API_KEY="your-api-key"
+./.venv/bin/python ./Capstone_Final_Solution/MHERRERA_Capstone_8_1_Automatic_Hardened_Hybrid_Graph.py
+```
+
+The commands above set `OPENROUTER_API_KEY` for the current terminal session;
+alternatively, provide it through a local `.env` file. Never commit credentials.
+The application dependencies are pinned in
+[Capstone_Final_Solution/requirements.txt](Capstone_Final_Solution/requirements.txt);
+the shared [venv_requirements.txt](venv_requirements.txt) is an alternative
+dependency list for the broader project. Offline validation used Python
+3.12.10 on Windows; other versions and macOS/Linux execution have not been
+certified.
+
+Configure paths and runtime defaults in
+[Final_Solution_Retrieval.conf](Capstone_Final_Solution/Final_Solution_Retrieval.conf).
+The default database path is resolved relative to the solution folder and
+expects the sibling `Capstone_Database` folder at the repository root. Change
+that setting when relocating the solution. On macOS, set `[paths] database_dir`
+to `../Capstone_Database`. The required Wikipedia HTML/JSONL corpus, BM25 index,
+Chroma index, and graph artifacts are not included. Missing artifacts produce
+an explicit error; the Final Solution does not depend on the shared setup
+script or database builders and never builds or copies the artifacts. Hybrid
+ranking is implemented in the solution-local
+[Ranking_Techniques](Capstone_Final_Solution/Ranking_Techniques/) package;
+checkpoint launchers and configuration are not imported.
+
+### Final Solution behavior and configuration
+
+The default configuration runs hardened chat with automatic engine routing and
+graph-enabled retrieval. Simple questions use Context-Aware with GPT-4o-mini;
+recognized complex questions use Agentic Dynamic with GPT-5.4-mini. Both use
+four graph seeds and a 14,000-character retrieved-context limit. Runtime paths,
+retrieval settings, ranking weights, and models are configured in
+[Final_Solution_Retrieval.conf](Capstone_Final_Solution/Final_Solution_Retrieval.conf).
+Existing Chroma embeddings must match the configured embedding model.
+
+The launcher also retains explicit-engine evaluation, engine comparison,
+cost-experiment, and hardening-test workflows. Evaluation questions come from
+[Capstone_Ragas_Experiments/Test_Variables](Capstone_Ragas_Experiments/Test_Variables/);
+the comparison, hardening, and cost summary is written to
+`final_solution_8_1_optimization_performance.log` in
+[Capstone_Ragas_Experiments](Capstone_Ragas_Experiments/). Other RAGAS logs and
+per-question CSVs are written there as well. The cost experiment compares only
+GPT-4o-mini and GPT-5.4-mini, configured by
+[final_solution_8_1_cost_experiment_prototype.py](Capstone_Final_Solution/Utility_Scripts/final_solution_8_1_cost_experiment_prototype.py).
+
+### Final Solution retrieval and evidence
+
+- Exact-title and unambiguous surname matching improve article selection;
+  ambiguous surname matches are not forced.
+- A bounded, in-memory HTML overlay extracts article introductions while
+  excluding menus, tables/infoboxes, hatnotes, and references. It does not
+  modify or rebuild the persisted corpus or indexes.
+- Hybrid candidates are deterministically reranked using title match, passage
+  word overlap, introductory relevance for overview questions, and navigation
+  penalties; no reranker LLM call is added. Graph expansion uses linked-article
+  introductions and keeps ranked seeds ahead of expanded neighbors.
+- New questions are searched independently of prior assistant responses;
+  pronoun follow-ups also use the previous user question.
+- Prompts request excerpt-ID citations and article titles. A deterministic
+  **Sources (retrieved evidence)** footer lists documents supplied to the model;
+  it indicates provenance, not proof that every claim is supported.
+- The local Agentic engine sanitizes inputs and documents, uses tagged trust
+  boundaries, retrieves before planning, reports malformed planner output,
+  bounds clarification rounds, and handles local quit commands. Generated
+  answer text does not control session termination.
+
+The existing indexed chunks still contain some extraction noise. The
+introductory evidence overlay does not replace a clean-corpus rebuild or a
+learned reranker. Alias resolution and follow-up interpretation are
+deterministic heuristics, not general entity-linking or query-rewriting models.
+
+## Reviewer Notes and Limitations
+
+- Running the application requires network access and an OpenRouter API key.
+  Embedding, answer-generation, and Agentic planning calls can incur charges.
+- Results depend on the corpus and prebuilt indexes supplied locally. Chroma
+  embeddings must match the configured embedding model; a fresh clone alone is
+  not sufficient to run the full application.
+- Retrieval and follow-up interpretation include deterministic heuristics.
+  Indexed chunks may contain extraction noise, citations need evaluation, and
+  the source footer indicates provenance but does not guarantee factual support.
+- Evaluation datasets are small and some historical scores predate current
+  implementation changes; they do not establish general reliability. Consult
+  [testing results](Capstone_Checkpoints/Checkpoint_Testing_Results.md) for
+  methodology, results, and known caveats.
+
 ## Project Organization
 
 | Area | Purpose |

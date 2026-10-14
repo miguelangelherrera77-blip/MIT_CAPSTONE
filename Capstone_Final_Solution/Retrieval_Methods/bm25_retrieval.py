@@ -26,7 +26,7 @@ import bm25s
 from solution_config import DATABASE_DIR
 
 
-CONFIG_PATH = Path(__file__).resolve().parents[1] / "retrieval.conf"
+CONFIG_PATH = Path(__file__).resolve().parents[1] / "Final_Solution_Retrieval.conf"
 _config = configparser.ConfigParser()
 _config.read(CONFIG_PATH)
 BM25_CANDIDATES = _config.getint("retrieval", "bm25_candidates", fallback=10)
