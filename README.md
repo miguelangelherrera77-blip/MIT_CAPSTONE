@@ -158,30 +158,20 @@ deterministic heuristics, not general entity-linking or query-rewriting models.
 
 ## Requirements and Operational Warnings
 
-- Use a local Python environment with `venv` and `pip`. The dependency file
-  lists package requirements but does not declare a project-wide minimum Python
-  version; compatibility depends on the selected package versions. Offline
-  validation used **Python 3.12.10 on Windows**. Other versions and macOS/Linux
-  execution are not certified.
-- [venv_requirements.txt](venv_requirements.txt) lists direct dependencies for
-  checkpoints, the final solution, and setup/evaluation utilities. Pip resolves
-  transitive dependencies automatically.
-- Follow the checkpoint guide from the repository root. Setup installs
-  dependencies only when creating the virtual environment; it does not refresh
-  an existing environment or populate indexes without a build request.
-- Set `OPENROUTER_API_KEY` in the environment or the `.env` location documented
-  by the applicable guide. **Never commit credentials.**
-- Network access is needed for installation and API calls. Answer generation,
-  judging, and embeddings can incur charges; allow adequate local storage.
-- HTML is required for chunking and graph creation; JSONL suffices for BM25
-  and Chroma creation. A fresh clone needs suitable corpus/index artifacts.
-- Checkpoints 4.1-7.1 invoke setup/build checks before normal menus and quit
-  selections. Missing artifacts can trigger builders and embedding costs;
-  `--help` exits before bootstrap.
-- Checkpoints 1.1 and 2.1 execute live workflows at module level; do not import
-  them as offline smoke tests.
-- Do not rebuild databases merely to launch a checkpoint. Explicit rebuilds
-  can overwrite generated artifacts after confirmation.
+- **Environment:** Use `venv` and `pip` with the applicable dependency list.
+  Python 3.12.10 on Windows was validated; no project-wide minimum is declared,
+  and other runtimes/platforms are not certified.
+- **Credentials and costs:** Set `OPENROUTER_API_KEY`; never commit it.
+  Installation and API calls require network access. Generation, judging, and
+  embeddings may incur charges.
+- **Data:** Supply compatible corpus/index artifacts and adequate storage.
+  HTML supports chunking/graph creation; JSONL supports BM25/Chroma creation.
+- **Checkpoint setup:** Follow the [checkpoint guide](Capstone_Checkpoints/Checkpoint_Readme.md).
+  Existing environments are not refreshed automatically. Checkpoints 4.1-7.1
+  check artifacts before menus and may trigger paid builds; `--help` skips setup.
+  Rebuilds can overwrite artifacts.
+- **Imports:** Checkpoints 1.1-2.1 run live workflows on import; do not use them
+  as offline smoke tests.
 
 ## Evaluation Summary
 
