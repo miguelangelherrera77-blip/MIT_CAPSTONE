@@ -5,6 +5,11 @@
 
 ## Overview
 
+Students, researchers, and curious readers can spend significant time finding
+and verifying facts across Wikipedia articles. This system is designed to help
+them answer questions using one or multiple curated Wikipedia articles, with
+answers grounded in retrieved source evidence and citations they can check.
+
 A Wikipedia retrieval-augmented generation (RAG) system combining BM25 lexical
 search, Chroma vector retrieval, and optional graph expansion.
 
